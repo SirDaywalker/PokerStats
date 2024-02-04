@@ -14,6 +14,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Objects;
+
 @Service
 public class AuthenticationService {
     private final JWTService jwtService;
@@ -87,7 +94,7 @@ public class AuthenticationService {
         return this.jwtService.generateToken(null, user);
     }
 
-    public String register(@NonNull RegisterRequest request) {
+    public String register(@NonNull RegisterRequest request) throws IOException {
         if (this.userRepository.existsByName(request.name())) {
             throw new IllegalArgumentException("User %s already exists".formatted(request.name()));
         }
@@ -97,6 +104,14 @@ public class AuthenticationService {
         user.setRole(Role.GUEST);
         user.setBuyIn(4);
         this.userRepository.save(user);
+
+        final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
+                System.getProperty("user.dir"),
+                URLEncoder.encode(user.getName(), StandardCharsets.UTF_8),
+                Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+        ));
+        Files.createDirectories(onDisk.getParentFile().toPath());
+        request.picture().transferTo(onDisk);
         return this.generateToken(user);
     }
 }
