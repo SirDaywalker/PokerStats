@@ -1,6 +1,8 @@
 package de.stammtisch.pokerstats.service;
 
 import de.stammtisch.pokerstats.controllers.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controllers.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
@@ -82,6 +84,20 @@ public class AuthenticationService {
      * @return The generated token.
      */
     public String generateToken(@NonNull User user) {
-        return this.jwtService.generateToken(user);
+        return this.jwtService.generateToken(null, user);
+    }
+
+    public String register(@NonNull RegisterRequest request) {
+        if (this.userRepository.existsByName(request.name())) {
+            throw new IllegalArgumentException("User %s already exists".formatted(request.name()));
+        }
+        final User user = new User();
+        user.setName(request.name());
+        user.setPassword(this.passwordEncoder.encode(request.password()));
+        user.setRole(Role.GUEST);
+        user.setBuyIn(4);
+        this.userRepository.save(user);
+        return this.jwtService.generateToken(null, user);
+
     }
 }
