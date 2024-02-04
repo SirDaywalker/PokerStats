@@ -98,6 +98,5 @@ public class AuthenticationService {
         user.setBuyIn(4);
         this.userRepository.save(user);
         return this.jwtService.generateToken(null, user);
-
     }
 }
