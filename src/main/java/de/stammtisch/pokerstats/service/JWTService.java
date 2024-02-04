@@ -11,15 +11,16 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JWTService {
     private final String secret;
-    private final long expiration;
+    private final int expiration;
 
-    public JWTService(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") long expiration) {
+    public JWTService(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") int expiration) {
         this.secret = secret;
         this.expiration = expiration;
     }
@@ -40,8 +41,8 @@ public class JWTService {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
-                .setIssuedAt(new java.util.Date(System.currentTimeMillis()))
-                .setExpiration(new java.util.Date(System.currentTimeMillis() + expiration))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + this.expiration * 1000L))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -55,7 +56,7 @@ public class JWTService {
     }
 
     private @NonNull Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        byte[] keyBytes = Decoders.BASE64.decode(this.secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
