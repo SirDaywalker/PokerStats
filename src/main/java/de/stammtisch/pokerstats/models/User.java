@@ -22,8 +22,7 @@ public class User implements UserDetails {
     private @Id @Setter(AccessLevel.PRIVATE) Long id;
 
     private String password;
-    private String firstName;
-    private String lastName;
+    private String name;
     private int buyIn;
 
     @Enumerated(EnumType.STRING)
@@ -35,10 +34,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "winner")
     private Set<PokerGame> wins;
 
-    public User(String password, String firstName, String lastName, int buyIn, Role role) {
+    public User(String password, String name, int buyIn, Role role) {
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.buyIn = buyIn;
         this.role = role;
     }
@@ -55,7 +53,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return String.format("%s %s", firstName, lastName);
+        return this.name;
     }
 
     @Override
