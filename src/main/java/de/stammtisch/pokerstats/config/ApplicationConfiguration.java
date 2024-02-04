@@ -21,10 +21,10 @@ public class ApplicationConfiguration {
         this.userService = userService;
     }
 
-    @Bean
-    public UserService userService() {
-        return this.userService;
-    }
+//    @Bean
+//    public UserService userService() {
+//        return this.userService;
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,7 +41,7 @@ public class ApplicationConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(this.userService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
