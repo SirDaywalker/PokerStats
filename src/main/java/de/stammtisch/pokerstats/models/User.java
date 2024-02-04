@@ -1,7 +1,6 @@
 package de.stammtisch.pokerstats.models;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +18,10 @@ import java.util.Set;
 @Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
-    private @Id @Setter(AccessLevel.PRIVATE) Long id;
+    @Id
+    private String name;
 
     private String password;
-    private String name;
     private int buyIn;
 
     @Enumerated(EnumType.STRING)
@@ -39,11 +38,6 @@ public class User implements UserDetails {
         this.name = name;
         this.buyIn = buyIn;
         this.role = role;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.id = System.currentTimeMillis();
     }
 
     @Override
