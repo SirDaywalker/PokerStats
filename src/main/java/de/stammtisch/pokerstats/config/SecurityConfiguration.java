@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -28,21 +29,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(@NonNull HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeHttpRequests(auth -> {
-           auth.requestMatchers(
-                   "/",
-                   "/login",
-                   "/register",
-                   "/error",
-                   "/api/v1/auth/register",
-                   "/api/v1/auth/authenticate",
-                   "/cdn/**",
-                   "/js/**",
-                   "/css/**",
-                   "/img/**"
-           ).permitAll();
-           auth.anyRequest().authenticated();
-        })
+        return httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(
+                           "/",
+                           "/login",
+                           "/register",
+                           "/error",
+                           "/api/v1/auth/register",
+                           "/api/v1/auth/authenticate",
+                           "/cdn/**",
+                           "/js/**",
+                           "/css/**",
+                           "/img/**"
+                    ).permitAll();
+                    auth.anyRequest().authenticated();
+                })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(this.authenticationProvider)
                 .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
