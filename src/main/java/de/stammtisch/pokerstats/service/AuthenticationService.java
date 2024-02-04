@@ -82,6 +82,6 @@ public class AuthenticationService {
      * @return The generated token.
      */
     public String generateToken(@NonNull User user) {
-        return this.jwtService.generateToken(user);
+        return this.jwtService.generateToken(null, user);
     }
 }
