@@ -70,10 +70,10 @@ public class AuthenticationService {
      */
     public void matchCredentials(String name, String password) throws BadCredentialsException {
         this.authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        name,
-                        password
-                )
+            new UsernamePasswordAuthenticationToken(
+                name,
+                password
+            )
         );
     }
 
@@ -97,6 +97,6 @@ public class AuthenticationService {
         user.setRole(Role.GUEST);
         user.setBuyIn(4);
         this.userRepository.save(user);
-        return this.jwtService.generateToken(null, user);
+        return this.generateToken(user);
     }
 }
