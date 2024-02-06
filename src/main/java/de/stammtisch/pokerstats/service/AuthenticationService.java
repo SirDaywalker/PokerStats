@@ -107,7 +107,7 @@ public class AuthenticationService {
 
         final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                 System.getProperty("user.dir"),
-                URLEncoder.encode(user.getName(), StandardCharsets.UTF_8),
+                URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
                 Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
         ));
         Files.createDirectories(onDisk.getParentFile().toPath());

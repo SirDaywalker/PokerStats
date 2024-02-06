@@ -1,6 +1,7 @@
 package de.stammtisch.pokerstats.models;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
+    @Getter(AccessLevel.NONE)
     private String name;
 
     private String password;
