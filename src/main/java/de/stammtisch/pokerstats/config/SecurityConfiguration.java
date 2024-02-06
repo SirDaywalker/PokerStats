@@ -42,7 +42,8 @@ public class SecurityConfiguration {
                            "/cdn/**",
                            "/js/**",
                            "/css/**",
-                           "/img/**"
+                           "/img/**",
+                           "/assets/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
