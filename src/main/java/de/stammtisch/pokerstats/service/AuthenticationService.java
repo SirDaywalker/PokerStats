@@ -1,7 +1,7 @@
 package de.stammtisch.pokerstats.service;
 
-import de.stammtisch.pokerstats.controllers.dtos.AuthenticationRequest;
-import de.stammtisch.pokerstats.controllers.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;

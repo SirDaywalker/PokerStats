@@ -1,4 +1,4 @@
-package de.stammtisch.pokerstats.controllers.dtos;
+package de.stammtisch.pokerstats.controller.dtos;
 
 import org.springframework.web.multipart.MultipartFile;
 

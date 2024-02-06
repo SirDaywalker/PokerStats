@@ -1,7 +1,7 @@
-package de.stammtisch.pokerstats.controllers.apis;
+package de.stammtisch.pokerstats.controller.api;
 
-import de.stammtisch.pokerstats.controllers.dtos.AuthenticationRequest;
-import de.stammtisch.pokerstats.controllers.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

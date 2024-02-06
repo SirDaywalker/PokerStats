@@ -1,6 +1,6 @@
-package de.stammtisch.pokerstats.controllers.apis;
+package de.stammtisch.pokerstats.controller.api;
 
-import de.stammtisch.pokerstats.controllers.dtos.CreatePokerGameRequest;
+import de.stammtisch.pokerstats.controller.dtos.CreatePokerGameRequest;
 import de.stammtisch.pokerstats.service.PokerGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

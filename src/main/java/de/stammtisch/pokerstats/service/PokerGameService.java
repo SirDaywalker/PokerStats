@@ -1,6 +1,6 @@
 package de.stammtisch.pokerstats.service;
 
-import de.stammtisch.pokerstats.controllers.dtos.CreatePokerGameRequest;
+import de.stammtisch.pokerstats.controller.dtos.CreatePokerGameRequest;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.models.UserGame;

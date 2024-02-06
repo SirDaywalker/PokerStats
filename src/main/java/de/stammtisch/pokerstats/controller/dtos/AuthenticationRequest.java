@@ -1,4 +1,4 @@
-package de.stammtisch.pokerstats.controllers.dtos;
+package de.stammtisch.pokerstats.controller.dtos;
 
 public record AuthenticationRequest(
         String name,
