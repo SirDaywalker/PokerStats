@@ -21,11 +21,6 @@ public class ApplicationConfiguration {
         this.userService = userService;
     }
 
-//    @Bean
-//    public UserService userService() {
-//        return this.userService;
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

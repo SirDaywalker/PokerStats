@@ -8,6 +8,7 @@ import de.stammtisch.pokerstats.repository.PokerGameRepository;
 import de.stammtisch.pokerstats.repository.UserGameRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public class PokerGameService {
         this.userGameRepository = userGameRepository;
     }
 
-    public void createGame(CreatePokerGameRequest request) {
+    public void createGame(@NonNull CreatePokerGameRequest request) {
         final PokerGame game = new PokerGame();
         final Set<User> users = new HashSet<>();
         final Set<UserGame> usersGames = new HashSet<>();

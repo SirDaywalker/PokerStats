@@ -35,13 +35,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "winner")
     private Set<PokerGame> wins;
 
-    public User(String password, String name, int buyIn, Role role) {
-        this.password = password;
-        this.name = name;
-        this.buyIn = buyIn;
-        this.role = role;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

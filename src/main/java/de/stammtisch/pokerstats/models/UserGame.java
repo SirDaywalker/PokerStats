@@ -13,7 +13,7 @@ import lombok.Setter;
 public class UserGame {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @ManyToOne
