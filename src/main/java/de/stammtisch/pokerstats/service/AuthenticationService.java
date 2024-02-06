@@ -128,7 +128,7 @@ public class AuthenticationService {
 
     public String register(@NonNull RegisterRequest request) throws IOException {
         if (this.userRepository.existsByName(request.name())) {
-            throw new IllegalArgumentException("User %s already exists".formatted(request.name()));
+            throw new IllegalArgumentException("User %s already exists.".formatted(request.name()));
         }
         final User user = new User();
         user.setName(request.name());
