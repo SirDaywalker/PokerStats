@@ -5,6 +5,7 @@ import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
@@ -55,6 +57,23 @@ public class AuthenticationService {
         cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
+    /**
+     * Extracts the token from the cookies.
+     *
+     * @param cookies The cookies to extract the token from.
+     * @return The token or null if it does not exist.
+     */
+    public String getTokenFromCookie(String cookies) {
+        if (cookies == null) {
+            return null;
+        }
+        for (String cookie : cookies.split("; ")) {
+            if (cookie.startsWith("Authorization=")) {
+                return cookie.split("=")[1];
+            }
+        }
+        return null;
+    }
 
     /**
      * Authenticates the user.
@@ -83,6 +102,19 @@ public class AuthenticationService {
             )
         );
     }
+
+    /**
+     * @param token The JWT-Token to extract the user from.
+     * @return The user from the token.
+     * @throws NoSuchElementException If the user does not exist.
+     * @throws IllegalArgumentException If the token is invalid.
+     * @throws JwtException If the token is invalid.
+     */
+    public @NonNull User getUserFromToken(String token) {
+        return this.userRepository.findByName(this.jwtService.extractUsernameFromToken(token)).orElseThrow();
+    }
+
+
 
     /**
      * Generates a token for the given user.
