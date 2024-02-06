@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/api/v1/pokerGame")
+@RequestMapping("/api/v1/poker-game")
 public class PokerGameController {
     private final PokerGameService pokerGameService;
 
