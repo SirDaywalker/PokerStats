@@ -1,0 +1,28 @@
+:root {
+    --red: #DF0000;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #121212;
+        --text: #FFFFFF;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #FFFFFF;
+        --text: #000000;
+    }
+}
+
+* {
+    color: var(--text);
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+}
+
