@@ -1,0 +1,29 @@
+@media (prefers-color-scheme: dark) {
+    .button {
+        border-color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .button {
+        border-color: black;
+    }
+}
+
+.button {
+    border-radius: 10px;
+    font-size: 1.5rem;
+    border: 2px solid transparent;
+    background: transparent;
+    cursor: pointer;
+}
+
+.button.red {
+    border-color: var(--red);
+}
+
+.button.filled.red {
+    background-color: var(--red);
+    color: black;
+    border-color: black;
+}
