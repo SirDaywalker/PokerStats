@@ -135,7 +135,9 @@ public class AuthenticationService {
         user.setPassword(this.passwordEncoder.encode(request.password()));
         user.setRole(Role.GUEST);
         user.setBuyIn(4);
-        this.userRepository.save(user);
+        user.setProfilePictureType(
+                Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+        );
 
         final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                 System.getProperty("user.dir"),
@@ -144,6 +146,7 @@ public class AuthenticationService {
         ));
         Files.createDirectories(onDisk.getParentFile().toPath());
         request.picture().transferTo(onDisk);
+        this.userRepository.save(user);
         return this.generateToken(user);
     }
 }
