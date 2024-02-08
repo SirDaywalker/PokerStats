@@ -87,6 +87,9 @@ for (let key in cards_with_values) {
         pair = true;
     }
     if (cards_with_values[key].length === 3) {
+        if (three_of_a_kind) {
+            full_house = true;
+        }
         three_of_a_kind = true;
     }
     if (cards_with_values[key].length === 4) {
@@ -97,26 +100,27 @@ for (let key in cards_with_values) {
 let flush = false;
 
 for (let key in cards_with_types) {
-    if (cards_with_types[key].length === 5) {
+    if (cards_with_types[key].length >= 5) {
         flush = true;
     }
 }
 
 let straight = false;
-let straight_flush = flush && straight;
-let royal_flush = false;
-
 
 for (let i = 2; i <= 10; i++) {
-    if (cards_with_values[i].length === 1 && cards_with_values[i + 1].length === 1 && cards_with_values[i + 2].length === 1 && cards_with_values[i + 3].length === 1 && cards_with_values[i + 4].length === 1) {
+    if (cards_with_values[i].length !== 0 && cards_with_values[i + 1].length !== 0 && cards_with_values[i + 2].length !== 0 && cards_with_values[i + 3].length !== 0 && cards_with_values[i + 4].length !== 0) {
         straight = true;
     }
 }
 
-if (cards_with_values[10].length === 1 && cards_with_values[11].length === 1 && cards_with_values[12].length === 1 && cards_with_values[13].length === 1 && cards_with_values[14].length === 1) {
-    straight = true;
+let straight_flush = flush && straight;
+let royal_flush = false;
 
-    if (straight_flush && cards_with_types["hearts"].length === 5) {
+if (cards_with_values[10].length !== 0 && cards_with_values[11].length !== 0 && cards_with_values[12].length !== 0 && cards_with_values[13].length !== 0 && cards_with_values[14].length !== 0) {
+    straight = true;
+    straight_flush = flush && straight;
+
+    if (straight_flush) {
         royal_flush = true;
     }
 
@@ -132,6 +136,7 @@ console.log("Straight: " + straight);
 console.log("Royal flush: " + royal_flush);
 console.log("Straight flush: " + straight_flush);
 
-
+console.log(cards_with_values);
+console.log(cards_with_types);
 
 
