@@ -6,7 +6,7 @@
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
     <link th:href="@{/css/index.css}" rel="stylesheet"/>
-<!--    <script type="module" th:src="@{/js/cards.js}"></script> -->
+    <link th:href="@{/css/card.css}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -24,11 +24,26 @@
         </div>
 
         <div id="table">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
+            <div class="card flipped">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
+            <div class="card flipped">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
+            <div class="card flipped">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
+            <div class="card flipped">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
+            <div class="card flipped">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
         </div>
         <span id="combination"></span>
         <div th:if="${user == null}" id="buttons-in-row">

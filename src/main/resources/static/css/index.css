@@ -118,6 +118,11 @@
     #combination {
         display: block;
     }
+
+    .card {
+        height: 95px;
+        width: 65px;
+    }
 }
 
 #king {

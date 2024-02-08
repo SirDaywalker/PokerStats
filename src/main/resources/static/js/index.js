@@ -5,12 +5,29 @@ iconCards[0].src = '/assets/' + getRandomCards();
 iconCards[1].src = '/assets/' + getRandomCards();
 
 const tableCards = document.getElementById('table').children;
-tableCards[0].src = '/assets/' + getRandomCards();
-tableCards[1].src = '/assets/' + getRandomCards();
-tableCards[2].src = '/assets/' + getRandomCards();
-tableCards[3].src = '/assets/' + getRandomCards();
-tableCards[4].src = '/assets/' + getRandomCards();
+tableCards[0].children[0].src = '/assets/' + getRandomCards();
+tableCards[1].children[0].src = '/assets/' + getRandomCards();
+tableCards[2].children[0].src = '/assets/' + getRandomCards();
+tableCards[3].children[0].src = '/assets/' + getRandomCards();
+tableCards[4].children[0].src = '/assets/' + getRandomCards();
 
+let index = 0;
+function flipCard(stop) {
+    setTimeout(() => {
+        if (index < stop) {
+            tableCards[index].classList.remove('flipped');
+            index++;
+            flipCard(stop);
+        }
+    }, 500);
+}
+flipCard(3);
+setTimeout(() => {
+    flipCard(4);
+}, 2000);
+setTimeout(() => {
+    flipCard(5);
+}, 4000);
 
 // Check the combination of the seven cards
 const cards_with_values = {
@@ -47,7 +64,7 @@ for (let i = 0; i < iconCards.length; i++) {
     processCard(i, iconCards[i].src.split('/').pop());
 }
 for (let i = 0; i < tableCards.length; i++) {
-    processCard(i, tableCards[i].src.split('/').pop());
+    processCard(i, tableCards[i].children[0].src.split('/').pop());
 }
 
 cards_with_values[11] = cards_with_values["jack"];
@@ -87,6 +104,8 @@ for (let key in cards_with_types) {
 
 let straight = false;
 let straight_flush = flush && straight;
+let royal_flush = false;
+
 
 for (let i = 2; i <= 10; i++) {
     if (cards_with_values[i].length === 1 && cards_with_values[i + 1].length === 1 && cards_with_values[i + 2].length === 1 && cards_with_values[i + 3].length === 1 && cards_with_values[i + 4].length === 1) {
@@ -97,6 +116,9 @@ for (let i = 2; i <= 10; i++) {
 if (cards_with_values[10].length === 1 && cards_with_values[11].length === 1 && cards_with_values[12].length === 1 && cards_with_values[13].length === 1 && cards_with_values[14].length === 1) {
     straight = true;
 
+    if (straight_flush && cards_with_types["hearts"].length === 5) {
+        royal_flush = true;
+    }
 
 }
 
@@ -107,7 +129,7 @@ console.log("Full house: " + full_house);
 console.log("Two pairs: " + two_pairs);
 console.log("Flush: " + flush);
 console.log("Straight: " + straight);
-
+console.log("Royal flush: " + royal_flush);
 console.log("Straight flush: " + straight_flush);
 
 
