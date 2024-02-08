@@ -1,0 +1,85 @@
+form {
+    background: var(--container);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 2em;
+}
+
+form > div:first-child {
+    display: flex;
+    gap: 2em;
+    margin: 0 0 1em;
+}
+
+#profile {
+    width: 70px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: relative;
+    background: var(--background);
+    cursor: pointer;
+    overflow: hidden;
+    transition: filter 0.3s;
+}
+
+#profile:hover {
+    filter: brightness(0.7);
+}
+
+#profile svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#profile svg > circle, #profile svg > path {
+    fill: var(--container);
+}
+
+#profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    display: none;
+}
+
+form > label, form > div:first-child > label {
+    display: flex;
+}
+
+#image-upload {
+    display: none;
+}
+
+input {
+    margin: 1em 0;
+    background: var(--background);
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+form > label {
+    height: 74px;
+}
+
+form > label > input {
+    width: 100%;
+}
+
+form button[type=submit] {
+    display: block;
+    margin: 0.5em auto 2em;
+}
+

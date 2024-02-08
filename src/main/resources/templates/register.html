@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registrieren</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/css/register.css}" rel="stylesheet"/>
 </head>
 <body>
-    register baby
+    <h1>Registrieren</h1>
+    <form>
+        <div>
+            <label for="image-upload" id="profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="54" viewBox="0 0 41 45">
+                    <circle cx="20.5" cy="12.5" r="12.5"/>
+                    <path d="M19.6644 19.2707C20.0595 18.6699 20.9405 18.6699 21.3356 19.2707L37.2347 43.4506C37.672 44.1155 37.195 45 36.3992 45H4.60082C3.805 45 3.32804 44.1155 3.76527 43.4506L19.6644 19.2707Z"/>
+                </svg>
+                <img id="image-preview" src="" alt="">
+            </label>
+            <input type="file" id="image-upload" accept="image/*">
+            <label><input type="text" placeholder="Vollständiger Name" required></label>
+        </div>
+        <label><input type="password" placeholder="Passwort" required></label>
+        <label><input type="password" placeholder="Passwort wiederholen" required></label>
+        <button class="button filled red" type="submit">Registrieren</button>
+        <a href="/login">Bereits registriert?</a>
+    </form>
+    <script th:src="@{/js/register.js}"></script>
 </body>
 </html>
