@@ -54,7 +54,7 @@ form > label, form > div:first-child > label {
     display: flex;
 }
 
-#image-upload {
+#picture {
     display: none;
 }
 
