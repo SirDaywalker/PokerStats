@@ -38,7 +38,9 @@
 }
 
 #icon-cards img {
-    height: 100%;
+    height: 95px;
+    position: absolute;
+    top: 5px;
 }
 
 #icon-cards img:first-child {
@@ -46,7 +48,6 @@
 }
 
 #icon-cards img:last-child {
-    position: absolute;
     left: 11px;
 }
 
