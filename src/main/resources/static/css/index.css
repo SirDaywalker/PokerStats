@@ -5,6 +5,11 @@
     transform: translate(-50%, -50%);
 }
 
+img {
+    border: 1px solid black;
+    border-right: 5px;
+}
+
 #stammtisch {
     font-size: 3rem;
 }
@@ -31,6 +36,7 @@
 #king, #queen, #four, #ace {
     position: absolute;
     transform: scale(0.8);
+    border: none !important;
 }
 
 #table, #icon-cards {
@@ -53,10 +59,12 @@
 
 #combination {
     display: none;
+    transform: scale(0);
     text-align: center;
     font-size: 2rem;
     font-family: "Times New Roman", Times, sans-serif;
     text-shadow: 0 0 8px #DF0000;
+    transition: transform 0.5s;
 }
 
 @media only screen and (max-width: 1130px) {

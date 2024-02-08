@@ -11,24 +11,6 @@ tableCards[2].children[0].src = '/assets/' + getRandomCards();
 tableCards[3].children[0].src = '/assets/' + getRandomCards();
 tableCards[4].children[0].src = '/assets/' + getRandomCards();
 
-let index = 0;
-function flipCard(stop) {
-    setTimeout(() => {
-        if (index < stop) {
-            tableCards[index].classList.remove('flipped');
-            index++;
-            flipCard(stop);
-        }
-    }, 500);
-}
-flipCard(3);
-setTimeout(() => {
-    flipCard(4);
-}, 2000);
-setTimeout(() => {
-    flipCard(5);
-}, 4000);
-
 // Check the combination of the seven cards
 const cards_with_values = {
     2: [],
@@ -72,14 +54,22 @@ cards_with_values[12] = cards_with_values["queen"];
 cards_with_values[13] = cards_with_values["king"];
 cards_with_values[14] = cards_with_values["ace"];
 cards_with_values[1] = cards_with_values[14];
+delete cards_with_values["jack"];
+delete cards_with_values["queen"];
+delete cards_with_values["king"];
+delete cards_with_values["ace"];
 
 let pair = false;
 let three_of_a_kind = false;
 let four_of_a_kind = false;
-let full_house = pair && three_of_a_kind;
+let full_house = false;
 let two_pairs = false;
 
 for (let key in cards_with_values) {
+    if (key === "1") {
+        continue;
+    }
+
     if (cards_with_values[key].length === 2) {
         if (pair) {
             two_pairs = true;
@@ -96,7 +86,9 @@ for (let key in cards_with_values) {
         four_of_a_kind = true;
     }
 }
-
+if (!full_house) {
+    full_house = pair && three_of_a_kind;
+}
 let flush = false;
 
 for (let key in cards_with_types) {
@@ -123,20 +115,71 @@ if (cards_with_values[10].length !== 0 && cards_with_values[11].length !== 0 && 
     if (straight_flush) {
         royal_flush = true;
     }
-
 }
 
-console.log("Pair: " + pair);
-console.log("Three of a kind: " + three_of_a_kind);
-console.log("Four of a kind: " + four_of_a_kind);
-console.log("Full house: " + full_house);
-console.log("Two pairs: " + two_pairs);
-console.log("Flush: " + flush);
-console.log("Straight: " + straight);
-console.log("Royal flush: " + royal_flush);
-console.log("Straight flush: " + straight_flush);
+let result = "HIGH CARD";
+if (pair) {
+    result = "PAIR";
+}
+if (two_pairs) {
+    result = "TWO PAIRS";
+}
+if (three_of_a_kind) {
+    result = "THREE OF A KIND";
+}
+if (straight) {
+    result = "STRAIGHT";
+}
+if (flush) {
+    result = "FLUSH";
+}
+if (full_house) {
+    result = "FULL HOUSE";
+}
+if (four_of_a_kind) {
+    result = "FOUR OF A KIND";
+}
+if (straight_flush) {
+    result = "STRAIGHT FLUSH";
+}
+if (royal_flush) {
+    result = "ROYAL FLUSH";
+}
 
+const combination = document.getElementById('combination');
+
+let index = 0;
+function flipCard(stop) {
+    setTimeout(() => {
+        if (index < stop) {
+            tableCards[index].classList.remove('flipped');
+            index++;
+            flipCard(stop);
+        }
+    }, 500);
+}
+flipCard(3);
+setTimeout(() => {
+    flipCard(4);
+}, 2000);
+setTimeout(() => {
+    flipCard(5);
+}, 4000);
+setTimeout(() => {
+    combination.style.transform = 'scale(1)';
+    combination.innerText = result;
+}, 4500);
+
+console.log(result);
 console.log(cards_with_values);
 console.log(cards_with_types);
 
-
+console.log(pair);
+console.log(two_pairs);
+console.log(three_of_a_kind);
+console.log(four_of_a_kind);
+console.log(full_house);
+console.log(flush);
+console.log(straight);
+console.log(straight_flush);
+console.log(royal_flush);
