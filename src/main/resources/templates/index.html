@@ -6,14 +6,31 @@
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
     <link th:href="@{/css/index.css}" rel="stylesheet"/>
+<!--    <script type="module" th:src="@{/js/cards.js}"></script> -->
 </head>
 
 <body>
     <div id="invisible-center-box">
-        <span id="stammtisch">Stammtisch's</span>
-        <br>
-        <span id="poker-stats">PokerStats</span>
-        <div id="table"></div>
+        <div id="icon">
+            <div id="text">
+                <span id="stammtisch">Stammtisch's</span>
+                <br>
+                <span id="poker-stats">PokerStats</span>
+            </div>
+            <div id="icon-cards">
+                <img src="" alt="">
+                <img src="" alt="">
+            </div>
+        </div>
+
+        <div id="table">
+            <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+        </div>
+        <span id="combination"></span>
         <div th:if="${user == null}" id="buttons-in-row">
             <a href="/login"><button class="button filled red" type="button">Anmelden</button></a>
             <a href="/register"><button class="button red" type="button">Registrieren</button></a>
@@ -31,5 +48,6 @@
         <img id="four" th:src="@{/assets/rotated/four_of_diamonds.png}" alt="">
         <img id="ace" th:src="@{/assets/rotated/ace_of_spades_index.png}" alt="">
     </div>
+    <script type="module" th:src="@{/js/index.js}"></script>
 </body>
 </html>

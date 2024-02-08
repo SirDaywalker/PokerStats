@@ -33,8 +33,29 @@
     transform: scale(0.8);
 }
 
-#table {
+#table, #icon-cards {
     display: none;
+}
+
+#icon-cards img {
+    height: 100%;
+}
+
+#icon-cards img:first-child {
+    transform: rotate(-15deg);
+}
+
+#icon-cards img:last-child {
+    position: absolute;
+    left: 11px;
+}
+
+#combination {
+    display: none;
+    text-align: center;
+    font-size: 2rem;
+    font-family: "Times New Roman", Times, sans-serif;
+    text-shadow: 0 0 8px #DF0000;
 }
 
 @media only screen and (max-width: 1130px) {
@@ -66,10 +87,35 @@
         width: 100%;
         padding: 15px;
     }
+
+    #icon {
+        display: flex;
+        flex-direction: row-reverse;
+        position: relative;
+
+    }
+
+    #icon-cards {
+        display: block;
+        position: absolute;
+        height: 100%;
+        left: 0;
+    }
+    #text {
+        margin: 0 0 0 6em;
+    }
+
     #table {
         display: flex;
         width: 100%;
         justify-content: space-between;
+        margin: 2em 0;
+    }
+    #table img {
+        height: 95px;
+    }
+    #combination {
+        display: block;
     }
 }
 
