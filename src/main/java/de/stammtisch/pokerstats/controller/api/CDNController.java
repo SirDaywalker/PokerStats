@@ -31,7 +31,7 @@ public class CDNController {
     public ResponseEntity<?> userProfile(@RequestParam(value = "name") String name) {
         final User user;
         try {
-            user = userService.loadUserByUsername(URLDecoder.decode(name, StandardCharsets.UTF_8));
+            user = this.userService.loadUserByUsername(URLDecoder.decode(name, StandardCharsets.UTF_8));
         } catch (UsernameNotFoundException e) {
             return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
         }
