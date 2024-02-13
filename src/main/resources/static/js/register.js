@@ -1,3 +1,5 @@
+import {setErrorMessage} from "./setErrorMessage.js";
+
 document.getElementById('profile-image-selector').addEventListener('change', function() {
     let reader = new FileReader();
     reader.onload = function(e) {
@@ -33,23 +35,16 @@ form.addEventListener('submit', function(event) {
     xhr.open('POST', '/api/v1/auth/register', true);
     xhr.onload = function() {
         if (xhr.status === 200) {
-            window.location.href = '/';
+            window.location.href = '/home';
             return;
         }
-        const errorElement = document.getElementsByClassName('message')[0];
-        if (errorElement.classList.contains('red')) {
-            errorElement.classList.remove('red');
-        }
-        errorElement.classList.add('red');
         if (xhr.status === 400) {
-            errorElement.innerHTML = 'Ein Fehler ist aufgetreten. Existiert ein Account für Sie bereits?';
+            setErrorMessage('Ein Fehler ist aufgetreten. Existiert ein Account für Sie bereits?');
         }
         else if (xhr.status === 413) {
-            errorElement.innerHTML = 'Das Bild ist zu groß. Bitte wählen Sie ein Bild mit einer kleineren Dateigröße.';
+            setErrorMessage('Das Bild ist zu groß.');
         } else {
-            const errorElement = document.getElementsByClassName('message')[0];
-            errorElement.innerHTML = xhr.status.toString();
-            errorElement.classList.add('red');
+            setErrorMessage('Status ' + xhr.status.toString());
         }
     };
     xhr.send(formData);
