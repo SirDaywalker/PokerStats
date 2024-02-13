@@ -73,6 +73,6 @@ public class User implements UserDetails {
     }
 
     public String getProfilePictureURL() {
-        return "/cdn/u/%s/picture.%s".formatted(this.getNamePathSave(), this.getProfilePictureType());
+        return "/cdn/u/picture?name=" + this.getNamePathSave();
     }
 }
