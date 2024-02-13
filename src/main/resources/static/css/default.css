@@ -1,5 +1,6 @@
 :root {
     --red: #DF0000;
+    --red_transparent: #df00001A;
 }
 
 @media (prefers-color-scheme: dark) {
