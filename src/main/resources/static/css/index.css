@@ -22,7 +22,7 @@ img {
 
 #buttons-in-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: stretch;
     height: 4em;
     margin: 2em 0 0;
@@ -65,6 +65,37 @@ img {
     font-family: "Times New Roman", Times, sans-serif;
     text-shadow: 0 0 8px #DF0000;
     transition: transform 0.5s;
+}
+
+#welcome-back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#welcome-back > div {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em 0;
+    gap: 0.3em;
+}
+
+#welcome-back > div > div {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#welcome-back > div > div > img {
+    height: 34px;
+    width: 34px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 @media only screen and (max-width: 1130px) {

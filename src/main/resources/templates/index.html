@@ -50,11 +50,13 @@
             <a href="/login"><button class="button filled red" type="button">Anmelden</button></a>
             <a href="/register"><button class="button red" type="button">Registrieren</button></a>
         </div>
-        <div th:if="${user != null}">
-            <span id="welcome">Willkommen zurück,></span>
+        <div th:if="${user != null}" id="welcome-back">
             <div>
-                <img th:src="${user.getProfilePictureURL()}" alt="">
-                <span th:text="${user.getUsername()}"></span>
+                <span id="welcome">Willkommen zurück,</span>
+                <div>
+                    <img th:src="${user.getProfilePictureURL()}" alt="">
+                    <span th:text="${user.getUsername()}"></span>
+                </div>
             </div>
             <a href="/home"><button class="button filled red" type="button">Startseite</button></a>
         </div>
