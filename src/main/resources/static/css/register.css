@@ -1,9 +1,19 @@
+h1 {
+    text-align: center;
+    font-weight: 500;
+    margin: 2em 0 1em;
+    font-size: 3rem;
+}
+
+span.message {
+    margin: 0 auto 2em;
+}
+
 form {
     background: var(--container);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    width: 20em;
+    margin: 0 auto;
     border-radius: 10px;
     border: 2px solid black;
     padding: 2em;
@@ -15,47 +25,56 @@ form > div:first-child {
     margin: 0 0 1em;
 }
 
-#profile {
-    width: 70px;
-    height: 70px;
-    border: 2px solid black;
-    border-radius: 10px;
+#picture {
     position: relative;
+    width: 74px;
+    height: 74px;
     background: var(--background);
-    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid black;
     overflow: hidden;
     transition: filter 0.3s;
 }
 
-#profile:hover {
+#picture:hover {
     filter: brightness(0.7);
 }
 
-#profile svg {
+#picture > * {
     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+#picture > svg {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#profile svg > circle, #profile svg > path {
+#picture svg > circle, #picture svg > path {
     fill: var(--container);
 }
 
-#profile img {
+img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute;
     display: none;
+}
+
+#profile-image-selector {
+    opacity: 0;
 }
 
 form > label, form > div:first-child > label {
     display: flex;
-}
-
-#picture {
-    display: none;
+    flex: 1;
 }
 
 input {
@@ -64,6 +83,7 @@ input {
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
+    width: 100%;
 }
 
 input:focus {
@@ -72,10 +92,6 @@ input:focus {
 
 form > label {
     height: 74px;
-}
-
-form > label > input {
-    width: 100%;
 }
 
 form button[type=submit] {
