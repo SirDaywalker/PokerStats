@@ -107,6 +107,7 @@ form button[type=submit] {
     background: var(--background);
     overflow: hidden;
     position: relative;
+    border: 2px solid black;
 }
 
 #bar {
