@@ -23,6 +23,7 @@ password.addEventListener('input', function() {
     percentage *= Math.min(input.length / 8, 1)
 
     document.getElementById('bar').style.width = percentage + '%';
+    document.getElementById('bar').style.backgroundColor = 'hsl(' + (percentage * 1.2) + ', 100%, 50%)';
 });
 
 form.addEventListener('submit', function(event) {

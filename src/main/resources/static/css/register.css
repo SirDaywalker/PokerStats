@@ -115,7 +115,6 @@ form button[type=submit] {
     border-radius: 10px;
     position: absolute;
     left: 0;
-    background-image: linear-gradient(to right, var(--red), yellow, greenyellow);
     transition: width 0.3s;
 }
 
