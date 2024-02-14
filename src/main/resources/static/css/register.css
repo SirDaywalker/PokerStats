@@ -99,3 +99,23 @@ form button[type=submit] {
     margin: 0.5em auto 2em;
 }
 
+#password-weakness {
+    height: 4px;
+    width: 95%;
+    border-radius: 10px;
+    margin: 0 auto;
+    background: var(--background);
+    overflow: hidden;
+    position: relative;
+}
+
+#bar {
+    width: 0;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    background-image: linear-gradient(to right, var(--red), yellow, greenyellow);
+    transition: width 0.3s;
+}
+
