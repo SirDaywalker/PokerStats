@@ -16,14 +16,16 @@ password.addEventListener('input', function() {
     let input = this.value;
     let percentage = 0;
 
-    percentage += Number(new RegExp(/[A-Z]/).test(input)) * 25;
-    percentage += Number(new RegExp(/[a-z]/).test(input)) * 25;
-    percentage += Number(new RegExp(/[0-9]/).test(input)) * 25;
-    percentage += Number(new RegExp(/[^A-Za-z0-9]/).test(input)) * 25;
-    percentage *= Math.min(input.length / 8, 1)
+    percentage += Number(new RegExp(/[A-Z]/).test(input)) * 0.25;
+    percentage += Number(new RegExp(/[a-z]/).test(input)) * 0.25;
+    percentage += Number(new RegExp(/[0-9]/).test(input)) * 0.25;
+    percentage += Number(new RegExp(/[^A-Za-z0-9]/).test(input)) * 0.25;
+    percentage *= Math.min(input.length / 20, 1)
+    let percentage_full = percentage * 180;
+    percentage *= 100;
 
     document.getElementById('bar').style.width = percentage + '%';
-    document.getElementById('bar').style.backgroundColor = 'hsl(' + (percentage * 1.2) + ', 100%, 50%)';
+    document.getElementById('bar').style.backgroundColor = 'hsl(' + percentage_full + ', 100%, 50%)';
 });
 
 form.addEventListener('submit', function(event) {
