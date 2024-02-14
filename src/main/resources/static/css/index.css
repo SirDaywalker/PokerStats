@@ -162,6 +162,10 @@ img {
         height: 95px;
         width: 65px;
     }
+
+    #welcome-back > div {
+        flex-direction: column;
+    }
 }
 
 #king {
