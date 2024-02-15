@@ -175,16 +175,20 @@ public class AuthenticationService {
 
         MultipartFile picture = request.picture();
         if (picture != null) {
+            String type = picture.getContentType();
+            if (type == null || !type.startsWith("image/")) {
+                throw new IllegalArgumentException("Invalid picture.");
+            }
+            type = type.split("/")[1];
+
             final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                     System.getProperty("user.dir"),
                     URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
-                    Objects.requireNonNull(picture.getOriginalFilename()).split("\\.")[1]
+                    type
             ));
             Files.createDirectories(onDisk.getParentFile().toPath());
             picture.transferTo(onDisk);
-            user.setProfilePictureType(
-                    Objects.requireNonNull(picture.getOriginalFilename()).split("\\.")[1]
-            );
+            user.setProfilePictureType(type);
         }
         user.setName(request.name());
         token = this.generateToken(user);
