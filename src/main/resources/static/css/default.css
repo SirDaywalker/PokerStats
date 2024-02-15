@@ -1,6 +1,8 @@
 :root {
     --red: #DF0000;
     --red_transparent: #df00001A;
+    --border: 2px solid black;
+    --border-radius: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
