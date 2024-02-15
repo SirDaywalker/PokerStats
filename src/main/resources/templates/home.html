@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Home - PokerStats</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
 </head>
+
 <body>
-    Fassen Sie mich nicht an.
-    Das ist HOMO-SHIT
+    <header>
+        <div id="icon">
+            <div id="text">
+                <span id="stammtisch">Stammtisch's</span>
+                <br>
+                <span id="poker-stats">PokerStats</span>
+            </div>
+            <div id="icon-cards">
+                <img th:src="@{/assets/ace_of_spades.svg}" alt="">
+                <img th:src="@{/assets/king_of_hearts.svg}" alt="">
+            </div>
+        </div>
+
+        <div id="pott-badge"></div>
+        <div id="dropdown"></div>
+    </header>
+    <div id="card-centerbox"></div>
 </body>
 </html>
