@@ -95,7 +95,7 @@ form > label > input {
     border-radius: 10px;
     position: absolute;
     left: 0;
-    transition: width 0.3s;
+    transition: all 0.3s;
 }
 
 #last-bar {
