@@ -14,8 +14,9 @@
         <p>Account</p>
         <div id="first-bar">
             <div id="profile">
+                <label for="profile-image-selector"></label>
                 <input type="file" accept="image/*" id="profile-image-selector">
-                <img th:src="${user.getProfilePictureURL()}" alt="">
+                <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
                 <span id="guest-badge" th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
             </div>
             <label><input id="name" type="text" placeholder="Vollständiger Name" th:value="${user.getUsername()}" required></label>

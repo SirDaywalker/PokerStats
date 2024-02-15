@@ -30,14 +30,23 @@ form > p {
     border: 2px solid black;
     background: var(--background);
     position: relative;
+    transition: 0.3s filter ease-in-out;
 }
 
-#profile > input {
+#profile:hover {
+    filter: brightness(0.7);
+}
+
+#profile > label {
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: pointer;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+#profile > input {
+    display: none;
 }
 
 #profile > img {

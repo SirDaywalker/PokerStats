@@ -6,6 +6,7 @@ document.getElementById('profile-image-selector').addEventListener('change', fun
     reader.onload = function(e) {
         document.getElementById('image-preview').style.display = 'block';
         document.getElementById('image-preview').src = e.target.result;
+        document.getElementById('img-example').style.display = 'none';
     };
     reader.readAsDataURL(this.files[0]);
 });

@@ -1,6 +1,15 @@
 import {calculatePasswordStrength} from "./calculatePasswordStrength.js";
 import {setErrorMessage} from "./setErrorMessage.js";
 
+document.getElementById('profile-image-selector').addEventListener('change', function() {
+    const file = this.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('profile-image').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
 document.getElementById('new-password').addEventListener('input', function() {
     let percentage = calculatePasswordStrength(this.value);
     document.getElementById('bar').style.width = (100 * percentage) + '%';
