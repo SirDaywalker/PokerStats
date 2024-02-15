@@ -36,7 +36,3 @@ form button[type="submit"] {
     width: 50%;
     margin: 0 auto 2em;
 }
-
-input:focus {
-    outline: none;
-}

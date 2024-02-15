@@ -35,3 +35,7 @@ body {
     background: var(--background);
 }
 
+input:focus {
+    outline: none;
+}
+
