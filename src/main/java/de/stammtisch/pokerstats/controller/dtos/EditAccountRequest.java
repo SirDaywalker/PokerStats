@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public record EditAccountRequest(
         String name,
-        String oldPassword,
+        String password,
         String newPassword,
-        double buyIn,
+        int buyIn,
         MultipartFile picture
 ) {}
