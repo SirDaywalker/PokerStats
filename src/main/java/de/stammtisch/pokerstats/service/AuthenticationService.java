@@ -156,16 +156,22 @@ public class AuthenticationService {
         String token = this.getTokenFromCookie(cookies);
         User user = this.getUserFromToken(token);
         if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new IllegalArgumentException("Old password is incorrect.");
+            throw new  BadCredentialsException("Invalid password.");
         }
-        if (request.newPassword() != null) {
+        if (request.newPassword() != null && !request.newPassword().equals("null") ) {
+            if (request.newPassword().isBlank()) {
+                throw new IllegalArgumentException("Invalid new password.");
+            }
             user.setPassword(this.passwordEncoder.encode(request.newPassword()));
         }
-        if (2 <= request.buyIn() && request.buyIn() <= 5) {
-            user.setBuyIn(request.buyIn());
+
+        int buyIn;
+        if (user.getRole().equals(Role.GUEST)) {
+            buyIn = Math.min(5, Math.max(4, request.buyIn()));  // 4 is the default buy-in for guests
         } else {
-            throw new IllegalArgumentException("Buy-in must be between 2 and 5.");
+            buyIn = Math.min(5, Math.max(2, request.buyIn()));  // 2 is the default buy-in for members
         }
+        user.setBuyIn(buyIn);
 
         if (picture != null) {
             final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
