@@ -15,6 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,7 +152,7 @@ public class AuthenticationService {
         return this.generateToken(user);
     }
 
-    public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {
+    public String changeDetails(@NonNull EditAccountRequest request, String cookies, MultipartFile picture) throws IOException {
         String token = this.getTokenFromCookie(cookies);
         User user = this.getUserFromToken(token);
         if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
@@ -166,16 +167,16 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Buy-in must be between 2 and 5.");
         }
 
-        if (request.picture() != null) {
+        if (picture != null) {
             final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                     System.getProperty("user.dir"),
                     URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
-                    Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+                    Objects.requireNonNull(picture.getOriginalFilename()).split("\\.")[1]
             ));
             Files.createDirectories(onDisk.getParentFile().toPath());
-            request.picture().transferTo(onDisk);
+            picture.transferTo(onDisk);
             user.setProfilePictureType(
-                    Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+                    Objects.requireNonNull(picture.getOriginalFilename()).split("\\.")[1]
             );
         }
         user.setName(request.name());
