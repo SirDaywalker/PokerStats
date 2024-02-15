@@ -1,4 +1,5 @@
 import {setErrorMessage} from "./setErrorMessage.js";
+import {calculatePasswordStrength} from "./calculatePasswordStrength.js";
 
 document.getElementById('profile-image-selector').addEventListener('change', function() {
     let reader = new FileReader();
@@ -13,19 +14,9 @@ const form = document.getElementsByTagName('form')[0];
 const password = document.getElementById('password');
 
 password.addEventListener('input', function() {
-    let input = this.value;
-    let percentage = 0;
-
-    percentage += Number(new RegExp(/[A-Z]/).test(input)) * 0.25;
-    percentage += Number(new RegExp(/[a-z]/).test(input)) * 0.25;
-    percentage += Number(new RegExp(/[0-9]/).test(input)) * 0.25;
-    percentage += Number(new RegExp(/[^A-Za-z0-9]/).test(input)) * 0.25;
-    percentage *= Math.min(input.length / 20, 1)
-    let percentage_full = percentage * 180;
-    percentage *= 100;
-
-    document.getElementById('bar').style.width = percentage + '%';
-    document.getElementById('bar').style.backgroundColor = 'hsl(' + percentage_full + ', 100%, 50%)';
+    let percentage = calculatePasswordStrength(this.value);
+    document.getElementById('bar').style.width = (100 * percentage) + '%';
+    document.getElementById('bar').style.backgroundColor = 'hsl(' + (percentage * 180) + ', 100%, 50%)';
 });
 
 form.addEventListener('submit', function(event) {

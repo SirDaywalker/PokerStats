@@ -1,12 +1,12 @@
 span.message {
-    margin: 0 auto 2em;
+    margin: 2em auto 0;
 }
 
 form {
     background: var(--container);
     position: relative;
     width: 20em;
-    margin: 0 auto;
+    margin: 2em auto 0;
     border-radius: 10px;
     border: 2px solid black;
     padding: 2em;
