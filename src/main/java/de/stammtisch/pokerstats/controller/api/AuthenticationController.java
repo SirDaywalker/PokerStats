@@ -1,8 +1,10 @@
 package de.stammtisch.pokerstats.controller.api;
 
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.service.AuthenticationService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,5 +51,25 @@ public class AuthenticationController {
         }
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully authenticated.", HttpStatus.OK);
+    }
+
+    @PostMapping("/change-details")
+    public ResponseEntity<String> changeDetails(
+            @ModelAttribute EditAccountRequest request,
+            @RequestHeader("Cookie") String cookies,
+            HttpServletResponse response
+    ) {
+        final String token;
+        try {
+            token = this.authenticationService.changeDetails(request, cookies);
+        } catch (IllegalArgumentException | JwtException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IOException e) {
+            return new ResponseEntity<>("An error occurred while processing the request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        response.addCookie(AuthenticationService.generateCookie(token));
+        return new ResponseEntity<>("Successfully changed details.", HttpStatus.OK);
     }
 }

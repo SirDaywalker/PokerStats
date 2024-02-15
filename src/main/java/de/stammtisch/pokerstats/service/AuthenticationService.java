@@ -1,6 +1,7 @@
 package de.stammtisch.pokerstats.service;
 
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
@@ -148,5 +149,38 @@ public class AuthenticationService {
         request.picture().transferTo(onDisk);
         this.userRepository.save(user);
         return this.generateToken(user);
+    }
+
+    public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {
+        String token = this.getTokenFromCookie(cookies);
+        User user = this.getUserFromToken(token);
+        if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new IllegalArgumentException("Old password is incorrect.");
+        }
+        if (request.newPassword() != null) {
+            user.setPassword(this.passwordEncoder.encode(request.newPassword()));
+        }
+        if (2 <= request.buyIn() && request.buyIn() <= 5) {
+            user.setBuyIn(request.buyIn());
+        } else {
+            throw new IllegalArgumentException("Buy-in must be between 2 and 5.");
+        }
+
+        if (request.picture() != null) {
+            final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
+                    System.getProperty("user.dir"),
+                    URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
+                    Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+            ));
+            Files.createDirectories(onDisk.getParentFile().toPath());
+            request.picture().transferTo(onDisk);
+            user.setProfilePictureType(
+                    Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
+            );
+        }
+        user.setName(request.name());
+        token = this.generateToken(user);
+        this.userRepository.save(user);
+        return token;
     }
 }
