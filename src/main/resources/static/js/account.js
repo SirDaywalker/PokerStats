@@ -11,7 +11,7 @@ document.getElementById('account-form').addEventListener('submit', function(even
     event.preventDefault();
 
     const password = document.getElementById('password').value;
-    let newPassword = document.getElementById('new-password').value;
+    const newPassword = document.getElementById('new-password').value;
     let picture = document.getElementById('profile-image-selector').files[0];
     const name = document.getElementById('name').value;
     const buyIn = document.getElementById('buy-in').children[0].value;
@@ -20,16 +20,14 @@ document.getElementById('account-form').addEventListener('submit', function(even
     formData.append('name', name);
     formData.append('password', password);
 
-    if (newPassword === '') {
-        newPassword = null;
+    if (newPassword !== '') {
+        formData.append('newPassword', newPassword);
     }
-    formData.append('newPassword', newPassword);
     formData.append('buyIn', buyIn);
 
-    if (typeof picture === 'undefined') {
-        picture = null;
+    if (typeof picture !== 'undefined') {
+        formData.append('picture', picture);
     }
-    formData.append('picture', picture);
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/v1/auth/change-details', true);

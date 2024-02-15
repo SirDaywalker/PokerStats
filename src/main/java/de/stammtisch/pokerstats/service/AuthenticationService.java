@@ -152,13 +152,13 @@ public class AuthenticationService {
         return this.generateToken(user);
     }
 
-    public String changeDetails(@NonNull EditAccountRequest request, String cookies, MultipartFile picture) throws IOException {
+    public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {
         String token = this.getTokenFromCookie(cookies);
         User user = this.getUserFromToken(token);
         if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new  BadCredentialsException("Invalid password.");
         }
-        if (request.newPassword() != null && !request.newPassword().equals("null") ) {
+        if (request.newPassword() != null) {
             if (request.newPassword().isBlank()) {
                 throw new IllegalArgumentException("Invalid new password.");
             }
@@ -173,6 +173,7 @@ public class AuthenticationService {
         }
         user.setBuyIn(buyIn);
 
+        MultipartFile picture = request.picture();
         if (picture != null) {
             final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                     System.getProperty("user.dir"),

@@ -56,14 +56,13 @@ public class AuthenticationController {
 
     @PostMapping("/change-details")
     public ResponseEntity<String> changeDetails(
-            @RequestBody EditAccountRequest request,
-            @RequestParam(required = false) MultipartFile picture,
+            @ModelAttribute EditAccountRequest request,
             @RequestHeader("Cookie") String cookies,
             HttpServletResponse response
     ) {
         final String token;
         try {
-            token = this.authenticationService.changeDetails(request, cookies, picture);
+            token = this.authenticationService.changeDetails(request, cookies);
         } catch (IllegalArgumentException | JwtException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
