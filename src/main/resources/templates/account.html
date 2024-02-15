@@ -21,7 +21,7 @@
             <label><input type="text" placeholder="Vollständiger Name" th:value="${user.getUsername()}" required></label>
         </div>
         <label><input type="password" placeholder="Passwort" required></label>
-        <label><input type="password" placeholder="Neues Passwort"></label>
+        <label><input id="new-password" type="password" placeholder="Neues Passwort"></label>
         <div id="password-weakness">
             <div id="bar"></div>
         </div>
@@ -34,5 +34,6 @@
         </div>
         <button class="button filled red" type="submit">Speichern</button>
     </form>
+<script type="module" th:src="@{/js/account.js}"></script>
 </body>
 </html>
