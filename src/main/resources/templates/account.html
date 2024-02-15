@@ -26,7 +26,10 @@
             <div id="bar"></div>
         </div>
         <div id="last-bar">
-            <label><input id="buy-in" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required></label>
+            <label id="buy-in">
+                <input th:if="${user.getRole().name().equals('GUEST')}" min="4" max="5" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required>
+                <input th:if="${!user.getRole().name().equals('GUEST')}" min="2" max="5" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required>
+            </label>
             <span>
                 Einsätze können nicht zurückgefordert werden. Gäste zahlen das doppelte vom Mindesteinsatz, dieser
                 beträgt 2€. Der maximale Einsatz beträgt 5€.

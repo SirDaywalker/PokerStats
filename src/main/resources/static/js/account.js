@@ -11,27 +11,28 @@ document.getElementById('account-form').addEventListener('submit', function(even
     event.preventDefault();
 
     const password = document.getElementById('password').value;
-    const newPassword = document.getElementById('new-password').value;
-    const picture = document.getElementById('profile-image-selector').files[0];
+    let newPassword = document.getElementById('new-password').value;
+    let picture = document.getElementById('profile-image-selector').files[0];
     const name = document.getElementById('name').value;
-    const buyIn = document.getElementById('buy-in').value;
+    const buyIn = document.getElementById('buy-in').children[0].value;
 
     const formData = new FormData();
-    formData.append('password', password);
-    formData.append('newPassword', newPassword);
-
-    if (typeof picture !== 'undefined' && picture !== null) {
-        formData.append('picture', picture);
-    }
-    if (typeof picture !== 'undefined') {
-        formData.append('picture', null);
-    }
     formData.append('name', name);
+    formData.append('password', password);
+
+    if (newPassword === '') {
+        newPassword = null;
+    }
+    formData.append('newPassword', newPassword);
     formData.append('buyIn', buyIn);
+
+    if (typeof picture === 'undefined') {
+        picture = null;
+    }
+    formData.append('picture', picture);
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/v1/auth/change-details', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = function() {
         if (xhr.status === 200) {
             window.location.href = '/home';
@@ -51,8 +52,4 @@ document.getElementById('account-form').addEventListener('submit', function(even
         }
     };
     xhr.send(formData);
-    // Give out all entries in the console
-    for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]);
-    }
 });
