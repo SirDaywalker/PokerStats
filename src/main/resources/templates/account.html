@@ -10,23 +10,23 @@
 </head>
 <body>
     <span class="message"></span>
-    <form>
+    <form id="account-form">
         <p>Account</p>
         <div id="first-bar">
             <div id="profile">
-                <input type="file" accept="image/*" id="profile-picture" required>
+                <input type="file" accept="image/*" id="profile-image-selector">
                 <img th:src="${user.getProfilePictureURL()}" alt="">
                 <span id="guest-badge" th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
             </div>
-            <label><input type="text" placeholder="Vollständiger Name" th:value="${user.getUsername()}" required></label>
+            <label><input id="name" type="text" placeholder="Vollständiger Name" th:value="${user.getUsername()}" required></label>
         </div>
-        <label><input type="password" placeholder="Passwort" required></label>
+        <label><input id="password" type="password" placeholder="Passwort" required></label>
         <label><input id="new-password" type="password" placeholder="Neues Passwort"></label>
         <div id="password-weakness">
             <div id="bar"></div>
         </div>
         <div id="last-bar">
-            <label><input type="number" placeholder="Einsatz" required></label>
+            <label><input id="buy-in" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required></label>
             <span>
                 Einsätze können nicht zurückgefordert werden. Gäste zahlen das doppelte vom mindest Einsatz, dieser
                 beträgt 2€. Der maximale Einsatz beträgt 5€.
