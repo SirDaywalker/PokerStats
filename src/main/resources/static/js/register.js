@@ -26,6 +26,7 @@ form.addEventListener('submit', function(event) {
     const name = document.getElementById('name').value;
     const picture = document.getElementById('profile-image-selector').files[0];
     const confirmPassword = document.getElementById('password-confirm').value;
+    const email = document.getElementById('email').value;
 
     if (password.value !== confirmPassword) {
         const errorElement = document.getElementsByClassName('message')[0];
@@ -38,6 +39,7 @@ form.addEventListener('submit', function(event) {
     formData.append('name', name);
     formData.append('password', password.value);
     formData.append('picture', picture);
+    formData.append('email', email);
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/v1/auth/register', true);
