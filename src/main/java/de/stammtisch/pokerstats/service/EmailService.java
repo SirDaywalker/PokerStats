@@ -16,13 +16,13 @@ public class EmailService {
 	private JavaMailSender mailSender;
 
     @Async
-    public void send(String emailAdress, String email, String subject) {
+    public void send(String emailAddress, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
-            helper.setTo(emailAdress);
+            helper.setTo(emailAddress);
             helper.setSubject(subject);
             helper.setFrom("stammtischhub@gmail.com");
             this.mailSender.send(mimeMessage);
