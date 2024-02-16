@@ -195,4 +195,25 @@ public class AuthenticationService {
         this.userRepository.save(user);
         return token;
     }
+
+    /**
+     * Email must contain an @ symbol.
+     * Email must contain a domain name.
+     *
+     * @param email The email to check.
+     * @return True if the email is not valid, false otherwise.
+     */
+    private static boolean emailIsNotValid(@NonNull String email) {
+        return !email.matches("^[\\w\\-.]+@([\\w-]+\\.)+[\\w-]{2,6}$");
+    }
+
+    /**
+     * Name must not contain any digits.
+     *
+     * @param name The name to check.
+     * @return True if the name is not valid, false otherwise.
+     */
+    private static boolean nameIsNotValid(@NonNull String name) {
+        return name.matches(".*\\d.*");
+    }
 }
