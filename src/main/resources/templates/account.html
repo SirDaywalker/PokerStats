@@ -20,7 +20,7 @@
                 <span id="guest-badge" th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
             </div>
             <label>
-                <input id="name" type="text" pattern="\D" title="Nur Buchstaben erlaubt."
+                <input id="name" type="text" pattern="\D{2,}" title="Keine Zahlen erlaubt."
                        placeholder="Vollständiger Name" th:value="${user.getUsername()}" required>
             </label>
         </div>
