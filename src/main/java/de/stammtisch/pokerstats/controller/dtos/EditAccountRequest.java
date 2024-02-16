@@ -7,5 +7,6 @@ public record EditAccountRequest(
         String password,
         String newPassword,
         int buyIn,
-        MultipartFile picture
+        MultipartFile picture,
+        String email
 ) {}

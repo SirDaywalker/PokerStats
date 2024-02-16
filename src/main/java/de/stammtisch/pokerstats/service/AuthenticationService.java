@@ -161,8 +161,12 @@ public class AuthenticationService {
         String token = this.getTokenFromCookie(cookies);
         User user = this.getUserFromToken(token);
         if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new  BadCredentialsException("Invalid password.");
+            throw new BadCredentialsException("Invalid password.");
         }
+        if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
+            throw new IllegalArgumentException("Invalid email or name.");
+        }
+
         if (request.newPassword() != null) {
             if (request.newPassword().isBlank()) {
                 throw new IllegalArgumentException("Invalid new password.");
@@ -196,6 +200,7 @@ public class AuthenticationService {
             user.setProfilePictureType(type);
         }
         user.setName(request.name());
+        user.setEmail(request.email());
         token = this.generateToken(user);
         this.userRepository.save(user);
         return token;
