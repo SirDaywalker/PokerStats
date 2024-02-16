@@ -132,6 +132,10 @@ public class AuthenticationService {
         if (this.userRepository.existsByName(request.name())) {
             throw new IllegalArgumentException("User %s already exists.".formatted(request.name()));
         }
+        if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
+            throw new IllegalArgumentException("Invalid email or name.");
+        }
+
         final User user = new User();
         user.setName(request.name());
         user.setPassword(this.passwordEncoder.encode(request.password()));
@@ -140,6 +144,7 @@ public class AuthenticationService {
         user.setProfilePictureType(
                 Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
         );
+        user.setEmail(request.email());
 
         final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                 System.getProperty("user.dir"),
