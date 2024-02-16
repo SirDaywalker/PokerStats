@@ -1,4 +1,4 @@
-package de.stammtisch.pokerstats.service;
+package de.stammtisch.pokerstats.utils;
 
 import java.util.regex.Pattern;
 
