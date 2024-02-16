@@ -37,6 +37,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "winner")
     private Set<PokerGame> wins;
+    
+    @OneToMany(mappedBy = "debtor")
+    private Set<Invoice> debts;
+    
+    @OneToMany(mappedBy = "creditor")
+    private Set<Invoice> credits;
 
     @Column(length = 320)
     private String email;
