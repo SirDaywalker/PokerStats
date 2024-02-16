@@ -7,6 +7,7 @@
     <link th:href="@{/css/account.css}" rel="stylesheet"/>
     <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
     <link th:href="@{/css/messages.css}" rel="stylesheet"/>
+    <link th:href="@{/css/badges.css}" rel="stylesheet"/>
 </head>
 <body>
     <span class="message"></span>
@@ -17,7 +18,11 @@
                 <label for="profile-image-selector"></label>
                 <input type="file" accept="image/*" id="profile-image-selector">
                 <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
-                <span id="guest-badge" th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
+                <div id="guest-badge" class="badge">
+                    <div>
+                        <span  th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
+                    </div>
+                </div>
             </div>
             <label>
                 <input id="name" type="text" pattern="\D{2,}" title="Keine Zahlen erlaubt."

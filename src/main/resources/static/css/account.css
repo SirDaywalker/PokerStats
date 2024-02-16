@@ -58,6 +58,12 @@ form > p {
     border-radius: 10px;
 }
 
+#guest-badge {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+}
+
 #first-bar > label {
     flex: 1;
     display: flex;
