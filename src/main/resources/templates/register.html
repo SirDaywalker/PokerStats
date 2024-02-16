@@ -21,7 +21,10 @@
                 <img id="image-preview" src="" alt="">
                 <input id="profile-image-selector" type="file" accept="image/*">
             </div>
-            <label><input id="name" type="text" placeholder="Vollständiger Name" required></label>
+            <label>
+                <input id="name" pattern="\D" title="Nur Buchstaben erlaubt."
+                       type="text" placeholder="Vollständiger Name" required>
+            </label>
         </div>
         <label><input id="password" type="password" placeholder="Passwort" required></label>
         <div id="password-weakness">
