@@ -8,25 +8,23 @@ import org.springframework.stereotype.Service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.transaction.Transactional;
 
 @Service
-@Transactional
 public class EmailService {
 
 	@Autowired
 	private JavaMailSender mailSender;
 
     @Async
-    public void send(String emailAdresse, String email) {
+    public void send(String emailAdress, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
-            helper.setTo(emailAdresse);
-            helper.setSubject("Confirm your email");
-            helper.setFrom("bestbuyzConfirmation@gmail.com");
+            helper.setTo(emailAdress);
+            helper.setSubject(subject);
+            helper.setFrom("stammtischhub@gmail.com");
             this.mailSender.send(mimeMessage);
         } catch (MessagingException e) {
         }
