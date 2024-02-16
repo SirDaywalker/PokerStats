@@ -20,7 +20,7 @@
                 <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
                 <div id="guest-badge" class="badge">
                     <div>
-                        <span  th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
+                        <span th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
                     </div>
                 </div>
             </div>
