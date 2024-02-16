@@ -105,6 +105,10 @@ for (let i = 2; i <= 10; i++) {
     }
 }
 
+if (cards_with_values[14].length !== 0 && cards_with_values[2].length !== 0 && cards_with_values[3].length !== 0 && cards_with_values[4].length !== 0 && cards_with_values[5].length !== 0) {
+    straight = true;
+}
+
 let straight_flush = flush && straight;
 let royal_flush = false;
 
