@@ -1,0 +1,38 @@
+<header>
+    <div id="icon">
+        <div id="text">
+            <span id="stammtisch">Stammtisch's</span>
+            <br>
+            <span id="poker-stats">PokerStats</span>
+        </div>
+        <div id="icon-cards">
+            <img th:src="@{/assets/ace_of_spades.svg}" alt="">
+            <img th:src="@{/assets/king_of_hearts.svg}" alt="">
+        </div>
+    </div>
+
+    <div id="right">
+        <div id="pott-badge" class="badge">
+            <div>
+                <span>519,57€ im Pott</span> <!--TODO: Pott-Money holen-->
+            </div>
+        </div>
+
+        <div id="account-section">
+            <div id="account-info">
+                <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
+                <span id="name" th:text="${user.getUsername()}"></span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
+                <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
+            </svg>
+            <div id="account-popup">
+                <ul>
+                    <li><a href="#">Profil</a></li>
+                    <li><a href="/account">Account</a></li>
+                    <li><a id="logout" href="/login?logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
