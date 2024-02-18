@@ -1,0 +1,164 @@
+header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 1em);
+    height: 6em;
+    padding: 0.5em;
+}
+
+#text {
+    margin: 0 0 0 5em;
+}
+
+#stammtisch {
+    font-size: 1.5rem;
+}
+
+#poker-stats {
+    font-size: 4.5rem;
+    font-family: "Times New Roman", Times, serif;
+    line-height: 4rem;
+}
+
+#icon-cards {
+    display: block;
+    position: absolute;
+    height: 100%;
+    left: 1em;
+    top: 14px;
+}
+
+#icon-cards img {
+    height: 5em;
+    position: absolute;
+    top: 5px;
+}
+
+#icon-cards img:first-child {
+    transform: rotate(-15deg);
+}
+
+#icon-cards img:last-child {
+    left: 11px;
+}
+
+#right {
+    display: flex;
+    align-items: center;
+    margin-right: 11px;
+    gap: 1em;
+}
+
+#account-section {
+    display: flex;
+    align-items: center;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    height: 70%;
+    gap: 10%;
+    padding: 0 1% 0 0.5%;
+    min-width: max-content;
+    text-align: right;
+    transition: all 0.5s ease-in-out;
+    white-space: nowrap;
+    position: relative;
+    background: var(--container);
+}
+
+#account-section:hover {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#account-section:hover svg {
+    rotate: 180deg;
+    transition: all 0.5s ease-in-out;
+}
+
+#account-info {
+    display: flex;
+    gap: 5%;
+    height: 100%;
+    align-items: center;
+}
+
+#account-info img {
+    object-fit: cover;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    height: 70%;
+    aspect-ratio: 1 / 1;
+    margin-left: 6%;
+}
+
+#account-section svg {
+    width: 50px;
+    transition: all 0.5s ease-in-out;
+}
+
+#account-section svg > path {
+    stroke: black;
+    transition: stroke 0.5s ease-in-out;
+}
+
+#account-popup {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    width: 100%;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    border-right: 2px solid black;
+    top: 100%;
+    left: calc(0% - 2px);
+    z-index: 1;
+    background-color: var(--container);
+}
+
+#account-popup ul {
+    margin: 5%;
+    padding: 0;
+    text-align: left;
+}
+
+#account-popup li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: var(--border);
+}
+
+#account-popup li:first-child {
+    padding-top: 0;
+}
+
+#account-popup li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+#logout {
+    color: var(--red);
+}
+
+#account-section:hover #account-popup {
+    opacity: 1;
+    visibility: visible;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+#pott-badge {
+    height: min-content;
+    background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
+}
+
+#pott-badge > div > span {
+    background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: max-content;
+}
