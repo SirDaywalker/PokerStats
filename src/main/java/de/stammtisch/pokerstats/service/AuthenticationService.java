@@ -70,8 +70,13 @@ public class AuthenticationService {
             return null;
         }
         for (String cookie : cookies.split("; ")) {
-            if (cookie.startsWith("Authorization=")) {
+            if (!cookie.startsWith("Authorization=")) {
+                continue;
+            }
+            try {
                 return cookie.split("=")[1];
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                return null;
             }
         }
         return null;
