@@ -50,6 +50,16 @@
                 beträgt 2€. Der maximale Einsatz beträgt 5€.
             </span>
         </div>
+        <label th:if="${account.getRole().name().equals('ADMIN')}">
+            <select id="role">
+                <option th:if="${user.getRole().name().equals('GUEST')}" value="GUEST" selected>Gast</option>
+                <option th:if="${!user.getRole().name().equals('GUEST')}" value="GUEST">Gast</option>
+                <option th:if="${user.getRole().name().equals('MEMBER')}" value="MEMBER" selected>Mitglied</option>
+                <option th:if="${!user.getRole().name().equals('MEMBER')}" value="MEMBER">Mitglied</option>
+                <option th:if="${user.getRole().name().equals('ADMIN')}" value="ADMIN" selected>Administrator</option>
+                <option th:if="${!user.getRole().name().equals('ADMIN')}" value="ADMIN">Administrator</option>
+            </select>
+        </label>
         <button class="button filled red" type="submit">Speichern</button>
     </form>
 <script type="module" th:src="@{/js/account.js}"></script>
