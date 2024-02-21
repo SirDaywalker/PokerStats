@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -133,7 +134,7 @@ public class AuthenticationService {
         return this.jwtService.generateToken(null, user);
     }
 
-    public String register(@NonNull RegisterRequest request) throws IOException {
+    public String register(@NonNull RegisterRequest request) throws IOException, SQLIntegrityConstraintViolationException {
         if (this.userRepository.existsByName(request.name())) {
             throw new IllegalArgumentException("User %s already exists.".formatted(request.name()));
         }

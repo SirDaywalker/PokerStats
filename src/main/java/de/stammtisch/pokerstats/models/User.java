@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "creditor")
     private Set<Invoice> credits;
 
-    @Column(length = 320)
+    @Column(length = 320, unique = true)
     private String email;
 
     @Override
