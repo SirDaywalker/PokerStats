@@ -1,12 +1,16 @@
 package de.stammtisch.pokerstats.controller;
 
+import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
+import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.NoSuchElementException;
@@ -14,10 +18,12 @@ import java.util.NoSuchElementException;
 @Controller
 public class PageController {
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     @Autowired
-    public PageController(AuthenticationService authenticationService) {
+    public PageController(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -45,13 +51,34 @@ public class PageController {
     }
 
     @GetMapping("/account")
-    public ModelAndView account(@RequestHeader(name = "Cookie") String cookies) {
+    public ModelAndView account(
+            @RequestHeader(name = "Cookie") String cookies,
+            @RequestParam(name = "u", required = false) String requestedUser
+    ) {
         ModelAndView modelAndView = new ModelAndView("account");
+
+        final User account;
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            account = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
+        if (requestedUser != null) {
+            if (!account.getRole().equals(Role.ADMIN)) {
+                modelAndView.setViewName("error");
+                return modelAndView;
+            }
+            try {
+                final User user = this.userService.loadUserByUsername(requestedUser);
+                modelAndView.addObject("user", user);
+            } catch (UsernameNotFoundException e) {
+                modelAndView.setViewName("error");
+            }
+        } else {
+            modelAndView.addObject("user", account);
         }
         return modelAndView;
     }
