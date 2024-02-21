@@ -213,7 +213,10 @@ public class AuthenticationService {
      * @param email The email to check.
      * @return True if the email is not valid, false otherwise.
      */
-    private static boolean emailIsNotValid(@NonNull String email) {
+    private static boolean emailIsNotValid(String email) {
+        if (email == null) {
+            return true;
+        }
         return !email.matches("^[\\w\\-.]+@([\\w-]+\\.)+[\\w-]{2,6}$");
     }
 
@@ -223,7 +226,10 @@ public class AuthenticationService {
      * @param name The name to check.
      * @return True if the name is not valid, false otherwise.
      */
-    private static boolean nameIsNotValid(@NonNull String name) {
+    private static boolean nameIsNotValid(String name) {
+        if (name == null) {
+            return true;
+        }
         return name.matches(".*\\d.*");
     }
 }
