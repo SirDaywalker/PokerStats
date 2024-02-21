@@ -24,6 +24,14 @@ document.getElementById('account-form').addEventListener('submit', function(even
     let picture = document.getElementById('profile-image-selector').files[0];
     const name = document.getElementById('name').value;
     const buyIn = document.getElementById('buy-in').children[0].value;
+    const email = document.getElementById('email').value;
+    const target = document.getElementById('target').textContent;
+
+    let role = null;
+    if (document.getElementById('role') != null) {
+        const e = document.getElementById('role');
+        role = e.options[e.selectedIndex].value;
+    }
 
     const formData = new FormData();
     formData.append('name', name);
