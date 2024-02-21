@@ -1,6 +1,8 @@
 :root {
     --red: #DF0000;
     --red_transparent: #df00001A;
+    --blue: #0061df;
+    --blue_transparent: #0061df1A;
     --border: 2px solid black;
     --border-radius: 10px;
 }
