@@ -45,6 +45,12 @@ document.getElementById('account-form').addEventListener('submit', function(even
     if (typeof picture !== 'undefined') {
         formData.append('picture', picture);
     }
+    formData.append('email', email);
+
+    if (role !== null) {
+        formData.append('role', role);
+    }
+    formData.append('targetName', target);
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/v1/auth/change-details', true);

@@ -159,12 +159,28 @@ public class AuthenticationService {
 
     public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {
         String token = this.getTokenFromCookie(cookies);
-        User user = this.getUserFromToken(token);
-        if (!this.passwordEncoder.matches(request.password(), user.getPassword())) {
+        final User account = this.getUserFromToken(token);
+
+        String targetName = request.targetName();
+        if (targetName == null) {
+            targetName = account.getUsername();
+        } else {
+            if (!account.getRole().equals(Role.ADMIN)) {
+                throw new IllegalArgumentException("You are not allowed to change other users' details.");
+            }
+        }
+
+        final User user = this.userRepository.findByName(targetName).orElseThrow();
+        if (!this.passwordEncoder.matches(request.password(), account.getPassword())) {
             throw new BadCredentialsException("Invalid password.");
         }
+
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
             throw new IllegalArgumentException("Invalid email or name.");
+        }
+
+        if (request.role() != null) {
+            user.setRole(Role.valueOf(request.role()));
         }
 
         if (request.newPassword() != null) {
@@ -180,8 +196,8 @@ public class AuthenticationService {
         } else {
             buyIn = Math.min(5, Math.max(2, request.buyIn()));  // 2 is the default buy-in for members
         }
-        user.setBuyIn(buyIn);
 
+        user.setBuyIn(buyIn);
         MultipartFile picture = request.picture();
         if (picture != null) {
             String type = picture.getContentType();
@@ -189,7 +205,6 @@ public class AuthenticationService {
                 throw new IllegalArgumentException("Invalid picture.");
             }
             type = type.split("/")[1];
-
             final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
                     System.getProperty("user.dir"),
                     URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
@@ -199,9 +214,10 @@ public class AuthenticationService {
             picture.transferTo(onDisk);
             user.setProfilePictureType(type);
         }
+
         user.setName(request.name());
         user.setEmail(request.email());
-        token = this.generateToken(user);
+        token = this.generateToken(account);
         this.userRepository.save(user);
         return token;
     }
