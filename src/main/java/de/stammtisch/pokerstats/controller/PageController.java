@@ -5,6 +5,7 @@ import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -108,7 +109,10 @@ public class PageController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(name = "logout", required = false) String logout, HttpServletResponse response) {
+        if (logout != null) {
+            response.addCookie(AuthenticationService.generateCookie(null));
+        }
         return "login";
     }
 
