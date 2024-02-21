@@ -19,7 +19,7 @@ document.getElementById('new-password').addEventListener('input', function() {
 document.getElementById('account-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const password = document.getElementById('password').value;
+    const password = document.getElementById('password').children[0].value;
     const newPassword = document.getElementById('new-password').value;
     let picture = document.getElementById('profile-image-selector').files[0];
     const name = document.getElementById('name').value;

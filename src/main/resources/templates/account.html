@@ -29,7 +29,10 @@
                        placeholder="Vollständiger Name" th:value="${user.getUsername()}" required>
             </label>
         </div>
-        <label><input id="password" type="password" placeholder="Passwort" required></label>
+        <label id="password">
+            <input type="password" th:if="${account.getUsername() != user.getUsername()}" th:placeholder="${'Passwort von ' + account.getUsername()}" required>
+            <input type="password" th:if="${account.getUsername() == user.getUsername()}" placeholder="Passwort" required>
+        </label>
         <label><input id="new-password" type="password" placeholder="Neues Passwort"></label>
         <div id="password-weakness">
             <div id="bar"></div>
