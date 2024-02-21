@@ -18,9 +18,9 @@
                 <label for="profile-image-selector"></label>
                 <input type="file" accept="image/*" id="profile-image-selector">
                 <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
-                <div id="guest-badge" class="badge">
+                <div id="guest-badge" class="badge" th:if="${user.getRole().name().equals('GUEST')}">
                     <div>
-                        <span th:if="${user.getRole().name().equals('GUEST')}">Gast</span>
+                        <span >Gast</span>
                     </div>
                 </div>
             </div>
