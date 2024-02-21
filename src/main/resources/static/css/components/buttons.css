@@ -1,3 +1,10 @@
+/*
+
+<button class="button filled red">Click me</button>
+<button class="button red">Click me</button>
+
+ */
+
 @media (prefers-color-scheme: dark) {
     .button {
         border-color: white;

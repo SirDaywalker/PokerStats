@@ -1,3 +1,9 @@
+/*
+    Required: <span style="display: none" class="message">I am invisible.</span>
+    With JS: <span class="message red">This is an error.</span>
+
+ */
+
 .message {
     display: none;
     border: 2px solid;

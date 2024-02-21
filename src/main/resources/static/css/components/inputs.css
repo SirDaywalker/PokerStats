@@ -1,0 +1,15 @@
+/* <label class="input"><input></label> */
+
+.input {  /* Should be label element */
+    display: flex;
+    height: 74px;
+}
+
+.input > input, .input > select {
+    width: 100%;
+    margin: 1em 0;
+    background: var(--background);
+    border: 2px solid black;
+    border-radius: var(--border-radius);
+    padding: 10px;
+}

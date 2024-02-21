@@ -1,3 +1,10 @@
+/*
+<div class="card flipped">
+    <img src="" alt="">
+    <img class="background" th:src="@{/assets/background.svg}" alt="">
+</div>
+ */
+
 .card {
     position: relative;
     transition: transform 0.8s;
