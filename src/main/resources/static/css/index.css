@@ -203,7 +203,7 @@
     0% {
         top: -150%;
         left: 50%;
-        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateX(-50%);
+        transform: rotateX(0deg) rotateY(-600deg) rotateZ(0deg) translateX(-50%);
     }
     100% {}
 }
