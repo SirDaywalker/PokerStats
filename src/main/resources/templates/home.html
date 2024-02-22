@@ -5,6 +5,7 @@
     <title>Home - PokerStats</title>
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/badges.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/card.css}" rel="stylesheet"/>
     <link th:href="@{/css/header.css}" rel="stylesheet"/>
     <link th:href="@{/css/home.css}" rel="stylesheet"/>
 </head>
@@ -12,6 +13,19 @@
 <body>
     <header th:replace="~{header.html :: header}"></header>
 
-    <div id="card-centerbox"></div>
+    <div id="card-centerbox">
+        <div id="new-stammtisch">
+            <img th:src="@{/assets/ace_of_spades.svg}" alt="">
+        </div>
+        <div id="new-poker-round">
+            <img th:src="@{/assets/king_of_hearts.svg}" alt="">
+        </div>
+        <div id="statistics">
+            <img th:src="@{/assets/8_of_clubs.svg}" alt="">
+        </div>
+        <div  id="empty">
+            <img th:src="@{/assets/red_joker.svg}" alt="">
+        </div>
+    </div>
 </body>
 </html>
