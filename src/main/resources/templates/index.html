@@ -10,6 +10,24 @@
 </head>
 
 <body>
+<div id="scene">
+    <div id="top-left" class="card">
+        <img th:src="@{/assets/queen_of_hearts.svg}" alt="">
+        <img class="background" th:src="@{/assets/background.svg}" alt="">
+    </div>
+    <div id="top-right" class="card">
+        <img th:src="@{/assets/queen_of_hearts.svg}" alt="">
+        <img class="background" th:src="@{/assets/background.svg}" alt="">
+    </div>
+    <div id="bottom-left" class="card">
+        <img th:src="@{/assets/queen_of_hearts.svg}" alt="">
+        <img class="background" th:src="@{/assets/background.svg}" alt="">
+    </div>
+    <div id="bottom-right" class="card">
+        <img th:src="@{/assets/queen_of_hearts.svg}" alt="">
+        <img class="background" th:src="@{/assets/background.svg}" alt="">
+    </div>
+</div>
     <div id="invisible-center-box">
         <div id="icon">
             <div id="text">
@@ -22,7 +40,6 @@
                 <img src="" alt="">
             </div>
         </div>
-
         <div id="table">
             <div class="card flipped">
                 <img src="" alt="">
@@ -60,10 +77,6 @@
             </div>
             <a href="/home"><button class="button filled red" type="button">Startseite</button></a>
         </div>
-        <img id="king" th:src="@{/assets/rotated/king_of_clubs_index.png}" alt="">
-        <img id="queen" th:src="@{/assets/rotated/queen_of_hearts_index.png}" alt="">
-        <img id="four" th:src="@{/assets/rotated/four_of_diamonds.png}" alt="">
-        <img id="ace" th:src="@{/assets/rotated/ace_of_spades_index.png}" alt="">
     </div>
     <script type="module" th:src="@{/js/index.js}"></script>
 </body>
