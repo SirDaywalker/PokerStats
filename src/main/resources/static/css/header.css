@@ -5,6 +5,7 @@ header {
     width: calc(100% - 1em);
     height: 6em;
     padding: 0.5em;
+    align-items: center;
 }
 
 #text {
@@ -43,13 +44,6 @@ header {
     left: 11px;
 }
 
-#right {
-    display: flex;
-    align-items: center;
-    margin-right: 11px;
-    gap: 1em;
-}
-
 #account-section {
     display: flex;
     align-items: center;
@@ -57,8 +51,9 @@ header {
     border-radius: var(--border-radius);
     height: 70%;
     gap: 10%;
-    padding: 0 1% 0 0.5%;
+    padding: 0 1em 0 0.5em;
     min-width: max-content;
+    width: min-content;
     text-align: right;
     transition: all 0.5s ease-in-out;
     white-space: nowrap;
@@ -72,8 +67,8 @@ header {
 }
 
 #account-section:hover svg {
-    rotate: 180deg;
-    transition: all 0.5s ease-in-out;
+    transform: scale(1,-1);
+    transition: all 0.3s ease-in-out;
 }
 
 #account-info {
@@ -89,17 +84,19 @@ header {
     border-radius: var(--border-radius);
     height: 70%;
     aspect-ratio: 1 / 1;
-    margin-left: 6%;
 }
 
 #account-section svg {
     width: 50px;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 #account-section svg > path {
     stroke: black;
-    transition: stroke 0.5s ease-in-out;
+}
+
+#account-section:hover svg path {
+    stroke: black;
 }
 
 #account-popup {
@@ -154,6 +151,9 @@ header {
 #pott-badge {
     height: min-content;
     background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
+    position: absolute;
+    top: 19px;
+    right: 105%;
 }
 
 #pott-badge > div > span {
