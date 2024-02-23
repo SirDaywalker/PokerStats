@@ -57,35 +57,60 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    /**
+     * @return the name of the user.
+     */
     @Override
     public String getUsername() {
         return this.name;
     }
 
+    /**
+     * @return true if the account of the user is not expired, false otherwise.
+     * In this case, the account of the user never expires.
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * @return true if the account of the user is not locked, false otherwise.
+     * In this case, the account of the user never gets locked.
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * @return true if the credentials of the user are not expired, false otherwise.
+     * In this case, the credentials of the user never expire.
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    /**
+     * @return the name of the user.
+     */
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    /**
+     * @return the name of the user without any special characters.
+     */
     public String getNamePathSave() {
         return URLEncoder.encode(this.name, StandardCharsets.UTF_8);
     }
 
+    /**
+     * This method is used to get the URL of the profile picture of the user.
+     * @return the URL of the profile picture of the user.
+     */
     public String getProfilePictureURL() {
         return "/cdn/u/picture?name=" + this.getNamePathSave();
     }
