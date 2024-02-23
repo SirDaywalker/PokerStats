@@ -25,11 +25,16 @@ public class User implements UserDetails {
     @Getter(AccessLevel.NONE)
     private String name;
 
+    @Column(length = 60, nullable = false)
     private String password;
+
     private int buyIn;
+
+    @Column(nullable = false)
     private String profilePictureType;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "user")
@@ -44,7 +49,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "creditor")
     private Set<Invoice> credits;
 
-    @Column(length = 320, unique = true)
+    @Column(length = 320, unique = true, nullable = false)
     private String email;
 
     @Override
