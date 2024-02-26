@@ -31,11 +31,6 @@ form > p {
     border: 2px solid black;
     background: var(--background);
     position: relative;
-    transition: 0.3s filter ease-in-out;
-}
-
-#profile:hover {
-    filter: brightness(0.7);
 }
 
 #profile > label {
@@ -57,6 +52,11 @@ form > p {
     position: absolute;
     pointer-events: none;
     border-radius: var(--border-radius);
+    transition: 0.3s filter ease-in-out;
+}
+
+#profile:hover img {
+    filter: brightness(0.7);
 }
 
 #guest-badge {
