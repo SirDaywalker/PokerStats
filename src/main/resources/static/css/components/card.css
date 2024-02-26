@@ -9,6 +9,7 @@
     position: relative;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    aspect-ratio: 167 / 242;
 }
 
 .card * {
@@ -16,6 +17,8 @@
     backface-visibility: hidden;
     border: 1px solid black;
     border-radius: 7px;
+    height: 100%;
+    width: 100%;
 }
 
 .card.flipped {
