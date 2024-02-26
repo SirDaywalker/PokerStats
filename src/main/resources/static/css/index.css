@@ -40,17 +40,17 @@
     display: none;
 }
 
-#icon-cards img {
+#icon-cards div {
     height: 95px;
     position: absolute;
     top: 5px;
 }
 
-#icon-cards img:first-child {
+#icon-cards div:first-child {
     transform: rotate(-15deg);
 }
 
-#icon-cards img:last-child {
+#icon-cards div:last-child {
     left: 11px;
 }
 
@@ -143,10 +143,6 @@
         width: 100%;
         justify-content: space-between;
         margin: 2em 0;
-    }
-
-    #table img {
-        height: 95px;
     }
 
     #combination {

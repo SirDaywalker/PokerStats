@@ -1,8 +1,8 @@
 import {getRandomCards} from './getRandomCards.js';
 
 const iconCards = document.getElementById('icon-cards').children;
-iconCards[0].src = '/assets/' + getRandomCards();
-iconCards[1].src = '/assets/' + getRandomCards();
+iconCards[0].children[0].src = '/assets/' + getRandomCards();
+iconCards[1].children[0].src = '/assets/' + getRandomCards();
 
 const tableCards = document.getElementById('table').children;
 tableCards[0].children[0].src = '/assets/' + getRandomCards();
@@ -43,7 +43,7 @@ function processCard(index, card) {
 }
 
 for (let i = 0; i < iconCards.length; i++) {
-    processCard(i, iconCards[i].src.split('/').pop());
+    processCard(i, iconCards[i].children[0].src.split('/').pop());
 }
 for (let i = 0; i < tableCards.length; i++) {
     processCard(i, tableCards[i].children[0].src.split('/').pop());
