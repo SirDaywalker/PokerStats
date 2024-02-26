@@ -6,8 +6,14 @@
             <span id="poker-stats">PokerStats</span>
         </div>
         <div id="icon-cards">
-            <img th:src="@{/assets/ace_of_spades.svg}" alt="">
-            <img th:src="@{/assets/king_of_hearts.svg}" alt="">
+            <div class="card">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
+            <div class="card">
+                <img src="" alt="">
+                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            </div>
         </div>
     </div>
 
@@ -32,4 +38,5 @@
             </ul>
         </div>
     </div>
+    <script type="module" th:src="@{/js/header.js}"></script>
 </header>

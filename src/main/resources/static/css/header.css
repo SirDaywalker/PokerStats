@@ -26,21 +26,21 @@ header {
     display: block;
     position: absolute;
     height: 100%;
-    left: 1em;
+    left: 14px;
     top: 14px;
 }
 
-#icon-cards img {
-    height: 5em;
+#icon-cards div {
+    height: 80px;
     position: absolute;
-    top: 5px;
+    top: 0;
 }
 
-#icon-cards img:first-child {
+#icon-cards div:first-child {
     transform: rotate(-15deg);
 }
 
-#icon-cards img:last-child {
+#icon-cards div:last-child {
     left: 11px;
 }
 
