@@ -16,7 +16,7 @@
     position: absolute;
     backface-visibility: hidden;
     border: 1px solid black;
-    border-radius: 7px;
+    border-radius: 7px;  /* Depends on the size, */
     width: 100%;
 }
 
