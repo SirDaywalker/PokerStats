@@ -99,13 +99,11 @@ form > button[type="submit"] {
     border: var(--border);
     border-radius: var(--border-radius);
     transition: all 0.3s ease-in-out;
-    background: var(--blue_transparent);
-    border-color: var(--blue);
 }
 
 #selected label:hover {
-    background: var(--red);
-    border-color: var(--red_transparent);
+    background: var(--red_transparent);
+    border-color: var(--red);
 }
 
 #selected label:hover img {
