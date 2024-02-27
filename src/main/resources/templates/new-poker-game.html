@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Neues Pokerspiel - PokerStats</title>
+    <link rel="stylesheet" th:href="@{/css/default.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/components/buttons.css}">
+    <link rel="stylesheet" th:href="@{/css/components/messages.css}">
+    <link rel="stylesheet" th:href="@{/css/components/container.css}">
+    <link rel="stylesheet" th:href="@{/css/new-poker-game.css}">
 </head>
 <body>
-    newww gamee
+    <span class="message"></span>
+    <form class="container" id="new-poker-game-form">
+        <p>Neue Pokerrunde</p>
+        <div id="user-selection">
+            <div id="selected">
+                <span>Spieler auswählen</span>
+            </div>
+            <div id="users">
+                <label th:each="user : ${users}">
+                    <input type="checkbox">
+                    <img th:src="${user.getProfilePictureURL()}" alt="">
+                    <span th:text="${user.getUsername()}"></span>
+                </label>
+            </div>
+        </div>
+
+        <label for="notes">
+            <textarea id="notes" maxlength="4096" placeholder="Notizen"></textarea>
+        </label>
+
+        <div id="info">
+            <label>
+                <input readonly type="text">
+            </label>
+            <label>
+                <input readonly type="text">
+            </label>
+        </div>
+        <button class="button red filled" type="submit">Starten</button>
+    </form>
+    <script th:src="@{/js/new-poker-game.js}"></script>
 </body>
 </html>
