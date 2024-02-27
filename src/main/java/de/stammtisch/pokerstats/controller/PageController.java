@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -89,10 +90,13 @@ public class PageController {
         ModelAndView modelAndView = new ModelAndView("new-poker-game");
         try {
             User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", user);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
+            return modelAndView;
         }
+        final List<User> users = this.userService.getAllUsers();
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 
