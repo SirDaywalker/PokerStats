@@ -107,7 +107,7 @@ form > button[type="submit"] {
 }
 
 #selected label:hover img {
-    filter: blur(2px)
+    border-color: var(--red);
 }
 
 #users label + label {
@@ -124,4 +124,5 @@ form > button[type="submit"] {
     aspect-ratio: 1 / 1;
     border: var(--border);
     border-radius: var(--border-radius);
+    transition: all 0.3s ease-in-out;
 }
