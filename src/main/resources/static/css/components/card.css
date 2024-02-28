@@ -9,7 +9,7 @@
     position: relative;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-    aspect-ratio: 167 / 242;
+    aspect-ratio: 223 / 324;
 }
 
 .card * {
