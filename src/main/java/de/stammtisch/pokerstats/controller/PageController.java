@@ -3,6 +3,7 @@ package de.stammtisch.pokerstats.controller;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
+import de.stammtisch.pokerstats.service.PokerGameService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,17 +15,24 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
 public class PageController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
+    private final PokerGameService pokerGameService;
 
     @Autowired
-    public PageController(AuthenticationService authenticationService, UserService userService) {
+    public PageController(
+            AuthenticationService authenticationService,
+            UserService userService,
+            PokerGameService pokerGameService
+    ) {
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.pokerGameService = pokerGameService;
     }
 
     @GetMapping("/")
@@ -89,10 +97,15 @@ public class PageController {
         ModelAndView modelAndView = new ModelAndView("new-poker-game");
         try {
             User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", user);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
+            return modelAndView;
         }
+        final double pot = this.pokerGameService.getCurrentGamePot();
+        final List<User> users = this.userService.getAllUsers();
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 

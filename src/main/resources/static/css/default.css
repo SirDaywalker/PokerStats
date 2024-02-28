@@ -5,6 +5,7 @@
     --blue_transparent: #0061df1A;
     --border: 2px solid black;
     --border-radius: 10px;
+    --placeholder: #757575
 }
 
 @media (prefers-color-scheme: dark) {
