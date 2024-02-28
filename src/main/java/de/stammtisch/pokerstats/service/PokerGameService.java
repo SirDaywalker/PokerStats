@@ -52,4 +52,17 @@ public class PokerGameService {
         this.pokerGameRepository.save(game);
         this.userGameRepository.saveAll(usersGames);
     }
+
+    public double getCurrentGamePot() {
+        double pot = 0;
+
+        for (PokerGame game : this.pokerGameRepository.findAll()) {
+            for (UserGame userGame : game.getUsers()) {
+                pot += userGame.getBuyIn();
+            }
+            pot /= 2;
+        }
+        // Round pot to 2 decimal places
+        return Math.round(pot * 100.0) / 100.0;
+    }
 }

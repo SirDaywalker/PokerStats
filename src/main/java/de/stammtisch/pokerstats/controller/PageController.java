@@ -3,6 +3,7 @@ package de.stammtisch.pokerstats.controller;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
+import de.stammtisch.pokerstats.service.PokerGameService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,11 +22,17 @@ import java.util.NoSuchElementException;
 public class PageController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
+    private final PokerGameService pokerGameService;
 
     @Autowired
-    public PageController(AuthenticationService authenticationService, UserService userService) {
+    public PageController(
+            AuthenticationService authenticationService,
+            UserService userService,
+            PokerGameService pokerGameService
+    ) {
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.pokerGameService = pokerGameService;
     }
 
     @GetMapping("/")
@@ -95,8 +102,10 @@ public class PageController {
             modelAndView.setViewName("login");
             return modelAndView;
         }
+        final double pot = this.pokerGameService.getCurrentGamePot();
         final List<User> users = this.userService.getAllUsers();
         modelAndView.addObject("users", users);
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
