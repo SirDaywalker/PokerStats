@@ -48,7 +48,7 @@ public class PokerGameService {
         }
         game.setNotes(request.notes());
         game.setUsers(usersGames);
-        game.setWinner(this.userRepository.findByName(request.winner()).orElseThrow());
+        game.setWinner(null);
         this.pokerGameRepository.save(game);
         this.userGameRepository.saveAll(usersGames);
     }
