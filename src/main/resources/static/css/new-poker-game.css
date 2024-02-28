@@ -49,7 +49,6 @@ form > button[type="submit"] {
 }
 
 #user-selection {
-    max-height: 17em;
     margin: 0 0 1em;
     border: var(--border);
     border-radius: var(--border-radius);
@@ -57,11 +56,14 @@ form > button[type="submit"] {
 }
 
 #selected {
-    height: 4em;
+    min-height: 3em;
     background: var(--background);
     border-bottom: var(--border);
     display: flex;
     align-items: center;
+    padding: calc(1em - 7px);
+    gap: calc(1em - 7px);
+    flex-wrap: wrap;
 }
 
 #selected > span {
@@ -94,11 +96,11 @@ form > button[type="submit"] {
 }
 
 #selected label {
-    margin: calc(1em - 7px) 0 calc(1em - 7px) calc(1em - 7px);
     padding: 5px;
     border: var(--border);
     border-radius: var(--border-radius);
     transition: all 0.3s ease-in-out;
+    margin: 0;
 }
 
 #selected label:hover {
@@ -125,4 +127,9 @@ form > button[type="submit"] {
     border: var(--border);
     border-radius: var(--border-radius);
     transition: all 0.3s ease-in-out;
+    object-fit: cover;
+}
+
+#users label:hover img {
+    border-color: var(--blue);
 }
