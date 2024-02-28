@@ -12,6 +12,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -39,6 +40,10 @@ public class PokerGameService {
         for (String name : request.players()) {
             users.add(this.userRepository.findByName(name).orElseThrow());
         }
+        if (users.size() < 2) {
+            throw new NoSuchElementException("Es müssen mindestens 2 Spieler teilnehmen.");
+        }
+
         for (User user : users) {
             UserGame userGame = new UserGame();
             userGame.setUser(user);
