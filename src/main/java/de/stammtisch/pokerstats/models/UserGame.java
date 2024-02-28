@@ -22,5 +22,5 @@ public class UserGame {
     @ManyToOne(fetch = FetchType.EAGER)
     private PokerGame pokerGame;
 
-    private int buyIn;
+    private double buyIn;
 }
