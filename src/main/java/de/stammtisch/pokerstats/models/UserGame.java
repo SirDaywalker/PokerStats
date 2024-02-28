@@ -16,10 +16,10 @@ public class UserGame {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PokerGame pokerGame;
 
     private int buyIn;

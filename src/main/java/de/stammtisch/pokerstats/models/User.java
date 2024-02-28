@@ -37,16 +37,16 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserGame> games;
 
-    @OneToMany(mappedBy = "winner")
+    @OneToMany(mappedBy = "winner", fetch = FetchType.EAGER)
     private Set<PokerGame> wins;
     
-    @OneToMany(mappedBy = "debtor")
+    @OneToMany(mappedBy = "debtor", fetch = FetchType.EAGER)
     private Set<Invoice> debts;
     
-    @OneToMany(mappedBy = "creditor")
+    @OneToMany(mappedBy = "creditor", fetch = FetchType.EAGER)
     private Set<Invoice> credits;
 
     @Column(length = 320, unique = true, nullable = false)

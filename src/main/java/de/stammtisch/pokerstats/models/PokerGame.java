@@ -21,10 +21,10 @@ public class PokerGame {
     @Column(length = 4096, nullable = false)
     private String notes;
 
-    @OneToMany(mappedBy = "pokerGame")
+    @OneToMany(mappedBy = "pokerGame", fetch = FetchType.EAGER)
     private Set<UserGame> users;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User winner;
 
     @PrePersist
