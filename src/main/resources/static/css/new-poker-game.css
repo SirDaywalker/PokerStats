@@ -1,5 +1,5 @@
 form {
-    margin: 2em;
+    margin: 2em 2em 0;
 }
 
 form > p {
@@ -35,14 +35,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 label[for="notes"] {
-    height: 15em;
-}
-
-label[for="user"] {
     height: 10em;
-    max-height: 15em;
 }
-
 
 form > button[type="submit"] {
     margin: 1em auto 0;
