@@ -23,6 +23,7 @@
                     <input type="checkbox">
                     <img th:src="${user.getProfilePictureURL()}" alt="">
                     <span th:text="${user.getUsername()}"></span>
+                    <span style="display: none" th:text="${user.getBuyIn()}"></span>
                 </label>
             </div>
         </div>
@@ -33,10 +34,10 @@
 
         <div id="info">
             <label>
-                <input th:value="${pot} + '€ im Pot'" readonly type="text">
+                <input id="total-pot" th:value="${pot} + '€ im Pot'" readonly type="text">
             </label>
             <label>
-                <input readonly type="text">
+                <input id="winning-amount" readonly type="text">
             </label>
         </div>
         <button class="button red filled" type="submit">Starten</button>
