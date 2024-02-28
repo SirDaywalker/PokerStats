@@ -11,8 +11,7 @@ for (let char of potElement.value) {
     }
     defaultPot += char;
 }
-defaultPot = Number(defaultPot);
-payout.value = (defaultPot / 2).toFixed(2) + "€";
+defaultPot = Number(defaultPot.replace(/,/g, '.'));
 
 function updatePot() {
     let pot = defaultPot;
@@ -22,9 +21,15 @@ function updatePot() {
         }
         pot += Number(user.children[3].innerText);
     }
-    potElement.value = String(pot.toFixed(2)) + "€ im Pot";
+    pot = pot.toString().replace(/,/g, '.');
+    pot = Number(pot).toFixed(2);
+    let halfPot = (pot / 2).toFixed(2);
+    pot = pot.toString().replace(/\./g, ',');
+    halfPot = halfPot.toString().replace(/\./g, ',');
+
+    potElement.value = pot + " € im Pot";
     // Round to 2 decimal places
-    payout.value = (pot / 2).toFixed(2) + "€";
+    payout.value = halfPot + " € für den Gewinner";
 }
 
 

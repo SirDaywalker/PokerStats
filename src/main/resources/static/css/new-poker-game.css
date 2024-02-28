@@ -40,6 +40,7 @@ label[for="notes"] {
 
 #info > label > input {
     color: var(--placeholder);
+    cursor: default;
 }
 
 form > button[type="submit"] {
