@@ -37,11 +37,11 @@
                 <input id="total-pot" th:value="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pot'" readonly type="text">
             </label>
             <label>
-                <input th:value="${#numbers.formatCurrency(pot).replace('¤', '€') + ' für den Gewinner'}" id="winning-amount" readonly type="text">
+                <input th:value="${#numbers.formatCurrency(pot / 2).replace('¤', '€') + ' für den Gewinner'}" id="winning-amount" readonly type="text">
             </label>
         </div>
         <button class="button red filled" type="submit">Starten</button>
     </form>
-    <script th:src="@{/js/new-poker-game.js}"></script>
+    <script type="module" th:src="@{/js/new-poker-game.js}"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import {setErrorMessage} from "./setErrorMessage.js";
+
 const users_element = document.getElementById('users');
 const selected_users = document.getElementById('selected');
 
@@ -53,3 +55,38 @@ for (let user of users_element.children) {
         }
     });
 }
+
+const form = document.getElementById('new-poker-game-form');
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const users = [];
+    for (let user of selected_users.children) {
+        if (user.localName === "span") {
+            continue;
+        }
+        users.push(user.children[2].innerText);
+    }
+
+    const data = {
+        players: users,
+        notes: document.getElementById('notes').value
+    };
+    fetch('/api/v1/poker-game/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = '/poker';
+        } else {
+            response.text().then(text => {
+                if (text === "") {
+                    text = "Status " + response.status + ": " + response.statusText
+                }
+                setErrorMessage(text);
+            });
+        }
+    });
+});
