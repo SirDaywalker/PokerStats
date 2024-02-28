@@ -38,6 +38,10 @@ label[for="notes"] {
     height: 10em;
 }
 
+#info > label > input {
+    color: var(--placeholder);
+}
+
 form > button[type="submit"] {
     margin: 1em auto 0;
 }
