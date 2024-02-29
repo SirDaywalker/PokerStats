@@ -7,7 +7,6 @@
 
 .badge {
     padding: 2px;
-    background: linear-gradient(90deg, rgba(223,0,0,1) 0%, rgba(98,0,223,1) 100%);
     border-radius: var(--border-radius);
 }
 
@@ -20,8 +19,27 @@
 .badge > div > span {
     border-radius: var(--border-radius);
     padding: 3px;
-    background: linear-gradient(90deg, rgba(223,0,0,1) 0%, rgba(98,0,223,1) 100%);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 600;
+}
+
+.red-to-violet > div > span, .red-to-violet {
+    background: linear-gradient(90deg, rgba(223,0,0,1) 0%, rgba(98,0,223,1) 100%);
+}
+.red-to-violet > div > span {
+    -webkit-background-clip: text;
+}
+
+.green-to-yellow > div > span, .green-to-yellow {
+    background: linear-gradient(90deg, rgb(87 223 0) 0%, rgb(223 206 0) 100%);
+}
+.green-to-yellow > div > span {
+    -webkit-background-clip: text;
+}
+
+.red-to-orange > div > span, .red-to-orange {
+    background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
+}
+.red-to-orange > div > span {
+    -webkit-background-clip: text;
 }

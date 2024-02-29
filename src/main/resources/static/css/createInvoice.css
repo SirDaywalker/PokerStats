@@ -36,3 +36,90 @@ form button[type="submit"] {
     width: 50%;
     margin: 0 auto 2em;
 }
+
+
+#user-selection {
+    margin: 0 0 1em;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+#selected {
+    min-height: 3em;
+    background: var(--background);
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+    padding: calc(1em - 7px);
+    gap: calc(1em - 7px);
+    flex-wrap: wrap;
+}
+
+#selected > span {
+    margin: 0 0 0 1em;
+    color: var(--placeholder);
+}
+
+#selected:has(label) > span {
+    display: none;
+}
+
+#users {
+    max-height: 15em;
+    overflow-y: auto;
+    background: var(--background);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+#users:not(:has(label)) {
+    display: none;
+}
+
+#users label, #selected label {
+    height: 2em;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+    cursor: pointer;
+    margin: 1em;
+}
+
+#selected label {
+    padding: 5px;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease-in-out;
+    margin: 0;
+}
+
+#selected label:hover {
+    background: var(--red_transparent);
+    border-color: var(--red);
+}
+
+#selected label:hover img {
+    border-color: var(--red);
+}
+
+#users label + label {
+    border-top: var(--border);
+    padding: 1em 0 0;
+}
+
+#users input, #selected input {
+    display: none;
+}
+
+#users img, #selected img {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease-in-out;
+    object-fit: cover;
+}
+
+#users label:hover img {
+    border-color: var(--blue);
+}

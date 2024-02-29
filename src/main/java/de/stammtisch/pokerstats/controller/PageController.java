@@ -53,9 +53,12 @@ public class PageController {
         try {
             User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
             modelAndView.addObject("user", user);
+
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
         }
+        final double pot = this.pokerGameService.getCurrentGamePot();
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
@@ -154,7 +157,17 @@ public class PageController {
     }
 
     @GetMapping("/createInvoice")
-    public String createInvoice() {
-        return "createInvoice";
+    public ModelAndView createInvoice(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("createInvoice");
+        try {
+            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("account", user);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        final List<User> users = this.userService.getAllUsers();
+        modelAndView.addObject("users", users);
+        return modelAndView;
     }
 }

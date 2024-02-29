@@ -150,15 +150,11 @@ header {
 
 #pott-badge {
     height: min-content;
-    background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
     position: absolute;
     top: 19px;
     right: 105%;
 }
 
 #pott-badge > div > span {
-    background: linear-gradient(90deg, var(--red) 0%, #ff8744 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     width: max-content;
 }
