@@ -152,4 +152,9 @@ public class PageController {
     public String error() {
         return "error";
     }
+
+    @GetMapping("/createInvoice")
+    public String createInvoice() {
+        return "createInvoice";
+    }
 }
