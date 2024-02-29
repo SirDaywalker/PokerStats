@@ -53,9 +53,12 @@ public class PageController {
         try {
             User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
             modelAndView.addObject("user", user);
+
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
         }
+        final double pot = this.pokerGameService.getCurrentGamePot();
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
