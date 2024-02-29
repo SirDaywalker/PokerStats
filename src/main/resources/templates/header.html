@@ -20,7 +20,7 @@
     <div id="account-section">
         <div id="pott-badge" class="badge red-to-orange">
             <div>
-                <span>519,57€ im Pott</span> <!--TODO: Pott-Money holen-->
+                <span th:text="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pott'"></span>
             </div>
         </div>
         <div id="account-info">
