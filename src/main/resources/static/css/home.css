@@ -8,11 +8,111 @@
     margin-top: 10%;
 }
 
-#card-centerbox a div {
-    height: 20em;
+.tilting-card-content div {
+    height: 25em
 }
 
-#card-centerbox a div:hover {
-    transform: scale(1.25);
+.tilting-card-content div img {
+    top: 0;
+    left: 0;
 }
 
+.tilting-card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);position: relative;
+}
+
+.tilting-card-content {
+    --perspective: 500px;
+    --rotationX: 0;
+    --rotationY: 0;
+    --angle: 8deg;
+
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+
+    display: grid;
+    place-content: center;
+    text-align: center;
+    aspect-ratio: 223 / 324;
+    transform:
+        perspective(var(--perspective))
+        rotateX(var(--rotationX))
+        rotateY(var(--rotationY))
+    ;
+    transition: transform 350ms ease;
+}
+
+.mouse-position-tracker {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.mouse-position-tracker:nth-child(1):hover ~ .tilting-card-content {
+    --rotationX: var(--angle);
+    --rotationY: calc(var(--angle) * -1);
+}
+
+.mouse-position-tracker:nth-child(2):hover ~ .tilting-card-content {
+    --rotationX: var(--angle);
+}
+
+.mouse-position-tracker:nth-child(3):hover ~ .tilting-card-content {
+    --rotationX: var(--angle);
+    --rotationY: var(--angle);
+}
+
+.mouse-position-tracker:nth-child(4):hover ~ .tilting-card-content {
+    --rotationY: calc(var(--angle) * -1);
+}
+
+
+.mouse-position-tracker:nth-child(6):hover ~ .tilting-card-content {
+    --rotationY: var(--angle);
+}
+
+.mouse-position-tracker:nth-child(7):hover ~ .tilting-card-content {
+    --rotationX: calc(var(--angle) * -1);
+    --rotationY: calc(var(--angle) * -1);
+}
+
+.mouse-position-tracker:nth-child(8):hover ~ .tilting-card-content {
+    --rotationX: calc(var(--angle) * -1);
+}
+
+.mouse-position-tracker:nth-child(9):hover ~ .tilting-card-content {
+    --rotationX: calc(var(--angle) * -1);
+    --rotationY: var(--angle);
+}
+
+/* 1st, 4th, 7th */
+.mouse-position-tracker:nth-child(3n - 2) {
+    grid-column: 1 / 2;
+}
+
+/* 2nd, 5th, 8th */
+.mouse-position-tracker:nth-child(3n - 1) {
+    grid-column: 2 / 3;
+}
+
+/* 3rd, 6th, 9th */
+.mouse-position-tracker:nth-child(3n) {
+    grid-column: 3 / 4;
+}
+
+/* 1 - 3 */
+.mouse-position-tracker:nth-child(n + 1):nth-child(-n + 3) {
+    grid-row: 1 / 2;
+}
+
+/* 4 - 6 */
+.mouse-position-tracker:nth-child(n + 4):nth-child(-n + 6) {
+    grid-row: 2 / 3;
+}
+
+/* 7 - 9 */
+.mouse-position-tracker:nth-child(n + 7):nth-child(-n + 9) {
+    grid-row: 3 / 4;
+}
