@@ -1,16 +1,32 @@
 <!DOCTYPE html>
-<html lang="de" th:>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pokerspiele - PokerStats</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/poker-games.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/badges.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div th:each="game : ${games}">
+    <div id="container">
+        <div th:each="game : ${games}" class="game container">
             <div>
-                <div th:each="user : ${game.getUsers()}"><img th:src="${user.getProfilePictureURL()}" alt=""></div>
+                <div class="picture-row">
+                    <div th:each="userGame : ${game.getUsers()}"><img th:src="${userGame.getUser().getProfilePictureURL()}" alt=""></div>
+                </div>
+                <div>
+                    <div th:if="${game.getWinner() == null}" class="badge green-to-yellow">
+                        <div>
+                            <span>Running</span>
+                        </div>
+                    </div>
+                    <span th:if="${game.getWinner() != null}" th:text="${game.getWinner().getUsername()}"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
+                        <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
+                    </svg>
+                </div>
             </div>
-            <span th:text="${game.getWinner()}"></span>
         </div>
     </div>
 </body>

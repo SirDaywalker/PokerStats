@@ -1,0 +1,47 @@
+#container {
+    margin: 2em 2em 0;
+}
+
+.game {
+    height: 3em;
+    display: flex;
+    flex-direction: column;
+}
+
+.game > div:first-child {
+    height: 3em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.picture-row {
+    display: flex;
+}
+
+.picture-row > div {
+    height: calc(100%);
+    width: 28px;
+}
+
+.picture-row > div:last-child {
+    width: unset;
+}
+
+.picture-row > div > img {
+    height: calc(100% - 4px);
+    aspect-ratio: 1 / 1;
+    border-radius: var(--border-radius);
+    border: var(--border);
+    object-fit: cover;
+    outline: 2px solid var(--container);
+}
+
+.picture-row + div {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.picture-row + div > svg {
+    stroke: black;
+}
