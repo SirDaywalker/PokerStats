@@ -1,5 +1,7 @@
 #container {
     margin: 2em 2em 0;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .game {
