@@ -33,17 +33,21 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
 
+    private final ConfirmationService confirmationService;
+
     @Autowired
     public AuthenticationService(
             JWTService jwtService,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
-            UserRepository userRepository
+            UserRepository userRepository,
+            ConfirmationService confirmationService
     ) {
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
+        this.confirmationService = confirmationService;
     }
 
     /**

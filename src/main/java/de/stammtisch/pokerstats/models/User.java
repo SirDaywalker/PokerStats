@@ -52,6 +52,8 @@ public class User implements UserDetails {
     @Column(length = 320, unique = true, nullable = false)
     private String email;
 
+    private boolean enabled = true;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -97,7 +99,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
     /**
@@ -114,4 +116,5 @@ public class User implements UserDetails {
     public String getProfilePictureURL() {
         return "/cdn/u/picture?name=" + this.getNamePathSave();
     }
+
 }
