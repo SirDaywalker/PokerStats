@@ -8,6 +8,15 @@
     margin-top: 10%;
 }
 
+#card-centerbox a {
+    transition: all 500ms;
+}
+
+#card-centerbox a:hover {
+    scale: 1.09;
+    transition: all 500ms;
+}
+
 .tilting-card-content div {
     height: 25em
 }
