@@ -109,6 +109,20 @@ public class PageController {
         return modelAndView;
     }
 
+    @GetMapping("/games/poker")
+    public ModelAndView pokerGames(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("poker-games");
+        try {
+            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("user", user);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        modelAndView.addObject("games", this.pokerGameService.getGames());
+        return modelAndView;
+    }
+
     @GetMapping("/statistics")
     public ModelAndView statistics(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("statistics");

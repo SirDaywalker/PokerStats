@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="de" th:>
+<head>
+    <meta charset="UTF-8">
+    <title>Pokerspiele - PokerStats</title>
+</head>
+<body>
+    <div class="container">
+        <div th:each="game : ${games}">
+            <div>
+                <div th:each="user : ${game.getUsers()}"><img th:src="${user.getProfilePictureURL()}" alt=""></div>
+            </div>
+            <span th:text="${game.getWinner()}"></span>
+        </div>
+    </div>
+</body>
+</html>

@@ -12,8 +12,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 
 @Service
 public class PokerGameService {
@@ -56,6 +58,10 @@ public class PokerGameService {
         game.setWinner(null);
         this.pokerGameRepository.save(game);
         this.userGameRepository.saveAll(usersGames);
+    }
+
+    public List<PokerGame> getGames() {
+        return this.pokerGameRepository.findAll();
     }
 
     public double getCurrentGamePot() {
