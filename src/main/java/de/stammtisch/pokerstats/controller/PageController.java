@@ -152,4 +152,19 @@ public class PageController {
     public String error() {
         return "error";
     }
+
+    @GetMapping("/createInvoice")
+    public ModelAndView createInvoice(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("createInvoice");
+        try {
+            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("account", user);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        final List<User> users = this.userService.getAllUsers();
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
 }
