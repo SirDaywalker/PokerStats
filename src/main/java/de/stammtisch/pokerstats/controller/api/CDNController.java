@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/cdn")
@@ -28,15 +29,15 @@ public class CDNController {
     }
 
     @GetMapping(value = "/u/picture", produces = {"image/*"})
-    public ResponseEntity<?> userProfile(@RequestParam(value = "name") String name) {
+    public ResponseEntity<?> userProfile(@RequestParam(value = "id") long id) {
         final User user;
         try {
-            user = this.userService.loadUserByUsername(URLDecoder.decode(name, StandardCharsets.UTF_8));
-        } catch (UsernameNotFoundException e) {
-            return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+            user = this.userService.getUserById(id);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        final String path = "./data/user/%s/picture.%s".formatted(user.getNamePathSave(), user.getProfilePictureType());
+        final String path = "./data/user/%d/picture.%s".formatted(id, user.getProfilePictureType());
         final byte[] image;
         try {
             image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();

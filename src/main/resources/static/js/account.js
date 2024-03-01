@@ -1,76 +1,70 @@
-import {calculatePasswordStrength} from "./calculatePasswordStrength.js";
+import {calculatePasswordStrength} from "./components/security.js";
 import {setErrorMessage} from "./setErrorMessage.js";
+import {sendDataToServer} from "./components/networking.js";
 
-document.getElementById('profile-image-selector').addEventListener('change', function() {
+const imageInputElement = document.getElementById('profile-image-selector');
+const imagePreviewElement = document.getElementById('profile-image');
+
+const newPasswordElement = document.getElementById('new-password');
+const form = document.getElementById('account-form');
+const nameElement = document.getElementById('name');
+
+imageInputElement.addEventListener('change', function() {
     const file = this.files[0];
     const reader = new FileReader();
     reader.onload = function(e) {
-        document.getElementById('profile-image').src = e.target.result;
-    };
+        imagePreviewElement.src = e.target.result;
+    }
     reader.readAsDataURL(file);
 });
 
-document.getElementById('new-password').addEventListener('input', function() {
+newPasswordElement.addEventListener('input', function() {
     let percentage = calculatePasswordStrength(this.value);
     document.getElementById('bar').style.width = (100 * percentage) + '%';
     document.getElementById('bar').style.backgroundColor = 'hsl(' + (percentage * 180) + ', 100%, 50%)';
 });
 
-document.getElementById('account-form').addEventListener('submit', function(event) {
+form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const password = document.getElementById('password').children[0].value;
-    const newPassword = document.getElementById('new-password').value;
-    let picture = document.getElementById('profile-image-selector').files[0];
-    const name = document.getElementById('name').value;
-    const buyIn = document.getElementById('buy-in').children[0].value;
-    const email = document.getElementById('email').value;
-    const target = document.getElementById('target').textContent;
+    const formData = new FormData();
+    formData.append('name', nameElement.value);
+    formData.append('password', document.getElementById('password').children[0].value);
+
+    const newPassword = newPasswordElement.value;
+    if (newPassword !== '') {
+        formData.append('newPassword', newPassword);
+    }
+
+    const picture = imageInputElement.files[0];
+    if (typeof picture !== 'undefined') {
+        formData.append('picture', picture);
+    }
+
+    formData.append('buyIn', document.getElementById('buy-in').children[0].value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('targetId', nameElement.getAttribute('data-target-id'));
 
     let role = null;
     if (document.getElementById('role') != null) {
         const e = document.getElementById('role');
         role = e.options[e.selectedIndex].value;
     }
-
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('password', password);
-
-    if (newPassword !== '') {
-        formData.append('newPassword', newPassword);
-    }
-    formData.append('buyIn', buyIn);
-
-    if (typeof picture !== 'undefined') {
-        formData.append('picture', picture);
-    }
-    formData.append('email', email);
-
     if (role !== null) {
         formData.append('role', role);
     }
-    formData.append('targetName', target);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/auth/change-details', true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            window.location.href = '/home';
-            return;
+    sendDataToServer(
+        formData,
+        '/api/v1/auth/change-details',
+        'POST',
+        null,
+        function(response, status, isOK) {
+            if (isOK) {
+                window.location.href = '/home';
+            } else {
+                setErrorMessage(response);
+            }
         }
-        if (xhr.status === 400) {
-            setErrorMessage('Ein Fehler ist aufgetreten. Sind die Daten gültig?');
-        }
-        else if (xhr.status === 413) {
-            setErrorMessage('Das Bild ist zu groß.');
-        }
-        else if (xhr.status === 401) {
-            setErrorMessage('Das Passwort ist falsch.');
-        }
-        else {
-            setErrorMessage('Status ' + xhr.status.toString());
-        }
-    };
-    xhr.send(formData);
+    );
 });

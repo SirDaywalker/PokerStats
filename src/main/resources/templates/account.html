@@ -11,7 +11,6 @@
 </head>
 <body>
     <span class="message"></span>
-    <span id="target" style="display: none" th:text="${user.getUsername()}"></span>
     <form id="account-form">
         <p>Account</p>
         <div id="first-bar">
@@ -19,20 +18,23 @@
                 <label for="profile-image-selector"></label>
                 <input type="file" accept="image/*" id="profile-image-selector">
                 <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
-                <div id="guest-badge" class="badge" th:if="${user.getRole().name().equals('GUEST')}">
+                <div id="guest-badge" class="badge red-to-violet" th:if="${user.getRole().name().equals('GUEST')}">
                     <div>
-                        <span >Gast</span>
+                        <span>Gast</span>
                     </div>
                 </div>
             </div>
             <label>
-                <input id="name" type="text" pattern="\D{2,}" title="Keine Zahlen erlaubt."
-                       placeholder="Vollständiger Name" th:value="${user.getUsername()}" required>
+                <input th:data-target-id="${user.getId()}" id="name" type="text" pattern="\D{2,}"
+                       title="Keine Zahlen erlaubt." placeholder="Vollständiger Name" th:value="${user.getUsername()}"
+                       required>
             </label>
         </div>
         <label id="password">
-            <input type="password" th:if="${account.getUsername() != user.getUsername()}" th:placeholder="${'Passwort von ' + account.getUsername()}" required>
-            <input type="password" th:if="${account.getUsername() == user.getUsername()}" placeholder="Passwort" required>
+            <input type="password" th:if="${account.getUsername() != user.getUsername()}"
+                   th:placeholder="${'Passwort von ' + account.getUsername()}" required>
+            <input type="password" th:if="${account.getUsername() == user.getUsername()}" placeholder="Passwort"
+                   required>
         </label>
         <label><input id="new-password" type="password" placeholder="Neues Passwort"></label>
         <div id="password-weakness">
@@ -41,13 +43,15 @@
         <label><input id="email" th:value="${user.getEmail()}" type="email" placeholder="E-Mail"></label>
         <div id="last-bar">
             <label id="buy-in">
-                <input th:if="${user.getRole().name().equals('GUEST')}" min="4" max="5" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required>
-                <input th:if="${!user.getRole().name().equals('GUEST')}" min="2" max="5" th:value="${user.getBuyIn()}" type="number" placeholder="Einsatz" required>
+                <input th:if="${user.getRole().name().equals('GUEST')}" min="4" max="5" th:value="${user.getBuyIn()}"
+                       type="number" placeholder="Einsatz" required>
+                <input th:if="${!user.getRole().name().equals('GUEST')}" min="2" max="5" th:value="${user.getBuyIn()}"
+                       type="number" placeholder="Einsatz" required>
                 <span>€</span>
             </label>
             <span>
                 Einsätze können nicht zurückgefordert werden. Gäste zahlen das doppelte vom Mindesteinsatz, dieser
-                beträgt 2€. Der maximale Einsatz beträgt 5€.
+                beträgt 2 €. Der maximale Einsatz beträgt 5 €.
             </span>
         </div>
         <label th:if="${account.getRole().name().equals('ADMIN')}">

@@ -155,15 +155,15 @@ public class AuthenticationService {
                 Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
         );
         user.setEmail(request.email());
+        this.userRepository.save(user);
 
-        final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
+        final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
                 System.getProperty("user.dir"),
-                URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
+                user.getId(),
                 Objects.requireNonNull(request.picture().getOriginalFilename()).split("\\.")[1]
         ));
         Files.createDirectories(onDisk.getParentFile().toPath());
         request.picture().transferTo(onDisk);
-        this.userRepository.save(user);
         return this.generateToken(user);
     }
 
@@ -171,16 +171,12 @@ public class AuthenticationService {
         String token = this.getTokenFromCookie(cookies);
         final User account = this.getUserFromToken(token);
 
-        String targetName = request.targetName();
-        if (targetName == null) {
-            targetName = account.getUsername();
-        } else {
-            if (!account.getRole().equals(Role.ADMIN)) {
-                throw new IllegalArgumentException("You are not allowed to change other users' details.");
-            }
+        long targetID = request.targetId();
+        if (targetID != account.getId() && !account.getRole().equals(Role.ADMIN)) {
+            throw new IllegalArgumentException("Du hast nicht die Berechtigung, diese Aktion auszuführen.");
         }
 
-        final User user = this.userRepository.findByName(targetName).orElseThrow();
+        final User user = this.userRepository.findById(targetID).orElseThrow();
         if (!this.passwordEncoder.matches(request.password(), account.getPassword())) {
             throw new BadCredentialsException("Invalid password.");
         }
@@ -215,9 +211,9 @@ public class AuthenticationService {
                 throw new IllegalArgumentException("Invalid picture.");
             }
             type = type.split("/")[1];
-            final File onDisk = new File("%s/data/user/%s/picture.%s".formatted(
+            final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
                     System.getProperty("user.dir"),
-                    URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8),
+                    user.getId(),
                     type
             ));
             Files.createDirectories(onDisk.getParentFile().toPath());

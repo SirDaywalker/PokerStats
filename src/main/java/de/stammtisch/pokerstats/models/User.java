@@ -22,6 +22,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @Getter(AccessLevel.NONE)
     private String name;
 
@@ -114,7 +117,7 @@ public class User implements UserDetails {
      * @return the URL of the profile picture of the user.
      */
     public String getProfilePictureURL() {
-        return "/cdn/u/picture?name=" + this.getNamePathSave();
+        return "/cdn/u/picture?id=" + this.getId();
     }
 
 }

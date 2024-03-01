@@ -10,5 +10,5 @@ public record EditAccountRequest (
         MultipartFile picture,
         String email,
         String role,
-        String targetName
+        long targetId
 ) {}

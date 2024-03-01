@@ -65,7 +65,7 @@ public class PageController {
     @GetMapping("/account")
     public ModelAndView account(
             @RequestHeader(name = "Cookie") String cookies,
-            @RequestParam(name = "u", required = false) String requestedUser
+            @RequestParam(name = "u", required = false) Long requestedUserId
     ) {
         ModelAndView modelAndView = new ModelAndView("account");
 
@@ -78,13 +78,13 @@ public class PageController {
             return modelAndView;
         }
 
-        if (requestedUser != null) {
+        if (requestedUserId != null) {
             if (!account.getRole().equals(Role.ADMIN)) {
                 modelAndView.setViewName("error");
                 return modelAndView;
             }
             try {
-                final User user = this.userService.loadUserByUsername(requestedUser);
+                final User user = this.userService.getUserById(requestedUserId);
                 modelAndView.addObject("user", user);
             } catch (UsernameNotFoundException e) {
                 modelAndView.setViewName("error");
