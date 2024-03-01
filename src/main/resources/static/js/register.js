@@ -1,5 +1,5 @@
 import {setErrorMessage} from "./setErrorMessage.js";
-import {calculatePasswordStrength} from "./calculatePasswordStrength.js";
+import {calculatePasswordStrength} from "./components/security";
 
 document.getElementById('profile-image-selector').addEventListener('change', function() {
     let reader = new FileReader();
