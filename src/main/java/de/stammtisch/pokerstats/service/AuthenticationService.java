@@ -20,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
@@ -141,10 +139,10 @@ public class AuthenticationService {
 
     public String register(@NonNull RegisterRequest request) throws IOException, SQLIntegrityConstraintViolationException {
         if (this.userRepository.existsByName(request.name())) {
-            throw new IllegalArgumentException("User %s already exists.".formatted(request.name()));
+            throw new IllegalArgumentException("Der Name ist bereits vergeben.");
         }
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
-            throw new IllegalArgumentException("Invalid email or name.");
+            throw new IllegalArgumentException("Der Name oder die E-Mail-Adresse ist ungültig.");
         }
 
         final User user = new User();
@@ -179,11 +177,11 @@ public class AuthenticationService {
 
         final User user = this.userRepository.findById(targetID).orElseThrow();
         if (!this.passwordEncoder.matches(request.password(), account.getPassword())) {
-            throw new BadCredentialsException("Invalid password.");
+            throw new BadCredentialsException("Das Passwort ist falsch.");
         }
 
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
-            throw new IllegalArgumentException("Invalid email or name.");
+            throw new IllegalArgumentException("Der Name oder die E-Mail-Adresse ist ungültig.");
         }
 
         if (request.role() != null) {
@@ -192,7 +190,7 @@ public class AuthenticationService {
 
         if (request.newPassword() != null) {
             if (request.newPassword().isBlank()) {
-                throw new IllegalArgumentException("Invalid new password.");
+                throw new IllegalArgumentException("Das neue Passwort darf nicht leer sein.");
             }
             user.setPassword(this.passwordEncoder.encode(request.newPassword()));
         }
@@ -209,7 +207,7 @@ public class AuthenticationService {
         if (picture != null) {
             String type = picture.getContentType();
             if (type == null || !type.startsWith("image/")) {
-                throw new IllegalArgumentException("Invalid picture.");
+                throw new IllegalArgumentException("Das Bild ist ungültig.");
             }
             type = type.split("/")[1];
             final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
