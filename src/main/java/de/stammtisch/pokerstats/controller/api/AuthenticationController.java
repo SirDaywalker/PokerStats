@@ -3,6 +3,7 @@ package de.stammtisch.pokerstats.controller.api;
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,6 +79,8 @@ public class AuthenticationController {
             return new ResponseEntity<>("Ein Fehler ist aufgetreten.", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>("Das Passwort ist falsch.", HttpStatus.UNAUTHORIZED);
+        } catch (EmailAlreadyInUseException e) {
+            return new ResponseEntity<>("Die E-Mail-Adresse ist bereits in Benutzung.", HttpStatus.BAD_REQUEST);
         }
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Erfolgreich geändert.", HttpStatus.OK);
