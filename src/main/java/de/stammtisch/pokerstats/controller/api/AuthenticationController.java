@@ -73,13 +73,13 @@ public class AuthenticationController {
         try {
             token = this.authenticationService.changeDetails(request, cookies);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Die Anfrage konnte nicht verarbeitet werden.", HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
-            return new ResponseEntity<>("An error occurred while processing the request.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Ein Fehler ist aufgetreten.", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Das Passwort ist falsch.", HttpStatus.UNAUTHORIZED);
         }
         response.addCookie(AuthenticationService.generateCookie(token));
-        return new ResponseEntity<>("Successfully changed details.", HttpStatus.OK);
+        return new ResponseEntity<>("Erfolgreich geändert.", HttpStatus.OK);
     }
 }
