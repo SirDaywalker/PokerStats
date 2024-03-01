@@ -8,6 +8,8 @@
     height: 3em;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .game > div:first-child {
@@ -44,6 +46,10 @@
     gap: 2em;
 }
 
-.picture-row + div > svg {
-    stroke: black;
+.picture-row + div > svg > path {
+    transition: all 0.3s ease-in-out;
+}
+
+.game:hover .picture-row + div > svg > path {
+    fill: var(--red);
 }
