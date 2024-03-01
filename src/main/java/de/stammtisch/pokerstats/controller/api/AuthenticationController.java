@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -51,10 +52,15 @@ public class AuthenticationController {
         try {
             token = this.authenticationService.authenticate(request);
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Die Anmeldedaten sind falsch.", HttpStatus.UNAUTHORIZED);
+        } catch (DisabledException e) {
+            return new ResponseEntity<>(
+                    "Der Account ist entweder nicht bestätigt oder gesperrt. Bitte überprüfen Sie Ihre E-Mails.",
+                    HttpStatus.UNAUTHORIZED
+            );
         }
         response.addCookie(AuthenticationService.generateCookie(token));
-        return new ResponseEntity<>("Successfully authenticated.", HttpStatus.OK);
+        return new ResponseEntity<>("Erfolgreich angemeldet.", HttpStatus.OK);
     }
 
     @PostMapping("/change-details")

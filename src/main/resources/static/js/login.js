@@ -1,24 +1,24 @@
 import {setErrorMessage} from "./setErrorMessage.js";
+import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
 loginForm.addEventListener('submit', function(event) {
     event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/auth/authenticate', true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            window.location.href = '/home';
-            return;
-        }
-        if (xhr.status === 400) {
-            setErrorMessage('Fehlerhafte Anmeldedaten.');
-        } else {
-            setErrorMessage('Status ' + xhr.status.toString());
-        }
+    const data = {
+        name: document.getElementById('name').value,
+        password: document.getElementById('password').value
     };
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({name: username, password: password}));
+    sendDataToServer(
+        JSON.stringify(data),
+        '/api/v1/auth/authenticate',
+        'POST',
+        'application/json',
+        function(response, status, isOK) {
+            if (isOK) {
+                window.location.href = '/home';
+            } else {
+                setErrorMessage(response);
+            }
+        }
+    );
 });
