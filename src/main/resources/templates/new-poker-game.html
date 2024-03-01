@@ -19,12 +19,13 @@
                 <span>Spieler auswählen</span>
             </div>
             <div id="users">
-                <label th:each="user : ${users}">
-                    <input type="checkbox">
-                    <img th:src="${user.getProfilePictureURL()}" alt="">
-                    <span th:text="${user.getUsername()}"></span>
-                    <span style="display: none" th:text="${user.getBuyIn()}"></span>
-                </label>
+                <div class="user" th:each="user : ${users}">
+                    <div>
+                        <img th:src="${user.getProfilePictureURL()}" alt="">
+                        <span th:text="${user.getUsername()}"></span>
+                    </div>
+                    <span th:data-buy-in="${user.getBuyIn()}" th:text="'Einsatz: ' + ${user.getBuyIn()} + ' €'"></span>
+                </div>
             </div>
         </div>
 
@@ -34,10 +35,12 @@
 
         <div id="info">
             <label>
-                <input id="total-pot" th:value="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pot'" readonly type="text">
+                <input th:data-pot="${pot}" id="pot"
+                       th:value="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pot'" readonly type="text">
             </label>
             <label>
-                <input th:value="${#numbers.formatCurrency(pot / 2).replace('¤', '€') + ' für den Gewinner'}" id="winning-amount" readonly type="text">
+                <input th:value="${#numbers.formatCurrency(pot / 2).replace('¤', '€') + ' für den Gewinner'}"
+                       id="payout" readonly type="text">
             </label>
         </div>
         <button class="button red filled" type="submit">Starten</button>

@@ -3,17 +3,10 @@ import {setErrorMessage} from "./setErrorMessage.js";
 const users_element = document.getElementById('users');
 const selected_users = document.getElementById('selected');
 
-const potElement = document.getElementById('total-pot');
-const payout = document.getElementById('winning-amount');
+const potElement = document.getElementById('pot');
+const payoutElement = document.getElementById('payout');
 
-let defaultPot = "";
-for (let char of potElement.value) {
-    if (char === '€') {
-        break;
-    }
-    defaultPot += char;
-}
-defaultPot = Number(defaultPot.replace(/,/g, '.'));
+const defaultPot = Number(potElement.getAttribute('data-pot'));
 
 function updatePot() {
     let pot = defaultPot;
@@ -21,19 +14,14 @@ function updatePot() {
         if (user.localName === "span") {
             continue;
         }
-        pot += Number(user.children[3].innerText);
+        pot += Number(user.children[1].getAttribute('data-buy-in'));
     }
-    pot = pot.toString().replace(/,/g, '.');
-    pot = Number(pot).toFixed(2);
-    let halfPot = (pot / 2).toFixed(2);
-    pot = pot.toString().replace(/\./g, ',');
-    halfPot = halfPot.toString().replace(/\./g, ',');
+    pot = pot.toFixed(2);
+    let payout = (pot / 2).toFixed(2)
 
-    potElement.value = pot + " € im Pot";
-    // Round to 2 decimal places
-    payout.value = halfPot + " € für den Gewinner";
+    potElement.value = String(pot).replace(/\./, ",") + " € im Pot";
+    payoutElement.value = String(payout).replace(/\./, ",") + " € für den Gewinner";
 }
-
 
 for (let user of users_element.children) {
     user.children[0].addEventListener('click', function(event) {
@@ -64,7 +52,7 @@ form.addEventListener('submit', function(event) {
         if (user.localName === "span") {
             continue;
         }
-        users.push(user.children[2].innerText);
+        users.push(user.children[0].children[1].innerText);
     }
 
     const data = {
@@ -79,7 +67,7 @@ form.addEventListener('submit', function(event) {
         body: JSON.stringify(data)
     }).then(response => {
         if (response.ok) {
-            window.location.href = '/poker/games';
+            window.location.href = '/games/poker';
         } else {
             response.text().then(text => {
                 if (text === "") {
