@@ -3,6 +3,7 @@ package de.stammtisch.pokerstats.service;
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
@@ -222,6 +223,9 @@ public class AuthenticationService {
         }
 
         user.setName(request.name());
+        if (userRepository.existsByEmail(request.email()) && !user.getEmail().equals(request.email())) {
+            throw new EmailAlreadyInUseException(request.email());
+        }
         user.setEmail(request.email());
         token = this.generateToken(account);
         this.userRepository.save(user);
