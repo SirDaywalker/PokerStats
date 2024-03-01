@@ -1,6 +1,6 @@
 /**
  * This function sends a request to the server.
- * @param {string} data - The data to send in the request. Should be in the form of {key: value, key: value, ...}
+ * @param {string} data - The data to send in the request. Must match the content type.
  * @param {string} url - The URL to send the request to.
  * @param {string} method - The method to use for the request.
  * @param {string} contentType - The content type of the request.
