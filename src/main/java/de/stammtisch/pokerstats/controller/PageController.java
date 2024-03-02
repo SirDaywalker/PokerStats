@@ -51,8 +51,10 @@ public class PageController {
     public ModelAndView home(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("home");
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            User account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
 
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
@@ -92,6 +94,8 @@ public class PageController {
         } else {
             modelAndView.addObject("user", account);
         }
+        final double pot = this.pokerGameService.getCurrentGamePot();
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
@@ -99,8 +103,10 @@ public class PageController {
     public ModelAndView newPokerGame(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("new-poker-game");
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("account", user);
+            User account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
             return modelAndView;
@@ -116,13 +122,17 @@ public class PageController {
     public ModelAndView pokerGames(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("poker-games");
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            User account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
             return modelAndView;
         }
         modelAndView.addObject("games", this.pokerGameService.getGames());
+        final double pot = this.pokerGameService.getCurrentGamePot();
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
