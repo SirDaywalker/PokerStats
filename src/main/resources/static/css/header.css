@@ -30,6 +30,10 @@ header {
     top: 14px;
 }
 
+#icon-cards .card > * {
+    border-radius: 4px !important;
+}
+
 #icon-cards div {
     height: 80px;
     position: absolute;
