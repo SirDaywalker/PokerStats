@@ -13,8 +13,8 @@ form {
     background: var(--container);
     width: 20em;
     margin: 0 auto;
-    border-radius: 10px;
-    border: 2px solid black;
+    border-radius: var(--border-radius);
+    border: var(--border);
     padding: 2em;
 }
 
@@ -25,8 +25,8 @@ label {
 
 input {
     background: var(--background);
-    border: 2px solid black;
-    border-radius: 10px;
+    border: var(--border);
+    border-radius: var(--border-radius);
     padding: 10px;
     flex: 1;
     height: 22px;

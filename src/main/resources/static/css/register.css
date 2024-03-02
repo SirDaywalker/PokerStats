@@ -14,8 +14,8 @@ form {
     position: relative;
     width: 20em;
     margin: 0 auto;
-    border-radius: 10px;
-    border: 2px solid black;
+    border-radius: var(--border-radius);
+    border: var(--border);
     padding: 2em;
 }
 
@@ -30,8 +30,8 @@ form > div:first-child {
     width: 74px;
     height: 74px;
     background: var(--background);
-    border-radius: 10px;
-    border: 2px solid black;
+    border-radius: var(--border-radius);
+    border: var(--border);
     overflow: hidden;
     transition: filter 0.3s;
 }
@@ -80,8 +80,8 @@ form > label, form > div:first-child > label {
 input {
     margin: 1em 0;
     background: var(--background);
-    border: 2px solid black;
-    border-radius: 10px;
+    border: var(--border);
+    border-radius: var(--border-radius);
     padding: 10px;
     width: 100%;
 }
@@ -98,18 +98,18 @@ form button[type=submit] {
 #password-weakness {
     height: 4px;
     width: 95%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     margin: 0 auto;
     background: var(--background);
     overflow: hidden;
     position: relative;
-    border: 2px solid black;
+    border: var(--border);
 }
 
 #bar {
     width: 0;
     height: 100%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     position: absolute;
     left: 0;
     transition: all 0.3s;
