@@ -26,22 +26,22 @@
                 </div>
             </div>
             <label>
-                <input th:data-target-id="${user.getId()}" id="name" type="text" pattern="\D{2,}"
+                <input autocomplete="name" th:data-target-id="${user.getId()}" id="name" type="text" pattern="\D{2,}"
                        title="Keine Zahlen erlaubt." placeholder="Vollständiger Name" th:value="${user.getUsername()}"
                        required>
             </label>
         </div>
         <label id="password">
-            <input type="password" th:if="${account.getUsername() != user.getUsername()}"
+            <input autocomplete="current-password" type="password" th:if="${account.getUsername() != user.getUsername()}"
                    th:placeholder="${'Passwort von ' + account.getUsername()}" required>
-            <input type="password" th:if="${account.getUsername() == user.getUsername()}" placeholder="Passwort"
+            <input autocomplete="current-password" type="password" th:if="${account.getUsername() == user.getUsername()}" placeholder="Passwort"
                    required>
         </label>
-        <label><input id="new-password" type="password" placeholder="Neues Passwort"></label>
+        <label><input autocomplete="new-password" id="new-password" type="password" placeholder="Neues Passwort"></label>
         <div id="password-weakness">
             <div id="bar"></div>
         </div>
-        <label><input id="email" th:value="${user.getEmail()}" type="email" placeholder="E-Mail"></label>
+        <label><input autocomplete="email" id="email" th:value="${user.getEmail()}" type="email" placeholder="E-Mail"></label>
         <div id="last-bar">
             <label id="buy-in">
                 <input th:if="${user.getRole().name().equals('GUEST')}" min="4" max="5" th:value="${user.getBuyIn()}"
