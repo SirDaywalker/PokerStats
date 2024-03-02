@@ -1,5 +1,6 @@
 import {setErrorMessage} from "./setErrorMessage.js";
-import {calculatePasswordStrength} from "./components/security";
+import {calculatePasswordStrength} from "./components/security.js";
+import {sendDataToServer} from "./components/networking.js";
 
 document.getElementById('profile-image-selector').addEventListener('change', function() {
     let reader = new FileReader();
@@ -41,21 +42,17 @@ form.addEventListener('submit', function(event) {
     formData.append('picture', picture);
     formData.append('email', email);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/auth/register', true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            window.location.href = '/home';
-            return;
+    sendDataToServer(
+        formData,
+        '/api/v1/auth/register',
+        'POST',
+        null,
+        function(text, status, isOK) {
+            if (isOK) {
+                window.location.href = '/home';
+                return;
+            }
+            setErrorMessage(text);
         }
-        if (xhr.status === 400) {
-            setErrorMessage('Ein Fehler ist aufgetreten. Existiert ein Account für Sie bereits?');
-        }
-        else if (xhr.status === 413) {
-            setErrorMessage('Das Bild ist zu groß.');
-        } else {
-            setErrorMessage('Status ' + xhr.status.toString());
-        }
-    };
-    xhr.send(formData);
+    )
 });
