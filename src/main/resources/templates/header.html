@@ -20,12 +20,14 @@
     <div id="account-section">
         <div id="pott-badge" class="badge red-to-orange">
             <div>
+                <!--/*@thymesVar id="pot" type="double"*/-->
                 <span th:text="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pott'"></span>
             </div>
         </div>
         <div id="account-info">
-            <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
-            <span id="name" th:text="${user.getUsername()}"></span>
+            <!--/*@thymesVar id="account" type="de.stammtisch.pokerstats.models.User"*/-->
+            <img id="profile-picture" th:src="${account.getProfilePictureURL()}" alt="">
+            <span th:text="${account.getUsername()}"></span>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
                 <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
             </svg>
