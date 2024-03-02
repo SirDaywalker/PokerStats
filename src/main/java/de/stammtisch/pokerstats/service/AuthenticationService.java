@@ -145,6 +145,9 @@ public class AuthenticationService {
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
             throw new InvalidRequestParameterException("Der Name oder die E-Mail-Adresse ist ungültig.");
         }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new EmailAlreadyInUseException(request.email());
+        }
 
         final User user = new User();
         user.setName(request.name());
