@@ -4,6 +4,7 @@ import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
+import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
@@ -137,12 +138,12 @@ public class AuthenticationService {
         return this.jwtService.generateToken(null, user);
     }
 
-    public String register(@NonNull RegisterRequest request) throws IOException, SQLIntegrityConstraintViolationException {
+    public String register(@NonNull RegisterRequest request) throws IOException {
         if (this.userRepository.existsByName(request.name())) {
-            throw new IllegalArgumentException("Der Name ist bereits vergeben.");
+            throw new InvalidRequestParameterException("Der Name ist bereits vergeben.");
         }
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
-            throw new IllegalArgumentException("Der Name oder die E-Mail-Adresse ist ungültig.");
+            throw new InvalidRequestParameterException("Der Name oder die E-Mail-Adresse ist ungültig.");
         }
 
         final User user = new User();

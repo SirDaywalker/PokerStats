@@ -4,6 +4,7 @@ import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
+import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,14 +35,16 @@ public class AuthenticationController {
         try {
             token = this.authenticationService.register(request);
         } catch (IllegalArgumentException | NullPointerException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Die Anfrage konnte nicht verarbeitet werden.", HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
-            return new ResponseEntity<>("An error occurred while processing the request.", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (SQLIntegrityConstraintViolationException e) {
-            return new ResponseEntity<>("The email is already in use.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Ein Fehler ist aufgetreten.", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (EmailAlreadyInUseException e) {
+            return new ResponseEntity<>("Die E-Mail-Adresse ist bereits in Benutzung.", HttpStatus.BAD_REQUEST);
+        } catch (InvalidRequestParameterException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         response.addCookie(AuthenticationService.generateCookie(token));
-        return new ResponseEntity<>("Successfully registered.", HttpStatus.OK);
+        return new ResponseEntity<>("Erfolgreich registriert.", HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
