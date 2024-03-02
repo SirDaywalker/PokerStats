@@ -16,7 +16,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 
 @RestController
