@@ -105,11 +105,11 @@ header {
     position: absolute;
     transition: all 0.5s ease-in-out;
     width: 100%;
-    border-left: 2px solid black;
-    border-bottom: 2px solid black;
+    border-left: var(--border);
+    border-bottom: var(--border);
     border-bottom-right-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
-    border-right: 2px solid black;
+    border-right: var(--border);
     top: 100%;
     left: calc(0% - 2px);
     z-index: 1;

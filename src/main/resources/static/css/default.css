@@ -3,7 +3,6 @@
     --red_transparent: #df00001A;
     --blue: #0061df;
     --blue_transparent: #0061df1A;
-    --border: 2px solid black;
     --border-radius: 10px;
     --placeholder: #757575
 }
@@ -13,6 +12,7 @@
         --background: #121212;
         --container: #1E1E1E;
         --text: #FFFFFF;
+        --border: 2px solid black;
     }
 }
 
@@ -21,6 +21,7 @@
         --background: #FFFFFF;
         --container: #F0F0F0;
         --text: #000000;
+        --border: 2px solid var(--placeholder);
     }
 }
 
