@@ -228,8 +228,13 @@ public class AuthenticationService {
             throw new EmailAlreadyInUseException(request.email());
         }
         user.setEmail(request.email());
-        token = this.generateToken(account);
         this.userRepository.save(user);
+
+        if (account.getId() == user.getId()) {
+            token = this.generateToken(user);
+        } else {
+            token = this.generateToken(account);
+        }
         return token;
     }
 
