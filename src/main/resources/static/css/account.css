@@ -3,13 +3,9 @@ span.message {
 }
 
 form {
-    background: var(--container);
     position: relative;
     width: 20em;
     margin: 2em auto 0;
-    border-radius: var(--border-radius);
-    border: 2px solid black;
-    padding: 2em;
 }
 
 form > p {
@@ -28,7 +24,7 @@ form > p {
     width: 74px;
     height: 74px;
     border-radius: var(--border-radius);
-    border: 2px solid black;
+    border: var(--border);
     background: var(--background);
     position: relative;
 }
@@ -75,7 +71,7 @@ form > p {
     width: 100%;
     margin: 1em 0;
     background: var(--background);
-    border: 2px solid black;
+    border: var(--border);
     border-radius: var(--border-radius);
     padding: 10px;
 }
@@ -93,7 +89,7 @@ form > label {
     background: var(--background);
     overflow: hidden;
     position: relative;
-    border: 2px solid black;
+    border: var(--border);
     margin: 0 auto 1em;
 }
 
@@ -139,5 +135,5 @@ form button[type=submit] {
     left: 10px;
     top: 50%;
     transform: translate(0, -50%);
-    color: rgb(117, 117, 117);
+    color: var(--placeholder);
 }

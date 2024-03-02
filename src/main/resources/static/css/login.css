@@ -10,12 +10,8 @@ span.message {
 }
 
 form {
-    background: var(--container);
     width: 20em;
     margin: 0 auto;
-    border-radius: var(--border-radius);
-    border: var(--border);
-    padding: 2em;
 }
 
 label {
