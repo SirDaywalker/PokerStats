@@ -3,7 +3,7 @@ package de.stammtisch.pokerstats.service;
 import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.ConfirmationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
@@ -14,16 +14,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class ConfirmationService {
-
     private final ConfirmationRepository confirmationRepository;
-
-    @Autowired
-    public ConfirmationService(
-          ConfirmationRepository confirmationRepository
-    ) {
-        this.confirmationRepository = confirmationRepository;
-    }
 
     public Confirmation createConfirmation(User user) {
         Confirmation confirmation = new Confirmation();

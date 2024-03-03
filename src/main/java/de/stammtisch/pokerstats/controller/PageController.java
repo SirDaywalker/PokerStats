@@ -7,7 +7,7 @@ import de.stammtisch.pokerstats.service.PokerGameService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,21 +19,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
+@AllArgsConstructor
 public class PageController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
     private final PokerGameService pokerGameService;
-
-    @Autowired
-    public PageController(
-            AuthenticationService authenticationService,
-            UserService userService,
-            PokerGameService pokerGameService
-    ) {
-        this.authenticationService = authenticationService;
-        this.userService = userService;
-        this.pokerGameService = pokerGameService;
-    }
 
     @GetMapping("/")
     public ModelAndView landing(@RequestHeader(name = "Cookie", required = false) String cookies) {

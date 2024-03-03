@@ -7,7 +7,7 @@ import de.stammtisch.pokerstats.models.UserGame;
 import de.stammtisch.pokerstats.repository.PokerGameRepository;
 import de.stammtisch.pokerstats.repository.UserGameRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +18,11 @@ import java.util.Set;
 
 
 @Service
+@AllArgsConstructor
 public class PokerGameService {
     private final PokerGameRepository pokerGameRepository;
     private final UserRepository userRepository;
     private final UserGameRepository userGameRepository;
-
-    @Autowired
-    public PokerGameService(
-            PokerGameRepository pokerGameRepository,
-            UserRepository userRepository,
-            UserGameRepository userGameRepository
-    ) {
-        this.pokerGameRepository = pokerGameRepository;
-        this.userRepository = userRepository;
-        this.userGameRepository = userGameRepository;
-    }
 
     public void createGame(@NonNull CreatePokerGameRequest request) {
         final PokerGame game = new PokerGame();

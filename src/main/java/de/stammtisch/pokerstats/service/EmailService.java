@@ -1,18 +1,16 @@
 package de.stammtisch.pokerstats.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-
 @Service
+@AllArgsConstructor
 public class EmailService {
-
-	@Autowired
 	private JavaMailSender mailSender;
 
     @Async

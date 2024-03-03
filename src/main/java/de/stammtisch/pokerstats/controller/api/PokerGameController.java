@@ -2,22 +2,21 @@ package de.stammtisch.pokerstats.controller.api;
 
 import de.stammtisch.pokerstats.controller.dtos.CreatePokerGameRequest;
 import de.stammtisch.pokerstats.service.PokerGameService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/poker-game")
+@AllArgsConstructor
 public class PokerGameController {
     private final PokerGameService pokerGameService;
-
-    @Autowired
-    public PokerGameController(PokerGameService pokerGameService) {
-        this.pokerGameService = pokerGameService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody CreatePokerGameRequest request) {

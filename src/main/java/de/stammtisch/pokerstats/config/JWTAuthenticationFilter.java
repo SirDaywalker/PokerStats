@@ -9,7 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,15 +21,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@AllArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
     private final UserService userService;
-
-    @Autowired
-    public JWTAuthenticationFilter(JWTService jwtService, UserService userService) {
-        this.jwtService = jwtService;
-        this.userService = userService;
-    }
 
     @Override
     protected void doFilterInternal(

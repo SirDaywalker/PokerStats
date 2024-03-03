@@ -1,6 +1,6 @@
 package de.stammtisch.pokerstats.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
@@ -14,18 +14,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfiguration {
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-
-    @Autowired
-    public SecurityConfiguration(
-            JWTAuthenticationFilter jwtAuthenticationFilter,
-            AuthenticationProvider authenticationProvider
-    ) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.authenticationProvider = authenticationProvider;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(@NonNull HttpSecurity httpSecurity) throws Exception {

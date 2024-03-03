@@ -8,7 +8,7 @@ import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,13 +20,9 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@AllArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-
-    @Autowired
-    public AuthenticationController(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@ModelAttribute RegisterRequest request, HttpServletResponse response) {

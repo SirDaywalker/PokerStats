@@ -10,7 +10,7 @@ import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class AuthenticationService {
     private final JWTService jwtService;
     private final PasswordEncoder passwordEncoder;
@@ -33,21 +34,6 @@ public class AuthenticationService {
     private final UserRepository userRepository;
 
     private final ConfirmationService confirmationService;
-
-    @Autowired
-    public AuthenticationService(
-            JWTService jwtService,
-            PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager,
-            UserRepository userRepository,
-            ConfirmationService confirmationService
-    ) {
-        this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.confirmationService = confirmationService;
-    }
 
     /**
      * Generates the Cookie to safe the authentication to access the site.

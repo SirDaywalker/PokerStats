@@ -1,7 +1,7 @@
 package de.stammtisch.pokerstats.config;
 
 import de.stammtisch.pokerstats.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
@@ -13,13 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@AllArgsConstructor
 public class ApplicationConfiguration {
     private final UserService userService;
-
-    @Autowired
-    public ApplicationConfiguration(UserService userService) {
-        this.userService = userService;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
