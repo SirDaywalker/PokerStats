@@ -89,43 +89,6 @@ public class PageController {
         return modelAndView;
     }
 
-    @GetMapping("/new-poker-game")
-    public ModelAndView newPokerGame(@RequestHeader(name = "Cookie") String cookies) {
-        ModelAndView modelAndView = new ModelAndView("new-poker-game");
-        try {
-            User account = this.authenticationService.getUserFromToken(
-                    this.authenticationService.getTokenFromCookie(cookies)
-            );
-            modelAndView.addObject("account", account);
-        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
-            modelAndView.setViewName("login");
-            return modelAndView;
-        }
-        final double pot = this.pokerGameService.getCurrentGamePot();
-        final List<User> users = this.userService.getAllUsers();
-        modelAndView.addObject("users", users);
-        modelAndView.addObject("pot", pot);
-        return modelAndView;
-    }
-
-    @GetMapping("/games/poker")
-    public ModelAndView pokerGames(@RequestHeader(name = "Cookie") String cookies) {
-        ModelAndView modelAndView = new ModelAndView("poker-games");
-        try {
-            User account = this.authenticationService.getUserFromToken(
-                    this.authenticationService.getTokenFromCookie(cookies)
-            );
-            modelAndView.addObject("account", account);
-        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
-            modelAndView.setViewName("login");
-            return modelAndView;
-        }
-        modelAndView.addObject("games", this.pokerGameService.getGames());
-        final double pot = this.pokerGameService.getCurrentGamePot();
-        modelAndView.addObject("pot", pot);
-        return modelAndView;
-    }
-
     @GetMapping("/statistics")
     public ModelAndView statistics(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("statistics");

@@ -67,7 +67,7 @@ form.addEventListener('submit', function(event) {
         body: JSON.stringify(data)
     }).then(response => {
         if (response.ok) {
-            window.location.href = '/games/poker';
+            window.location.href = '/games/poker/';
         } else {
             response.text().then(text => {
                 if (text === "") {
