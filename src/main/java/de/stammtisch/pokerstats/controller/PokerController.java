@@ -59,4 +59,26 @@ public class PokerController {
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }
+
+    @GetMapping("/pot")
+    public ModelAndView pot(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("pot");
+        try {
+            User account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
+        double[] pots = new double[this.pokerGameService.getGames().size()];
+        for (int i = 0; i < pots.length; i++) {
+            final double pot = this.pokerGameService.getCurrentGamePot(i);
+            pots[i] = pot;
+        }
+        modelAndView.addObject("pots", pots);
+        return modelAndView;
+    }
 }

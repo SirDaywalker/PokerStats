@@ -55,9 +55,13 @@ public class PokerGameService {
     }
 
     public double getCurrentGamePot() {
+        return this.getCurrentGamePot(this.getGames().size());
+    }
+
+    public double getCurrentGamePot(int atPosition) {
         double pot = 0;
 
-        for (PokerGame game : this.pokerGameRepository.findAll()) {
+        for (PokerGame game : this.getGames().subList(0, atPosition)) {
             for (UserGame userGame : game.getUsers()) {
                 pot += userGame.getBuyIn();
             }
