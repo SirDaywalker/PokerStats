@@ -5,6 +5,7 @@ import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
+import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.UserRepository;
@@ -32,7 +33,6 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-
     private final ConfirmationService confirmationService;
 
     /**
@@ -144,6 +144,9 @@ public class AuthenticationService {
         );
         user.setEmail(request.email());
         this.userRepository.save(user);
+        
+        //final Confirmation confirmation = this.confirmationService.createConfirmation(user);
+        //this.confirmationService.sendConfirmationMail(user, confirmation);
 
         final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
                 System.getProperty("user.dir"),

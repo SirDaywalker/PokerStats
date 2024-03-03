@@ -16,7 +16,9 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class ConfirmationService {
-    private final ConfirmationRepository confirmationRepository;
+    
+	private final ConfirmationRepository confirmationRepository;
+    private final EmailService emailService;
 
     public Confirmation createConfirmation(User user) {
         Confirmation confirmation = new Confirmation();
@@ -28,16 +30,8 @@ public class ConfirmationService {
         return confirmationRepository.save(confirmation);
     }
 
-    public void sendConfirmationMail(String username, String token) {
-        String mail;
-        try {
-            mail = StreamUtils.copyToString(new ClassPathResource("mails/ConfirmationMail.txt").getInputStream(), Charset.defaultCharset());
-        } catch (IOException e) {
-            return;
-        }
-        mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/register/confirm?token=" + token);
-        String date = LocalDate.now().toString();
-        mail = mail.replace("{DATE}", "");
+    public void sendConfirmationMail(User user, Confirmation confirmation) {
+    	//900000ms = 15min (expiration)
+        this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken(), confirmation.getId()+900000);
     }
 }
