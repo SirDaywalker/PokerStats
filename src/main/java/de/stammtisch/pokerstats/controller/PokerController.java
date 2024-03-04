@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -72,13 +73,21 @@ public class PokerController {
             modelAndView.setViewName("login");
             return modelAndView;
         }
+        final int size = this.pokerGameService.getGames().size();
+        final double[] potProgress = new double[size];
+        final int[] playerAmount = new int[size];
 
-        double[] pots = new double[this.pokerGameService.getGames().size()];
-        for (int i = 0; i < pots.length; i++) {
+        for (int i = 0; i < size; i++) {
             final double pot = this.pokerGameService.getCurrentGamePot(i);
-            pots[i] = pot;
+            potProgress[i] = pot;
+            playerAmount[i] = this.pokerGameService.getGames().get(i).getUsers().size();
         }
-        modelAndView.addObject("pots", pots);
+        double pot = this.pokerGameService.getCurrentGamePot();
+
+        modelAndView.addObject("potProgress", Arrays.toString(potProgress));
+        modelAndView.addObject("playerAmount", Arrays.toString(playerAmount));
+        modelAndView.addObject("size", size);
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 }
