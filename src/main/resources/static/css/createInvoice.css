@@ -16,6 +16,7 @@ form {
     border-radius: 10px;
     border: 2px solid black;
     padding: 2em;
+    max-height: 688px;
 }
 
 label {
