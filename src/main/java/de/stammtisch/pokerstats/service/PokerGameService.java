@@ -51,7 +51,11 @@ public class PokerGameService {
     }
 
     public List<PokerGame> getGames() {
-        return this.pokerGameRepository.findAll();
+        List<PokerGame> games = this.pokerGameRepository.findAll();
+
+        // Sort games by id
+        games.sort((a, b) -> (int) (a.getId() - b.getId()));
+        return games;
     }
 
     public double getCurrentGamePot() {
