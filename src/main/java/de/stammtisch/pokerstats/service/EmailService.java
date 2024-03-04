@@ -19,7 +19,6 @@ public class EmailService {
 
 	private JavaMailSender mailSender;
 
-    @Async
     public void send(String emailAddress, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -28,7 +27,7 @@ public class EmailService {
             helper.setText(email, true);
             helper.setTo(emailAddress);
             helper.setSubject(subject);
-            helper.setFrom("stammtischhub@gmail.com");
+            helper.setFrom("mugglemail420@gmail.com");
             this.mailSender.send(mimeMessage);
         } catch (MessagingException e) {
         }
@@ -42,9 +41,7 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/register/confirm?token=" + token);
-        String[] date = new Date(expirationDate).toString().split(" ");
-        mail = mail.replace("{DATE}", date[1] + " " + date[2] + ", " + date[5] + " " + date[3]);
+        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/confirm?token=" + token);
         
         this.send(emailAddress, mail, "Email Bestaetigung");
     }
