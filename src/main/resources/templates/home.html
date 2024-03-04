@@ -14,7 +14,7 @@
     <header th:replace="~{header.html :: header}"></header>
 
     <div id="card-centerbox">
-        <a href="#">
+        <a class="card-link-wrapper" href="#">
             <div class="tilting-card-wrapper">
                 <div class="mouse-position-tracker"></div>
                 <div class="mouse-position-tracker"></div>
@@ -31,11 +31,14 @@
                         <img th:src="@{/assets/ace_of_spades.svg}" alt="">
                         <img class="background" th:src="@{/assets/background.svg}" alt="">
                     </div>
+                    <div class="name-tag">
+                        <span>Jonas stinkt</span>
+                    </div>
                 </div>
             </div>
         </a>
 
-        <a href="/games/poker/new">
+        <a class="card-link-wrapper" href="/games/poker/new">
             <div class="tilting-card-wrapper">
                 <div class="mouse-position-tracker"></div>
                 <div class="mouse-position-tracker"></div>
@@ -52,11 +55,14 @@
                         <img th:src="@{/assets/king_of_hearts.svg}" alt="">
                         <img class="background" th:src="@{/assets/background.svg}" alt="">
                     </div>
+                    <div class="name-tag">
+                        <span>Neue Pokerrunde</span>
+                    </div>
                 </div>
             </div>
         </a>
 
-        <a href="/statistics">
+        <a class="card-link-wrapper" href="/statistics">
             <div class="tilting-card-wrapper">
                 <div class="mouse-position-tracker"></div>
                 <div class="mouse-position-tracker"></div>
@@ -73,11 +79,14 @@
                         <img th:src="@{/assets/queen_of_clubs.svg}" alt="">
                         <img class="background" th:src="@{/assets/background.svg}" alt="">
                     </div>
+                    <div class="name-tag">
+                        <span>Statistiken</span>
+                    </div>
                 </div>
             </div>
         </a>
 
-        <a href="#">
+        <a class="card-link-wrapper" href="#">
             <div class="tilting-card-wrapper">
                 <div class="mouse-position-tracker"></div>
                 <div class="mouse-position-tracker"></div>
@@ -93,6 +102,9 @@
                     <div id="new-poker-round" class="card">
                         <img th:src="@{/assets/red_joker.svg}" alt="">
                         <img class="background" th:src="@{/assets/background.svg}" alt="">
+                    </div>
+                    <div class="name-tag">
+                        <span>Jonas stinkt sehr</span>
                     </div>
                 </div>
             </div>
