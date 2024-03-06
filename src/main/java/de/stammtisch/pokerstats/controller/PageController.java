@@ -49,7 +49,7 @@ public class PageController {
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
         }
-        final double pot = this.pokerGameService.getCurrentGamePot();
+        final double pot = this.pokerGameService.getCurrentPot();
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }
@@ -84,7 +84,7 @@ public class PageController {
         } else {
             modelAndView.addObject("user", account);
         }
-        final double pot = this.pokerGameService.getCurrentGamePot();
+        final double pot = this.pokerGameService.getCurrentPot();
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }

@@ -58,20 +58,26 @@ public class PokerGameService {
         return games;
     }
 
-    public double getCurrentGamePot() {
-        return this.getCurrentGamePot(this.getGames().size());
+    public double getCurrentPot() {
+        if (this.getGames().isEmpty()) {
+            return 0;
+        }
+        double pot = this.getPot(this.getGames().get(this.getGames().size() - 1)) / 2;
+        pot = Math.round(pot * 100.0) / 100.0;
+        return pot;
     }
 
-    public double getCurrentGamePot(int atPosition) {
-        double pot = 0;
+    public double getPot(PokerGame game) {
+        List<PokerGame> games = this.getGames();
 
-        for (PokerGame game : this.getGames().subList(0, atPosition)) {
-            for (UserGame userGame : game.getUsers()) {
+        double pot = 0;
+        for (PokerGame g : games.subList(0, games.indexOf(game) + 1)) {
+            pot = Math.round(pot * 100.0) / 100.0;
+            pot /= 2;
+            for (UserGame userGame : g.getUsers()) {
                 pot += userGame.getBuyIn();
             }
-            pot /= 2;
         }
-        // Round pot to 2 decimal places
-        return Math.round(pot * 100.0) / 100.0;
+        return pot;
     }
 }

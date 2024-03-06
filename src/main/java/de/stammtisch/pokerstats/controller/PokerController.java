@@ -1,5 +1,6 @@
 package de.stammtisch.pokerstats.controller;
 
+import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.PokerGameService;
@@ -37,7 +38,7 @@ public class PokerController {
             return modelAndView;
         }
         modelAndView.addObject("games", this.pokerGameService.getGames());
-        final double pot = this.pokerGameService.getCurrentGamePot();
+        final double pot = this.pokerGameService.getCurrentPot();
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }
@@ -54,7 +55,7 @@ public class PokerController {
             modelAndView.setViewName("login");
             return modelAndView;
         }
-        final double pot = this.pokerGameService.getCurrentGamePot();
+        final double pot = this.pokerGameService.getCurrentPot();
         final List<User> users = this.userService.getAllUsers();
         modelAndView.addObject("users", users);
         modelAndView.addObject("pot", pot);
@@ -73,20 +74,23 @@ public class PokerController {
             modelAndView.setViewName("login");
             return modelAndView;
         }
-        final int size = this.pokerGameService.getGames().size();
-        final double[] potProgress = new double[size];
-        final int[] playerAmount = new int[size];
+        List<PokerGame> games = this.pokerGameService.getGames();
+        final double[] gamePots = new double[games.size()];
+        final double[] gamePayOuts = new double[games.size()];
+        final int[] playerAmount = new int[games.size()];
 
-        for (int i = 0; i < size; i++) {
-            final double pot = this.pokerGameService.getCurrentGamePot(i);
-            potProgress[i] = pot;
-            playerAmount[i] = this.pokerGameService.getGames().get(i).getUsers().size();
+        for (int i = 0; i < games.size(); i++) {
+            final PokerGame game = games.get(i);
+            gamePots[i] = this.pokerGameService.getPot(game);
+            gamePayOuts[i] = gamePots[i] / 2;
+            playerAmount[i] = game.getUsers().size();
         }
-        double pot = this.pokerGameService.getCurrentGamePot();
+        final double pot = this.pokerGameService.getCurrentPot();
 
-        modelAndView.addObject("potProgress", Arrays.toString(potProgress));
+        modelAndView.addObject("gamePots", Arrays.toString(gamePots));
         modelAndView.addObject("playerAmount", Arrays.toString(playerAmount));
-        modelAndView.addObject("size", size);
+        modelAndView.addObject("gamePayOuts", Arrays.toString(gamePayOuts));
+        modelAndView.addObject("size", games.size());
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }
