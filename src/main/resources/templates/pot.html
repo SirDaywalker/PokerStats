@@ -15,9 +15,7 @@
 <header th:replace="~{header.html :: header}"></header>
     <div id="container" class="container">
         <p>Bisherige Einsätze</p>
-        <canvas th:data-size="${size}" th:data-player="${playerAmount}"  th:data-pots="${gamePots}"
-                th:data-payouts="${gamePayOuts}" id="history">
-        </canvas>
+        <canvas id="history"></canvas>
     </div>
     <script th:src="@{/js/pot.js}" type="module"></script>
 </body>
