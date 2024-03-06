@@ -1,11 +1,8 @@
 package de.stammtisch.pokerstats.service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import lombok.AllArgsConstructor;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Date;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,12 +10,17 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
+
 @Service
 @AllArgsConstructor
 public class EmailService {
 
 	private JavaMailSender mailSender;
 
+	@Async
     public void send(String emailAddress, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -36,24 +38,24 @@ public class EmailService {
     public void sendConfirmationMail(String username, String emailAddress, String token, long expirationDate) {
     	String mail;
         try {
-            mail = StreamUtils.copyToString(new ClassPathResource("mails/ConfirmationMail.txt").getInputStream(), Charset.defaultCharset());
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/ConfirmationMail.html").getInputStream(), Charset.defaultCharset());
         } catch (IOException e) {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/confirm?token=" + token);
+        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/enable?confirmation=" + token);
         
-        this.send(emailAddress, mail, "Email Bestaetigung");
+        this.send(emailAddress, mail, "Email Bestätigung");
     }
     
     public void sendPasswordResetMail(String username, String emailAddress, String token, long expirationDate) {
     	String mail;
         try {
-            mail = StreamUtils.copyToString(new ClassPathResource("mails/PasswordResetMail.txt").getInputStream(), Charset.defaultCharset());
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/PasswordResetMail.html").getInputStream(), Charset.defaultCharset());
         } catch (IOException e) {
             return;
         }
         
-        this.send(emailAddress, mail, "Passwort Zuruecksetzung");
+        this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }
 }

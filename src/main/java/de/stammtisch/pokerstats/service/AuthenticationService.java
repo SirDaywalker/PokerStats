@@ -1,17 +1,11 @@
 package de.stammtisch.pokerstats.service;
 
-import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
-import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
-import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
-import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
-import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
-import de.stammtisch.pokerstats.models.Confirmation;
-import de.stammtisch.pokerstats.models.Role;
-import de.stammtisch.pokerstats.models.User;
-import de.stammtisch.pokerstats.repository.UserRepository;
-import io.jsonwebtoken.JwtException;
-import jakarta.servlet.http.Cookie;
-import lombok.AllArgsConstructor;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,11 +14,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
+import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
+import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
+import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
+import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
+import de.stammtisch.pokerstats.models.Confirmation;
+import de.stammtisch.pokerstats.models.Role;
+import de.stammtisch.pokerstats.models.User;
+import de.stammtisch.pokerstats.repository.ConfirmationRepository;
+import de.stammtisch.pokerstats.repository.UserRepository;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.Cookie;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +37,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final ConfirmationRepository confirmationRepository;
     private final ConfirmationService confirmationService;
 
     /**
@@ -156,6 +161,27 @@ public class AuthenticationService {
         Files.createDirectories(onDisk.getParentFile().toPath());
         request.picture().transferTo(onDisk);
         return this.generateToken(user);
+    }
+    
+    public String enableUser(@NonNull String confirmation) {
+		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
+		final User user = conf.getUser();
+		
+		long curTime = System.currentTimeMillis();
+		if(curTime - conf.getId() > 900000) {
+			throw new ConfirmationTimeExceededException(); 
+		}
+		if(user.isEnabled()) {
+			throw new UserAlreadyEnabledException();
+		}
+			
+		conf.setValidatedAt(curTime);
+		this.confirmationRepository.save(conf);
+		
+		user.setEnabled(true);
+		this.userRepository.save(user);
+		
+		return this.generateToken(user);
     }
 
     public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {

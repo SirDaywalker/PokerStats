@@ -1,17 +1,13 @@
 package de.stammtisch.pokerstats.service;
 
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
 import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -34,4 +30,5 @@ public class ConfirmationService {
     	//900000ms = 15min (expiration)
         this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken(), confirmation.getId()+900000);
     }
+    
 }

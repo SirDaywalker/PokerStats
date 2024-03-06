@@ -3,8 +3,10 @@ package de.stammtisch.pokerstats.controller.api;
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
+import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,6 +42,23 @@ public class AuthenticationController {
         }
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Erfolgreich registriert.", HttpStatus.OK);
+    }
+    
+    @PostMapping("/enable")
+    public ResponseEntity<String> enableUser(@RequestParam("confirmation") String confirmation, HttpServletResponse response){
+    	final String token;
+    	try {
+    		token = this.authenticationService.enableUser(confirmation);
+    	} catch (ConfirmationTimeExceededException e) {
+    		return new ResponseEntity<>("Bestätigungszeit ist abgelaufen.", HttpStatus.BAD_REQUEST);
+    	} catch (UserAlreadyEnabledException e) {
+    		return new ResponseEntity<>("Benutzer Email wurde bereits bestätigt.", HttpStatus.BAD_REQUEST);
+    	} catch (NoSuchElementException e) {
+    		return new ResponseEntity<>("Token ist fehlerhaft.", HttpStatus.BAD_REQUEST);
+    	}
+    	
+    	response.addCookie(AuthenticationService.generateCookie(token));
+		return new ResponseEntity<>("Benutzer Email wurde erfolgreich bestätigt.", HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
