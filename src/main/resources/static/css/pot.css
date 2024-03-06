@@ -1,8 +1,10 @@
 #container {
-    margin: 2em 2em 0;
+    margin: 2em auto 0;
+    max-width: 1000px;
 }
 
 #container > p {
     font-size: 1.8rem;
+    margin: 0 0 2em;
 }
 

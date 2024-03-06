@@ -9,10 +9,11 @@
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/components/card.css}" rel="stylesheet">
     <link th:href="@{/css/components/badges.css}" rel="stylesheet">
+    <link th:href="@{/css/components/container.css}" rel="stylesheet">
 </head>
 <body>
 <header th:replace="~{header.html :: header}"></header>
-    <div id="container">
+    <div id="container" class="container">
         <p>Bisherige Einsätze</p>
         <canvas th:data-size="${size}" th:data-player="${playerAmount}"  th:data-pots="${gamePots}"
                 th:data-payouts="${gamePayOuts}" id="history">
