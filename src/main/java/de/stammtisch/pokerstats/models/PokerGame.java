@@ -31,4 +31,14 @@ public class PokerGame {
     public void prePersist() {
         this.id = System.currentTimeMillis();
     }
+
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof PokerGame other)) {
+            return false;
+        }
+        return other.getId().equals(this.id);
+    }
 }
