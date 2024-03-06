@@ -70,7 +70,7 @@ header {
     border-bottom-left-radius: 0;
 }
 
-#account-section:hover svg {
+#account-info:hover svg {
     transform: scale(1,-1);
     transition: all 0.5s ease-in-out;
 }
@@ -145,7 +145,7 @@ header {
     color: var(--red);
 }
 
-#account-section:hover #account-popup {
+#account-info:hover #account-popup {
     opacity: 1;
     visibility: visible;
     border-top-right-radius: 0;
