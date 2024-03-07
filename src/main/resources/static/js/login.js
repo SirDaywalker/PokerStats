@@ -3,14 +3,6 @@ import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
 
-document.getElementById('confirmation').addEventListener('click', function(event) {
-    window.location.href = '/newConfirmation';
-})
-
-document.getElementById('resetPassword').addEventListener('click', function(event) {
-    window.location.href = '/resetPassword';
-})
-
 loginForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const data = {

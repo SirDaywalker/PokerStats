@@ -2,6 +2,7 @@ package de.stammtisch.pokerstats.controller.api;
 
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
+import de.stammtisch.pokerstats.controller.dtos.PasswordOrConfirmationRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
@@ -44,14 +45,14 @@ public class AuthenticationController {
         return new ResponseEntity<>("Erfolgreich registriert.", HttpStatus.OK);
     }
 
-    @GetMapping("requestConfirmation")
-    public ResponseEntity<String> requestConfirmation(){
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    @PutMapping("/requestConfirmation")
+    public ResponseEntity<String> requestConfirmation(@RequestBody PasswordOrConfirmationRequest request){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/resetPassword")
-    public ResponseEntity<String> resetPassword(){
-        return new ResponseEntity<>("Noch nicht implementiert.",HttpStatus.NOT_IMPLEMENTED);
+    @PutMapping("/requestPasswordReset")
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordOrConfirmationRequest request){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/confirm")

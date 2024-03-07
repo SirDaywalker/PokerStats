@@ -28,9 +28,17 @@ input {
     height: 22px;
 }
 
-form button[type="submit"] {
+form button {
     width: 50%;
     margin: 0 auto 2em;
+}
+
+form button[type="submit"] {
+	padding: 10px 0px;
+}
+
+form button[type="button"] {
+	margin-bottom: 1em;
 }
 
 a {
