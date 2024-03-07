@@ -133,4 +133,17 @@ public class PageController {
         modelAndView.addObject("users", users);
         return modelAndView;
     }
+
+    @GetMapping("/confirmInvoice")
+    public String confirmInvoice() {
+        return "confirmInvoice";
+    }
+
+    @GetMapping("/resetPassword")
+    public String resetPassword() {
+        return "resetPassword";
+    }
+
+    @GetMapping("/newConfirmation")
+    public String newConfirmation() { return "newConfirmation"; }
 }

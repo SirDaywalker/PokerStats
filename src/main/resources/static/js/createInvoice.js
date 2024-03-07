@@ -14,7 +14,6 @@ for (let user of users_element.children) {
             selected_users.removeChild(element);
             users_element.appendChild(element);
         }
-        updatePot();
 
         if (users_element.children.length === 0) {
             selected_users.style.borderBottom = 'none';
@@ -35,17 +34,12 @@ form.addEventListener('submit', function(event) {
             users.push(user.children[2].innerText);
     }
 
-    const data = {
-            players: users,
-            notes: document.getElementById('notes').value
-    };
+    const amount = document.getElementById('amount');
+    const due = document.getElementById('due');
+    const interest = document.getElementById('interest');
+    const interestIntervalDays = document.getElementById('interestIntervalDays');
 
-    const amount = document.getElementByID('amount');
-    const due = document.getElementByID('due');
-    const interest = document.getElementByID('interest');
-    const interestIntervalDays = document.getElementByID('interestIntervalDays');
-
-    const formDate = new FormData();
+    const formData = new FormData();
     formData.append('amount', amount);
     formData.append('due', due);
     formData.append('interest', interest);
@@ -55,7 +49,7 @@ form.addEventListener('submit', function(event) {
     xhr.open('POST', '/api/v1/auth/createInvoice', true);
     xhr.onload = function() {
         if (xhr.status === 200) {
-            window.location.href = '/home';
+            window.location.href = '/confirmInvoice';
             return;
         }
         if (xhr.status === 400) {
