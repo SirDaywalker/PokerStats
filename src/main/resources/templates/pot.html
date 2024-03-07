@@ -13,9 +13,20 @@
 </head>
 <body>
 <header th:replace="~{header.html :: header}"></header>
-    <div id="container" class="container">
-        <p>Bisherige Einsätze</p>
-        <canvas id="history"></canvas>
+    <div id="container">
+        <div class="container">
+            <p>Spielverläufe</p>
+            <span class="message"></span>
+            <canvas id="history"></canvas>
+        </div>
+        <div class="container">
+            <span class="message"></span>
+            <canvas id="best-players"></canvas>
+        </div>
+        <div class="container">
+            <span class="message"></span>
+            <canvas id="top-profit"></canvas>
+        </div>
     </div>
     <script th:src="@{/js/pot.js}" type="module"></script>
 </body>
