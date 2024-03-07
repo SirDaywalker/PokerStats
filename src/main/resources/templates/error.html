@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Error</title>
+    <title>Error - PokerStats</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/card.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/css/error.css}" rel="stylesheet"/>
 </head>
+
 <body>
-    ERROR
-    YOU FUCKED UP BADLY
+    <div class="container">
+        <h1>Ups... Da ist etwas schief gelaufen!</h1>
+        <div id="card" class="card flipped">
+            <img th:src="@{/assets/error.jpg}" alt="">
+            <img class="background" th:src="@{/assets/background.svg}" alt="">
+        </div>
+        <span id="message">YOU fucked up badly!</span>
+        <a href="/"><button class="button filled red" type="button">Bring mich zurück</button></a>
+    </div>
+    <script type="module" th:src="@{/js/error.js}"></script>
 </body>
 </html>
