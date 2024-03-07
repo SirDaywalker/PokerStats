@@ -54,7 +54,6 @@ header {
     border: var(--border);
     border-radius: var(--border-radius);
     height: 70%;
-    gap: 10%;
     padding: 0 1em 0 0.5em;
     min-width: max-content;
     width: min-content;

@@ -1,29 +1,33 @@
 <header>
-    <div id="icon">
-        <div id="text">
-            <span id="stammtisch">Stammtisch's</span>
-            <br>
-            <span id="poker-stats">PokerStats</span>
-        </div>
-        <div id="icon-cards">
-            <div class="card">
-                <img src="" alt="">
-                <img class="background" th:src="@{/assets/background.svg}" alt="">
+    <a href="/home">
+        <div id="icon">
+            <div id="text">
+                <span id="stammtisch">Stammtisch's</span>
+                <br>
+                <span id="poker-stats">PokerStats</span>
             </div>
-            <div class="card">
-                <img src="" alt="">
-                <img class="background" th:src="@{/assets/background.svg}" alt="">
+            <div id="icon-cards">
+                <div class="card">
+                    <img src="" alt="">
+                    <img class="background" th:src="@{/assets/background.svg}" alt="">
+                </div>
+                <div class="card">
+                    <img src="" alt="">
+                    <img class="background" th:src="@{/assets/background.svg}" alt="">
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 
     <div id="account-section">
-        <div id="pott-badge" class="badge red-to-orange">
-            <div>
-                <!--/*@thymesVar id="pot" type="double"*/-->
-                <span th:text="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pott'"></span>
+        <a href="/games/poker/pot">
+            <div id="pott-badge" class="badge red-to-orange">
+                <div>
+                    <!--/*@thymesVar id="pot" type="double"*/-->
+                    <span th:text="${#numbers.formatCurrency(pot).replace('¤', '€')} + ' im Pott'"></span>
+                </div>
             </div>
-        </div>
+        </a>
         <div id="account-info">
             <!--/*@thymesVar id="account" type="de.stammtisch.pokerstats.models.User"*/-->
             <img id="profile-picture" th:src="${account.getProfilePictureURL()}" alt="">
