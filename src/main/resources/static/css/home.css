@@ -3,9 +3,13 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2em;
+    gap: 5em;
     padding: 2em;
     margin-top: 10%;
+}
+
+#card-centerbox .card > img{
+    border-radius: 13px;
 }
 
 #card-centerbox > a {
@@ -144,4 +148,52 @@
 
 .name-tag > span {
     margin-top: 2%;
+}
+
+#card-stack, #card-stack > .card,  #card-stack > .card > img{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 400px;
+    aspect-ratio: 223 / 324;
+
+    transition: rotate 350ms ease;
+}
+
+#card-stack > div:nth-child(1) {
+    left: 5px;
+    top: -1px;
+    rotate: 1deg;
+    z-index: -1;
+}
+
+#card-stack > div:nth-child(2) {
+    left: 10px;
+    top: -2px;
+    rotate: 3deg;
+    z-index: -2;
+}
+
+#card-stack > div:nth-child(3) {
+    left: 15px;
+    top: -3px;
+    rotate: 5deg;
+    z-index: -3;
+}
+
+.card-link-wrapper:hover #card-stack > div {
+    transition: rotate 350ms ease;
+}
+
+.card-link-wrapper:hover #card-stack > div:nth-child(1) {
+    rotate: 4deg;
+}
+
+.card-link-wrapper:hover #card-stack > div:nth-child(2) {
+    rotate: 7deg;
+}
+
+.card-link-wrapper:hover #card-stack > div:nth-child(3) {
+    rotate: 9deg;
 }
