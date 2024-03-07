@@ -138,4 +138,12 @@ public class PageController {
     public String confirmInvoice() {
         return "confirmInvoice";
     }
+
+    @GetMapping("/resetPassword")
+    public String resetPassword() {
+        return "resetPassword";
+    }
+
+    @GetMapping("/newConfirmation")
+    public String newConfirmation() { return "newConfirmation"; }
 }
