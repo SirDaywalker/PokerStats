@@ -3,11 +3,6 @@ import {sendDataToServer} from "./components/networking.js";
 
 const resetPasswordForm = document.getElementById('resetPassword-form');
 
-document.getElementById('back').addEventListener('click', function(event) {
-	event.preventDefault();
-	window.location.href = '/login';
-});
-
 resetPasswordForm.addEventListener('submit', function(event) {
 	event.preventDefault();
 	

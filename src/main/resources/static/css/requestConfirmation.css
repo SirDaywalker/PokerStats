@@ -37,10 +37,6 @@ form button[type="submit"] {
 	padding: 10px 0px;
 }
 
-form button[type="button"] {
-	margin-bottom: 1em;
-}
-
 a {
     display: block;
 }

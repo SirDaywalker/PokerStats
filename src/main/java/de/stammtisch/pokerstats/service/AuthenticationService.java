@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
+import de.stammtisch.pokerstats.controller.dtos.PasswordOrConfirmationRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
@@ -160,6 +161,16 @@ public class AuthenticationService {
         ));
         Files.createDirectories(onDisk.getParentFile().toPath());
         request.picture().transferTo(onDisk);
+        return this.generateToken(user);
+    }
+    
+    public String requestConfirmation(@NonNull PasswordOrConfirmationRequest request) {
+    	final User user = this.userRepository.findByName(request.name()).orElseThrow();
+    	if(user.isEnabled()) {
+    		throw new UserAlreadyEnabledException();
+    	}
+    	final Confirmation confirmation = this.confirmationService.createConfirmation(user);
+        this.confirmationService.sendConfirmationMail(user, confirmation);
         return this.generateToken(user);
     }
     

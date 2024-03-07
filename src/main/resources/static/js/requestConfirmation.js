@@ -3,11 +3,6 @@ import {sendDataToServer} from "./components/networking.js";
 
 const newConfirmationForm = document.getElementById('newConfirmation-form');
 
-document.getElementById('back').addEventListener('click', function(event) {
-	event.preventDefault();
-	window.location.href = '/login';
-});
-
 newConfirmationForm.addEventListener('submit', function(event) {
 	event.preventDefault();
 	

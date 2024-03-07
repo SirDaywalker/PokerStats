@@ -46,13 +46,31 @@ public class AuthenticationController {
     }
 
     @PutMapping("/requestConfirmation")
-    public ResponseEntity<String> requestConfirmation(@RequestBody PasswordOrConfirmationRequest request){
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> requestConfirmation(@RequestBody PasswordOrConfirmationRequest request, HttpServletResponse response){
+        final String token;
+        try {
+        	token = this.authenticationService.requestConfirmation(request);
+        } catch (UserAlreadyEnabledException e) {
+        	return new ResponseEntity<>("Benutzer Email wurde bereits bestätigt.", HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException e) {
+    		return new ResponseEntity<>("Benutzer konnte nicht gefunden werden.", HttpStatus.BAD_REQUEST);
+    	}
+        
+        response.addCookie(AuthenticationService.generateCookie(token));
+		return new ResponseEntity<>("Bestätigunsmail wurde gesendet.", HttpStatus.OK);
     }
 
     @PutMapping("/requestPasswordReset")
-    public ResponseEntity<String> resetPassword(@RequestBody PasswordOrConfirmationRequest request){
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordOrConfirmationRequest request, HttpServletResponse response){
+    	final String token;
+        try {
+        	token = this.authenticationService.requestConfirmation(request);
+        } catch (NoSuchElementException e) {
+    		return new ResponseEntity<>("Benutzer konnte nicht gefunden werden.", HttpStatus.BAD_REQUEST);
+    	}
+        
+        response.addCookie(AuthenticationService.generateCookie(token));
+		return new ResponseEntity<>("Mail zur Passwortzurücksetzung wurde gesendet.", HttpStatus.OK);
     }
 
     @GetMapping("/confirm")
