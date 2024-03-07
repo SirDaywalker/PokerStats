@@ -9,8 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -103,13 +101,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
-    }
-
-    /**
-     * @return the name of the user without any special characters.
-     */
-    public String getNamePathSave() {
-        return URLEncoder.encode(this.name, StandardCharsets.UTF_8);
     }
 
     /**
