@@ -22,15 +22,6 @@ resetPasswordForm.addEventListener('submit', function(event) {
         'application/json',
         function(response, status, isOK) {
             if (isOK) {
-				if (Notification.permission === "granted") {
-			        alert("Email zur Passwortzurücksetzung wurde gesendet!");
-			    } else if (Notification.permission !== "denied") {
-			        Notification.requestPermission().then(function(permission) {
-			            if (permission === "granted") {
-			                alert("Email zur Passwortzurücksetzung wurde gesendet!");
-			            }
-			        });
-			    }
                 window.location.href = '/login';
             } else {
                 setErrorMessage(response);
