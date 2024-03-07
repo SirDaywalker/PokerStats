@@ -21,7 +21,6 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                 datasets: [
                     {
                         label: "Pot",
-                        data: data[0],
                         data: Object.values(data).map((x) => x.pot),
                         borderColor: "#df00001A",
                         backgroundColor: "#df0000",
@@ -31,19 +30,39 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                         backgroundColor: "#0061df",
                         borderColor: "#0061df1A",
 
-                        // Use the length of the array in data[2] as the x-axis.
                         // Use the length of the array in data.users as the x-axis.
                         data: Object.values(data).map((x) => x.users.length),
                     },
                     {
                         label: "Payout",
-                        data: data[1],
                         data: Object.values(data).map((x) => x.payout),
                         backgroundColor: "#64df00",
                         borderColor: "#64df001A",
                     }
                 ]
             },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+
+                                if (label === "Players") {
+                                    function compareLength(a, b) {
+                                        return a.length - b.length;
+                                    }
+
+                                    // Return all users and sort them by length.
+                                    return [...data[context.parsed.x].users].sort(compareLength);
+                                }
+                                // Add the currency to the pot and payout. in euro
+                                return label + ': €' + context.parsed.y;
+                            }
+                        }
+                    }
+                }
+            }
         });
     }
 );
