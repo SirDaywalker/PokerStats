@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/games/poker")
@@ -33,24 +31,23 @@ public class PokerGameController {
     @GetMapping("/stats")
     public ResponseEntity<String> stats() {
         List<PokerGame> games = this.pokerGameService.getGames();
-        final double[] pots = new double[games.size()];
-        final double[] payouts = new double[games.size()];
-        final ArrayList<String[]> users = new ArrayList<>(games.size());
+        Map<Integer, Map<Object, Object>> stats = new HashMap<>();
 
-        for (int i = 0; i < games.size(); i++) {
-            PokerGame game = games.get(i);
-
+        for (PokerGame game : games) {
             double pot = this.pokerGameService.getPot(game);
-            pots[i] = pot;
-            payouts[i] = Math.round((pot / 2) * 100.0) / 100.0;
+            double payout = Math.round((pot / 2) * 100.0) / 100.0;
 
-            ArrayList<String> gameUsers = new ArrayList<>();
+            ArrayList<String> users = new ArrayList<>();
             for (UserGame userGame : game.getUsers()) {
-                gameUsers.add(userGame.getUser().getUsername());
+                users.add(userGame.getUser().getUsername());
             }
-            users.add(gameUsers.toArray(new String[0]));
+            stats.put(
+                    games.indexOf(game),
+                    Map.of("pot", pot, "payout", payout, "users", users)
+            );
         }
         Gson gson = new Gson();
-        return new ResponseEntity<>(gson.toJson(new Object[]{pots, payouts, users}), HttpStatus.OK);
+        String json = gson.toJson(stats);
+        return new ResponseEntity<>(json, HttpStatus.OK);
     }
 }

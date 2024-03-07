@@ -10,7 +10,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
             return;
         }
 
-        let label = [...Array(data[0].length).keys()].map((x) => x + 1);
+        let label = Object.keys(data).map((x) => parseInt(x) + 1);
 
         new Chart("history", {
             type: "line",
@@ -21,6 +21,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                     {
                         label: "Pot",
                         data: data[0],
+                        data: Object.values(data).map((x) => x.pot),
                         borderColor: "#df00001A",
                         backgroundColor: "#df0000",
                     },
@@ -30,11 +31,13 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                         borderColor: "#0061df1A",
 
                         // Use the length of the array in data[2] as the x-axis.
-                        data: data[2].map((x) => x.length),
+                        // Use the length of the array in data.users as the x-axis.
+                        data: Object.values(data).map((x) => x.users.length),
                     },
                     {
                         label: "Payout",
                         data: data[1],
+                        data: Object.values(data).map((x) => x.payout),
                         backgroundColor: "#64df00",
                         borderColor: "#64df001A",
                     }
