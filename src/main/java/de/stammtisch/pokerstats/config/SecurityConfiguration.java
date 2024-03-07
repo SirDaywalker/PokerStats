@@ -28,6 +28,8 @@ public class SecurityConfiguration {
                            "/",
                            "/login",
                            "/register",
+                           "/resetPassword",
+                           "/newConfirmation",
                            "/error",
                            "/api/v1/auth/register",
                            "/api/v1/auth/authenticate",

@@ -16,9 +16,9 @@
         <label><input autocomplete="name" id="name" type="text" placeholder="Vollständiger Name" required></label>
         <label><input autocomplete="current-password" id="password" type="password" placeholder="Passwort" required></label>
         <button class="button filled red" type="submit">Login</button>
-        <a href="/api/v1/auth/resetPassword">Passwort vergessen?</a><br>
+        <a href="/resetPassword" id="resetPassword">Passwort vergessen?</a><br>
         <a href="/register">Noch nicht registriert?</a><br>
-        <a href="/api/v1/auth/requestConfirmation" id="confirmation">Keine Best&aumltigungs Email erhalten?</a>
+        <a href="/newConfirmation" id="confirmation">Keine Best&aumltigungs Email erhalten?</a>
     </form>
     <script type="module" th:src="@{/js/login.js}"></script>
 </body>

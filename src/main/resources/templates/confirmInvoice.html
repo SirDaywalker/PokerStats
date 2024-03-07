@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rechnung bestätigen</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/css/confirmInvoice.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/components/container.css}">
+    <link th:href="@{/css/components/messages.css}" rel="stylesheet"/>
+</head>
+<body>
+<h1>Rechnung überprüfen</h1>
+<form id="invoice-form">
+    <label><input readonly type="text"></label>
+    <label><input readonly type="text"></label>
+    <label><input readonly type="text"></label>
+    <label><input readonly type="text"></label>
+
+    <div id="user-selection">
+            <span>Ausgewählte Nutzer für die Rechnung</span>
+        <div id="selected">
+            <label th:each="user : ${users}">
+                <img th:src="${user.getProfilePictureURL()}" alt="">
+                <span th:text="${user.getUsername()}"></span>
+            </label>
+        </div>
+    </div>
+
+    <button class="button filled red" type="submit">Bearbeiten</button>
+    <button class="button filled red" type="submit">Bestätigen</button>
+</form>
+<script type="module" th:src="@{/js/confirmInvoice.js}"></script>
+</body>
+</html>

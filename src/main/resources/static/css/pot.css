@@ -8,3 +8,11 @@
     margin: 0 0 2em;
 }
 
+#container > span {
+    margin: 0 auto 2em;
+}
+
+.container {
+    margin: 2em;
+}
+
