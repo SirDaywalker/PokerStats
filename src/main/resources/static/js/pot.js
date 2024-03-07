@@ -3,7 +3,14 @@ import {setErrorMessage} from "./setErrorMessage.js";
 
 sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
     function(response, status, isOK) {
-        let data;
+        let data = {
+            "0": {
+                "users": [],
+                "payout": 7,
+                "pot": 14
+            }
+        }
+
         if (isOK) {
            data = JSON.parse(response);
         } else {
