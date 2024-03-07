@@ -53,7 +53,7 @@ public class User implements UserDetails {
     @Column(length = 320, unique = true, nullable = false)
     private String email;
 
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
