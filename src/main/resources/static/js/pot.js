@@ -1,4 +1,5 @@
 import {sendDataToServer} from "./components/networking.js";
+import {setErrorMessage} from "./setErrorMessage.js";
 
 sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
     function(response, status, isOK) {
@@ -6,7 +7,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
         if (isOK) {
            data = JSON.parse(response);
         } else {
-            console.error("Status " + status + ": " + response);
+            setErrorMessage("Status: " + status + " - " + response);
             return;
         }
 
