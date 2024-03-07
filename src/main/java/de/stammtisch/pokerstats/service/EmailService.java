@@ -43,7 +43,7 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/enable?confirmation=" + token);
+        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/confirm?confirmation=" + token);
         
         this.send(emailAddress, mail, "Email Bestätigung");
     }

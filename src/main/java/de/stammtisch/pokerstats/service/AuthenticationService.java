@@ -150,8 +150,8 @@ public class AuthenticationService {
         user.setEmail(request.email());
         this.userRepository.save(user);
         
-        //final Confirmation confirmation = this.confirmationService.createConfirmation(user);
-        //this.confirmationService.sendConfirmationMail(user, confirmation);
+        final Confirmation confirmation = this.confirmationService.createConfirmation(user);
+        this.confirmationService.sendConfirmationMail(user, confirmation);
 
         final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
                 System.getProperty("user.dir"),
@@ -163,7 +163,7 @@ public class AuthenticationService {
         return this.generateToken(user);
     }
     
-    public String enableUser(@NonNull String confirmation) {
+    public String confirmUser(@NonNull String confirmation) {
 		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
 		final User user = conf.getUser();
 		

@@ -43,12 +43,22 @@ public class AuthenticationController {
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Erfolgreich registriert.", HttpStatus.OK);
     }
-    
-    @PostMapping("/enable")
-    public ResponseEntity<String> enableUser(@RequestParam("confirmation") String confirmation, HttpServletResponse response){
+
+    @GetMapping("requestConfirmation")
+    public ResponseEntity<String> requestConfirmation(){
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @GetMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(){
+        return new ResponseEntity<>("Noch nicht implementiert.",HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmUser(@RequestParam("confirmation") String confirmation, HttpServletResponse response){
     	final String token;
     	try {
-    		token = this.authenticationService.enableUser(confirmation);
+    		token = this.authenticationService.confirmUser(confirmation);
     	} catch (ConfirmationTimeExceededException e) {
     		return new ResponseEntity<>("Bestätigungszeit ist abgelaufen.", HttpStatus.BAD_REQUEST);
     	} catch (UserAlreadyEnabledException e) {
@@ -58,7 +68,7 @@ public class AuthenticationController {
     	}
     	
     	response.addCookie(AuthenticationService.generateCookie(token));
-		return new ResponseEntity<>("Benutzer Email wurde erfolgreich bestätigt.", HttpStatus.OK);
+		return new ResponseEntity<>("Benutzer Email erfolgreich bestätigt.", HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
