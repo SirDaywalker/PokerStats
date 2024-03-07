@@ -31,7 +31,9 @@ public class PokerGameController {
     @GetMapping("/stats")
     public ResponseEntity<String> stats() {
         List<PokerGame> games = this.pokerGameService.getGames();
-        Map<Integer, Map<Object, Object>> stats = new HashMap<>();
+        Map<String, Map<Long, Map<String, Object>>> stats = new HashMap<>();
+        Map<Long, Map<String, Object>> gameStats = new HashMap<>();
+        Map<Long, Map<String, Object>> winnerStats = new HashMap<>();
 
         for (PokerGame game : games) {
             double pot = this.pokerGameService.getPot(game);
@@ -41,11 +43,36 @@ public class PokerGameController {
             for (UserGame userGame : game.getUsers()) {
                 users.add(userGame.getUser().getUsername());
             }
-            stats.put(
-                    games.indexOf(game),
+            gameStats.put(
+                    (long) games.indexOf(game),
                     Map.of("pot", pot, "payout", payout, "users", users)
             );
+            Long winnerId = game.getWinner().getId();
+            if (!winnerStats.containsKey(winnerId)) {
+                winnerStats.put(
+                        winnerId,
+                        Map.of(
+                                "wins", 1,
+                                "name", game.getWinner().getUsername(),
+                                "payout", payout
+                        )
+                );
+            } else {
+                int wins = (int) winnerStats.get(winnerId).get("wins");
+                double payoutSum = (double) winnerStats.get(winnerId).get("payout");
+                winnerStats.put(
+                        winnerId,
+                        Map.of(
+                                "wins", wins + 1,
+                                "name", game.getWinner().getUsername(),
+                                "payout", payoutSum + payout
+                        )
+                );
+            }
         }
+        stats.put("games", gameStats);
+        stats.put("winners", winnerStats);
+
         Gson gson = new Gson();
         String json = gson.toJson(stats);
         return new ResponseEntity<>(json, HttpStatus.OK);
