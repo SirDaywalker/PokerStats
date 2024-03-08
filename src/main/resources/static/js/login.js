@@ -4,9 +4,7 @@ import {sendDataToServer} from "./components/networking.js";
 const loginForm = document.getElementById('login-form');
 const formerUrl = document.referrer;
 
-if (performance.navigation.type == performance.navigation.TYPE_RELOAD && 
-		(formerUrl !== "http://localhost:8080/requestConfirmation" || formerUrl !== "http://localhost:8080/requestPasswordReset")
-	) {
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
   	window.location.href = '/home';
 }
 else if(formerUrl === "http://localhost:8080/requestConfirmation") {
