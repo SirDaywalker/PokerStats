@@ -21,6 +21,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.PRIVATE)
     private long id;
 
     @Getter(AccessLevel.NONE)
