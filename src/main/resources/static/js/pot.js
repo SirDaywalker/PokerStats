@@ -1,5 +1,5 @@
 import {sendDataToServer} from "./components/networking.js";
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 
 sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
     function(response, status, isOK) {
@@ -23,7 +23,12 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
         if (isOK) {
            data = JSON.parse(response);
         } else {
-            setErrorMessage("Status: " + status + " - " + response);
+            setErrorNotification("Status: " + status + " - " + response, -1);
+            return;
+        }
+
+        if (data["games"].length === 0) {
+            setErrorNotification("Es wurden noch keine Spiele gespielt.", -1);
             return;
         }
 
@@ -80,6 +85,12 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                 }
             }
         });
+
+        if (Object.keys(data["winners"]).length === 0) {
+            setErrorNotification("Es gibt noch keine Gewinner.", 1);
+            setErrorNotification("Es gibt noch keine Gewinner.", 2);
+            return;
+        }
 
         // Sort users by wins
         data["winners"] = Object.values(data["winners"]).sort((a, b) => b.wins - a.wins);
