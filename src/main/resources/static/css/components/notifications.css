@@ -4,7 +4,7 @@
 
  */
 
-.message {
+.notification {
     display: none;
     border: 2px solid;
     padding: 10px;
@@ -17,14 +17,14 @@
     display: block;
 }
 
-.message.red {
+.notification.red {
     border-color: var(--red);
     background: var(--red_transparent);
     animation: shake 0.5s ease-in-out;
 
 }
 
-.message.blue {
+.notification.blue {
     border-color: var(--blue);
     background: var(--blue_transparent);
 }

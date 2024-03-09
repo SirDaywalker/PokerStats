@@ -1,4 +1,4 @@
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 import {calculatePasswordStrength} from "./components/security.js";
 import {sendDataToServer} from "./components/networking.js";
 
@@ -30,7 +30,7 @@ form.addEventListener('submit', function(event) {
     const email = document.getElementById('email').value;
 
     if (password.value !== confirmPassword) {
-        const errorElement = document.getElementsByClassName('message')[0];
+        const errorElement = document.getElementsByClassName('notification')[0];
         errorElement.innerHTML = 'Passwörter stimmen nicht überein.';
         errorElement.classList.add('red');
         return;
@@ -52,7 +52,7 @@ form.addEventListener('submit', function(event) {
                 window.location.href = '/home';
                 return;
             }
-            setErrorMessage(text);
+            setErrorNotification(text, 0);
         }
     )
 });

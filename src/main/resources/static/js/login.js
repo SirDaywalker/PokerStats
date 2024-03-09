@@ -1,4 +1,4 @@
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setDefaultNotification, setErrorNotification} from "./components/notifications.js";
 import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
@@ -47,7 +47,7 @@ loginForm.addEventListener('submit', function(event) {
             if (isOK) {
                 window.location.href = '/home';
             } else {
-                setErrorMessage(response);
+                setErrorNotification(response, 0);
             }
         }
     );

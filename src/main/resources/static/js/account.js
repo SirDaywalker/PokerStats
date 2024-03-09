@@ -1,5 +1,5 @@
 import {calculatePasswordStrength} from "./components/security.js";
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 import {sendDataToServer} from "./components/networking.js";
 
 const imageInputElement = document.getElementById('profile-image-selector');
@@ -63,7 +63,7 @@ form.addEventListener('submit', function(event) {
             if (isOK) {
                 window.location.href = '/home';
             } else {
-                setErrorMessage(response);
+                setErrorNotification(response, 0);
             }
         }
     );

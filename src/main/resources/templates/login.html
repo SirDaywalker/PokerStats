@@ -6,19 +6,19 @@
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/buttons.css}" rel="stylesheet"/>
     <link th:href="@{/css/login.css}" rel="stylesheet"/>
-    <link th:href="@{/css/components/messages.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/notifications.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
 </head>
 <body>
     <h1>Login</h1>
-    <span class="message"></span>
+    <span class="notification"></span>
     <form id="login-form" class="container">
         <label><input autocomplete="name" id="name" type="text" placeholder="Vollständiger Name" required></label>
         <label><input autocomplete="current-password" id="password" type="password" placeholder="Passwort" required></label>
         <button class="button filled red" type="submit">Login</button>
         <a href="/requestPasswordReset">Passwort vergessen?</a><br>
         <a href="/register">Noch nicht registriert?</a><br>
-        <a href="/requestConfirmation">Keine Best&aumltigungs Email erhalten?</a>
+        <a href="/requestConfirmation">Keine E-Mail zur Bestätigung erhalten?</a>
     </form>
     <script type="module" th:src="@{/js/login.js}"></script>
 </body>

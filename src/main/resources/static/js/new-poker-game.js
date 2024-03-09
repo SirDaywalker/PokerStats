@@ -1,4 +1,4 @@
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 
 const users_element = document.getElementById('users');
 const selected_users = document.getElementById('selected');
@@ -73,7 +73,7 @@ form.addEventListener('submit', function(event) {
                 if (text === "") {
                     text = "Status " + response.status + ": " + response.statusText
                 }
-                setErrorMessage(text);
+                setErrorNotification(text, 0);
             });
         }
     });
