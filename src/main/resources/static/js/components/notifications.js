@@ -1,3 +1,9 @@
+/**
+ * This function sets the error notification message to a notification element.
+ * @param message - The message to be displayed
+ * @param index - The index of the notification element. If -1, all elements will be affected.
+ * @returns {void}
+ */
 export function setErrorNotification(message, index) {
     let elements = document.getElementsByClassName("notification");
 
@@ -25,6 +31,12 @@ export function setErrorNotification(message, index) {
     }
 }
 
+/**
+ * This function sets the default notification message to a notification element.
+ * @param message - The message to be displayed
+ * @param index - The index of the notification element. If -1, all elements will be affected.
+ * @returns {void}
+ */
 export function setDefaultNotification(message, index) {
     let elements = document.getElementsByClassName("notification");
 
