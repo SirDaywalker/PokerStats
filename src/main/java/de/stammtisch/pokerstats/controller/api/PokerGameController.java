@@ -47,7 +47,13 @@ public class PokerGameController {
                     (long) games.indexOf(game),
                     Map.of("pot", pot, "payout", payout, "users", users)
             );
-            Long winnerId = game.getWinner().getId();
+
+            Long winnerId;
+            try {
+                winnerId = game.getWinner().getId();
+            } catch (NullPointerException e) {
+                continue;
+            }
             if (!winnerStats.containsKey(winnerId)) {
                 winnerStats.put(
                         winnerId,
