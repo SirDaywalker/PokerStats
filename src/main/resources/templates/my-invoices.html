@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Meine Rechnungen - PokerStats</title>
+<link rel="stylesheet" th:href="@{/css/default.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/components/buttons.css}">
+<link rel="stylesheet" th:href="@{/css/components/notifications.css}">
+<link rel="stylesheet" th:href="@{/css/components/container.css}">
+<link rel="stylesheet" th:href="@{/css/components/card.css}" />
+<link rel="stylesheet" th:href="@{/css/components/badges.css}" />
+<link rel="stylesheet" th:href="@{/css/my-invoices.css}">
+<link rel="icon" type="image/png"
+	th:href="@{/assets/favicon/favicon.png}">
+</head>
+<body>
+	<header th:replace="~{header.html :: header}"></header>
+	<span class="notification"></span>
+
+	<form class="container" id="my-invoices">
+		<p>Meine Rechnungen</p>
+		<div id="invoice-selection">
+			<div id="selected">
+				<span>Zu zahlende Rechnungen:</span>
+				<div class="labels">
+					<span>Titel</span>
+					<span>Gläubiger</span>
+					<span>Fällig bis</span> 
+					<span>Betrag</span>
+				</div>
+			</div>
+			<div id="pendingInvoices">
+				<div class="invoice">
+					<span>Scooter Konzert</span>
+					<span>Julian Benedikt Kirchner</span>
+					<span>28.03.2024</span>
+					<span>84,50€</span>
+				</div>
+			</div>
+		</div>
+
+		<div id="invoice-selection">
+			<div id="selected">
+				<span>Aufgegebene Rechnungen:</span>
+				<div class="labels">
+					<span class="inner">Titel</span>
+					<span class="inner">Schuldner</span>
+					<span class="inner">Fällig bis</span> 
+					<span class="inner">Betrag</span>
+				</div>
+			</div>
+			<div id="pendingInvoices">
+				<div class="invoice">
+					<span>Scooter Konzert</span>
+					<span>Julian Benedikt Kirchner</span>
+					<span>28.03.2024</span>
+					<span>84,50€</span>
+				</div>
+			</div>
+		</div>
+
+		<button class="button red filled" type="submit">Zurück</button>
+	</form>
+	<script type="module" th:src="@{/js/my-invoices.js}"></script>
+</body>
+</html>

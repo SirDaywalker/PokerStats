@@ -207,7 +207,8 @@ public class PageController {
     }
     
     @GetMapping("/my-invoices")
-    public String myInvoices() {
-    	return "my-invoices";
+    public ModelAndView myInvoices(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("my-invoices");
+        return getModelAndView(cookies, modelAndView);
     }
 }
