@@ -32,6 +32,7 @@ public class EmailService {
             helper.setFrom("mugglemail420@gmail.com");
             this.mailSender.send(mimeMessage);
         } catch (MessagingException e) {
+        	
         }
     }
     

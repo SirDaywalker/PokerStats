@@ -164,8 +164,7 @@ public class PageController {
     		this.confirmationService.confirmUser(confirmation);
     	} catch (ConfirmationTimeExceededException | NoSuchElementException e) {
     		modelAndView.setViewName("redirect:/request-confirmation");
-    	} catch (UserAlreadyEnabledException e) {
-    		;
+    	} catch (UserAlreadyEnabledException ignored) {
     	}
 		return modelAndView;
     }
