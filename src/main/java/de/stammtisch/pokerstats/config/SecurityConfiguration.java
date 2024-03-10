@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                            "/request-password-reset",
                            "/request-confirmation",
                            "/error",
+                           "/statistics",
                            "/api/v1/auth/register",
                            "/api/v1/auth/authenticate",
                            "/api/v1/auth/confirm",
