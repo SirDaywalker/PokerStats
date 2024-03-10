@@ -1,4 +1,4 @@
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 
 const users_element = document.getElementById('users');
 const selected_users = document.getElementById('selected');
@@ -46,16 +46,16 @@ form.addEventListener('submit', function(event) {
     formData.append('interestIntervalDays', interestIntervalDays);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/auth/createInvoice', true);
+    xhr.open('POST', '/api/v1/auth/create-invoice', true);
     xhr.onload = function() {
         if (xhr.status === 200) {
-            window.location.href = '/confirmInvoice';
+            window.location.href = '/confirm-invoice';
             return;
         }
         if (xhr.status === 400) {
-            setErrorMessage('Ein Fehler ist aufgetreten. Haben Sie alle Felder ausgefüllt?');
+            setErrorNotification('Ein Fehler ist aufgetreten. Haben Sie alle Felder ausgefüllt?', 0);
         } else {
-            setErrorMessage('Status ' + xhr.status.toString());
+            setErrorNotification('Status ' + xhr.status.toString(), 0);
         }
     };
     xhr.send(formData);

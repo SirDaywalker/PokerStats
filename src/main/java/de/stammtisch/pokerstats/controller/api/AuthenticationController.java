@@ -8,6 +8,7 @@ import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
+import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class AuthenticationController {
         return new ResponseEntity<>("Erfolgreich registriert.", HttpStatus.OK);
     }
 
-    @PutMapping("/requestConfirmation")
+    @PutMapping("/request-confirmation")
     public ResponseEntity<String> requestConfirmation(@RequestBody PasswordOrConfirmationRequest request, HttpServletResponse response){
         final String token;
         try {
@@ -60,13 +61,15 @@ public class AuthenticationController {
 		return new ResponseEntity<>("Bestätigunsmail wurde gesendet.", HttpStatus.OK);
     }
 
-    @PutMapping("/requestPasswordReset")
+    @PutMapping("/request-password-reset")
     public ResponseEntity<String> resetPassword(@RequestBody PasswordOrConfirmationRequest request, HttpServletResponse response){
     	final String token;
         try {
-        	token = this.authenticationService.requestConfirmation(request);
+        	token = this.authenticationService.requestPasswordReset(request);
         } catch (NoSuchElementException e) {
     		return new ResponseEntity<>("Benutzer konnte nicht gefunden werden.", HttpStatus.BAD_REQUEST);
+    	} catch (UserNotEnabledException e) {
+    		return new ResponseEntity<>("Benutzer Email wurde noch nicht bestätigt.", HttpStatus.BAD_REQUEST);
     	}
         
         response.addCookie(AuthenticationService.generateCookie(token));
@@ -87,6 +90,7 @@ public class AuthenticationController {
     	}
     	
     	response.addCookie(AuthenticationService.generateCookie(token));
+    	
 		return new ResponseEntity<>("Benutzer Email erfolgreich bestätigt.", HttpStatus.OK);
     }
 

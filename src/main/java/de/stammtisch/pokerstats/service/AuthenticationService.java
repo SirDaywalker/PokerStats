@@ -22,6 +22,7 @@ import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
+import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
 import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
@@ -193,6 +194,14 @@ public class AuthenticationService {
 		this.userRepository.save(user);
 		
 		return this.generateToken(user);
+    }
+    
+    public String requestPasswordReset(@NonNull PasswordOrConfirmationRequest request) {
+    	final User user = this.userRepository.findByName(request.name()).orElseThrow();
+    	if(!user.isEnabled()) {
+    		throw new UserNotEnabledException();
+    	}
+    	return this.generateToken(user);
     }
 
     public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {

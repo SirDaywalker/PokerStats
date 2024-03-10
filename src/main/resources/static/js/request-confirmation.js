@@ -1,9 +1,9 @@
-import {setErrorMessage} from "./setErrorMessage.js";
+import {setErrorNotification} from "./components/notifications.js";
 import {sendDataToServer} from "./components/networking.js";
 
-const resetPasswordForm = document.getElementById('resetPassword-form');
+const newConfirmationForm = document.getElementById('newConfirmation-form');
 
-resetPasswordForm.addEventListener('submit', function(event) {
+newConfirmationForm.addEventListener('submit', function(event) {
 	event.preventDefault();
 	
 	const data = {
@@ -12,14 +12,14 @@ resetPasswordForm.addEventListener('submit', function(event) {
     
 	sendDataToServer(
         JSON.stringify(data),
-        '/api/v1/auth/requestPasswordReset',
+        '/api/v1/auth/request-confirmation',
         'PUT',
         'application/json',
         function(response, status, isOK) {
             if (isOK) {
                 window.location.href = '/login';
             } else {
-                setErrorMessage(response);
+                setErrorNotification(response, 0);
             }
         }
     );

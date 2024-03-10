@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -119,9 +120,9 @@ public class PageController {
         return "error";
     }
 
-    @GetMapping("/createInvoice")
+    @GetMapping("/create-invoice")
     public ModelAndView createInvoice(@RequestHeader(name = "Cookie") String cookies) {
-        ModelAndView modelAndView = new ModelAndView("createInvoice");
+        ModelAndView modelAndView = new ModelAndView("create-invoice");
         try {
             User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
             modelAndView.addObject("account", user);
@@ -134,18 +135,23 @@ public class PageController {
         return modelAndView;
     }
 
-    @GetMapping("/confirmInvoice")
+    @GetMapping("/confirm-invoice")
     public String confirmInvoice() {
         return "confirmInvoice";
     }
 
-    @GetMapping("/requestPasswordReset")
+    @GetMapping("/request-password-reset")
     public String resetPassword() {
-        return "requestPasswordReset";
+        return "request-password-reset";
     }
 
-    @GetMapping("/requestConfirmation")
+    @GetMapping("/request-confirmation")
     public String newConfirmation() {
-    	return "requestConfirmation"; 
+    	return "request-confirmation"; 
+    }
+    
+    @GetMapping("/confirm")
+    public String confirm(@PathVariable String confirmation) {
+    	return "";
     }
 }

@@ -38,7 +38,7 @@ public class EmailService {
     public void sendConfirmationMail(String username, String emailAddress, String token, long expirationDate) {
     	String mail;
         try {
-            mail = StreamUtils.copyToString(new ClassPathResource("mails/ConfirmationMail.html").getInputStream(), Charset.defaultCharset());
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/confirmation-mail.html").getInputStream(), Charset.defaultCharset());
         } catch (IOException e) {
             return;
         }
@@ -51,7 +51,7 @@ public class EmailService {
     public void sendPasswordResetMail(String username, String emailAddress, String token, long expirationDate) {
     	String mail;
         try {
-            mail = StreamUtils.copyToString(new ClassPathResource("mails/PasswordResetMail.html").getInputStream(), Charset.defaultCharset());
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/password-reset-mail.html").getInputStream(), Charset.defaultCharset());
         } catch (IOException e) {
             return;
         }

@@ -7,8 +7,8 @@ const formerUrl = document.referrer;
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
   	window.location.href = '/home';
 }
-else if(formerUrl === "http://localhost:8080/requestConfirmation") {
-	setErrorMessage("Bestätigungsmail wurde gesendet!");
+else if(formerUrl === "http://localhost:8080/request-confirmation") {
+	setDefaultNotification("Bestätigungsmail wurde gesendet!", 0);
 	if (Notification.permission === "granted") {
         new Notification("Bestätigungsmail wurde gesendet!");
     } else if (Notification.permission !== "denied") {
@@ -19,8 +19,20 @@ else if(formerUrl === "http://localhost:8080/requestConfirmation") {
         });
     }
 }
-else if(formerUrl === "http://localhost:8080/requestPasswordReset") {
-	setErrorMessage("Email zur Passwortzurücksetzung wurde gesendet!");
+else if(formerUrl === "http://localhost:8080/request-password-reset") {
+	setDefaultNotification("Email zur Passwortzurücksetzung wurde gesendet!", 0);
+	if (Notification.permission === "granted") {
+        new Notification("Email zur Passwortzurücksetzung wurde gesendet!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                new Notification("Email zur Passwortzurücksetzung wurde gesendet!");
+            }
+        });
+    }
+}
+else if(formerUrl.split("?")[0] === "http://localhost:8080/confirm") {
+	setDefaultNotification("Email zur Passwortzurücksetzung wurde gesendet!", 0);
 	if (Notification.permission === "granted") {
         new Notification("Email zur Passwortzurücksetzung wurde gesendet!");
     } else if (Notification.permission !== "denied") {
