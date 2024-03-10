@@ -199,7 +199,7 @@
     rotate: 9deg;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 850px) {
     #card-centerbox {
         margin-top: 15%;
     }
