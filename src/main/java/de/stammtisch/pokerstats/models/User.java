@@ -112,4 +112,14 @@ public class User implements UserDetails {
         return "/cdn/u/picture?id=" + this.getId();
     }
 
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof User other)) {
+            return false;
+        }
+        return other.getId() == this.id;
+    }
+
 }
