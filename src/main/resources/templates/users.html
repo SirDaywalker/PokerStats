@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutzer bearbeiten - PokerStats</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header.css}" rel="stylesheet"/>
+    <link th:href="@{/css/users.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/badges.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/card.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/favicon/favicon.png}" rel="icon" type="image/png" >
+</head>
+<body>
+    <header th:replace="~{header.html :: header}"></header>
+    <div class="container">
+        <h1>Nutzer zum Bearbeiten auswählen</h1>
+        <a th:each="user : ${users}" th:href="'/account?u=' + ${user.getId()}">
+            <div class="user">
+                <img th:src="${user.getProfilePictureURL()}" alt="">
+                <span th:text="${user.getUsername()}"></span>
+            </div>
+        </a>
+    </div>
+</body>
+</html>
