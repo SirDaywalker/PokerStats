@@ -178,11 +178,11 @@ header {
     #account-section {
         height: 4em;
         width: 345px;
-        margin: 0.5em 0 0 1em;
+        margin-top: 1em;
     }
 
     #pott-badge {
-        top: -103px;
-        right: -1px;
+        top: -110px;
+        right: -7px;
     }
 }

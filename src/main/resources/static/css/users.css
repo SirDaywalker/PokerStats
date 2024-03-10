@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    margin-top: 5em;
+    width: max-content;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 1.2em);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    margin: 1em 0;
+    padding: 0.5em;
+    transition: border-color 500ms ease-in-out;
+}
+
+.user > img {
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+
+.user > span {
+    margin-left: 1em;
+}
+
+.user:hover {
+    border-color: var(--blue);
+    transition: border-color 500ms ease-in-out;
+}

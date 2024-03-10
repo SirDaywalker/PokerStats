@@ -47,6 +47,12 @@ public class PageController {
     @GetMapping("/home")
     public ModelAndView home(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("home");
+        try {
+            final User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("user", user);
+        } catch (UsernameNotFoundException e) {
+            modelAndView.setViewName("error");
+        }
         return getModelAndView(cookies, modelAndView);
     }
 
@@ -208,9 +214,27 @@ public class PageController {
     public String passwordReset() {
     	return "password-reset";
     }
-    
+
+    @GetMapping("/users")
+    public ModelAndView selectUser(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("users");
+        try {
+            final User account = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("account", account);
+        } catch (UsernameNotFoundException e) {
+            modelAndView.setViewName("error");
+        }
+        final List<User> users = this.userService.getAllUsers();
+        modelAndView.addObject("users", users);
+
+        final double pot = this.pokerGameService.getCurrentPot();
+        modelAndView.addObject("pot", pot);
+        return modelAndView;
+    }
     @GetMapping("/my-invoices")
-    public String myInvoices() {
-    	return "my-invoices";
+    public ModelAndView myInvoices(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("my-invoices");
+        return getModelAndView(cookies, modelAndView);
+
     }
 }
