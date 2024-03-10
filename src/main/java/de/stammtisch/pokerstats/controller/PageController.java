@@ -148,12 +148,12 @@ public class PageController {
     }
 
     @GetMapping("/request-password-reset")
-    public String resetPassword() {
+    public String requestPasswordReset() {
         return "request-password-reset";
     }
 
     @GetMapping("/request-confirmation")
-    public String newConfirmation() {
+    public String requestConfirmation() {
     	return "request-confirmation"; 
     }
     
@@ -175,5 +175,10 @@ public class PageController {
     	ModelAndView modelAndView = new ModelAndView("redirection");
     	modelAndView.addObject("confirmation", confirmation);
     	return modelAndView;
+    }
+
+    @GetMapping("/password-reset")
+    public String passwordReset() {
+    	return "password-reset";
     }
 }
