@@ -32,6 +32,15 @@ public class PokerGame {
         this.id = System.currentTimeMillis();
     }
 
+    /**
+     * Checks if the given user has played in this game.
+     * @param user The user to check for.
+     * @return True if the user has played in this game, false otherwise.
+     */
+    public boolean userHasPlayed(User user) {
+        return this.users.stream().anyMatch(userGame -> userGame.getUser().equals(user));
+    }
+
     public boolean equals(Object o) {
         if (o == this) {
             return true;
