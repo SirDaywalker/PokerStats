@@ -58,16 +58,19 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                     },
                     title: {
                         display: true,
-                        text: `Siegesrate: ${winRate.toFixed(2)}%`, // Die Gewinnrate in Prozent anzeigen
+                        text: `Siegesrate: ${winRate.toFixed(2)}%`,
                         position: "bottom",
-                        padding: 10,
+                        padding: {
+                            top: 20,
+                            bottom: 0
+                        },
                         font: {
                             size: 16,
                             weight: "bold",
                         },
                     },
                 },
-                cutout: "80%", // Die Größe des inneren Lochs anpassen
+                cutout: "80%",
             },
         });
     }
