@@ -2,6 +2,7 @@ package de.stammtisch.pokerstats.controller;
 
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
+import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
@@ -12,16 +13,14 @@ import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -89,7 +88,33 @@ public class PageController {
     @GetMapping("/statistics")
     public ModelAndView statistics(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("statistics");
-        return getModelAndView(cookies, modelAndView);
+
+        final User account;
+        try {
+            account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
+        List<PokerGame> games = pokerGameService.getGames();
+        List<PokerGame> latestGames = new ArrayList<>();
+
+        for (PokerGame game : games) {
+            if (game.userHasPlayed(account)) {
+                latestGames.add(game);
+            }
+            if (latestGames.size() > 3) {
+                latestGames.remove(0);
+            }
+        }
+        modelAndView.addObject("latestGames", latestGames);
+        final double pot = this.pokerGameService.getCurrentPot();
+        modelAndView.addObject("pot", pot);
+        return modelAndView;
     }
 
     private ModelAndView getModelAndView(
@@ -148,12 +173,12 @@ public class PageController {
     }
 
     @GetMapping("/request-password-reset")
-    public String resetPassword() {
+    public String requestPasswordReset() {
         return "request-password-reset";
     }
 
     @GetMapping("/request-confirmation")
-    public String newConfirmation() {
+    public String requestConfirmation() {
     	return "request-confirmation"; 
     }
     
@@ -164,8 +189,7 @@ public class PageController {
     		this.confirmationService.confirmUser(confirmation);
     	} catch (ConfirmationTimeExceededException | NoSuchElementException e) {
     		modelAndView.setViewName("redirect:/request-confirmation");
-    	} catch (UserAlreadyEnabledException e) {
-    		;
+    	} catch (UserAlreadyEnabledException ignored) {
     	}
 		return modelAndView;
     }
@@ -175,5 +199,10 @@ public class PageController {
     	ModelAndView modelAndView = new ModelAndView("redirection");
     	modelAndView.addObject("confirmation", confirmation);
     	return modelAndView;
+    }
+
+    @GetMapping("/password-reset")
+    public String passwordReset() {
+    	return "password-reset";
     }
 }
