@@ -167,7 +167,7 @@ header {
     width: max-content;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 850px) {
     header {
         flex-direction: column;
         justify-content: center;
