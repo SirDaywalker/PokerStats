@@ -44,7 +44,7 @@ public class PokerGameController {
                 users.add(userGame.getUser().getUsername());
             }
             gameStats.put(
-                    (long) games.indexOf(game),
+                    game.getId(),
                     Map.of("pot", pot, "payout", payout, "users", users)
             );
 
