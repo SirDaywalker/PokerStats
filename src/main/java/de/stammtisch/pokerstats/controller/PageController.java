@@ -205,4 +205,9 @@ public class PageController {
     public String passwordReset() {
     	return "password-reset";
     }
+    
+    @GetMapping("/my-invoices")
+    public String myInvoices() {
+    	return "my-invoices";
+    }
 }
