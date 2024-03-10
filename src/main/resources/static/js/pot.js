@@ -18,7 +18,18 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
             return;
         }
 
-        let label = Object.keys(data["games"]).map((x) => parseInt(x) + 1);
+        let label = []
+        for (let i = 1; i <= Object.keys(data["games"]).length; i++) {
+            label.push(i);
+        }
+        // Sort games by key
+        data["games"] = Object.keys(data["games"]).sort().reduce(
+            (obj, key) => {
+                obj[key] = data["games"][key];
+                return obj;
+            },
+            {}
+        );
 
         new Chart("history", {
             type: "line",

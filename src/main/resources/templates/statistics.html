@@ -20,13 +20,28 @@
             <span class="notification"></span>
             <canvas th:data-user-id="${account.getId()}" id="win-rate"></canvas>
         </div>
-        <div class="container">
-            <span class="notification"></span>
-            <canvas></canvas>
+        <div class="container" id="match-history">
+            <p>Verlauf</p>
+            <div id="games">
+                <div th:each="game : ${latestGames}">
+                    <div th:data-id="${game.getId()}" th:if="${game.getWinner().equals(account)}" class="win"></div>
+                    <div th:if="${!game.getWinner().equals(account)}" class="lose"
+                         th:text="'- ' + ${#numbers.formatCurrency(game.getBuyInForUser(account)).replace('¤', '€')}">
+                    </div>
+                    <div class="player-amount" th:text="${game.getUsers().size() + ' Spieler'}"></div>
+                    <span th:text="${game.getFormattedDate('dd.MM.yyyy')}"></span>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <span class="notification"></span>
-            <canvas></canvas>
+        <div class="container" id="max-win">
+            <div>
+                <p>Auszahlung</p>
+                <div id="total-payout"></div>
+            </div>
+            <div>
+                <p>Eingesetz</p>
+                <div id="total-buyIn"></div>
+            </div>
         </div>
         <div class="container">
             <span class="notification"></span>

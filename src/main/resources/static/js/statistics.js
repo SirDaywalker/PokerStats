@@ -23,6 +23,16 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
             };
         }
 
+        const latestGames_typeGamesWonElements = document.getElementsByClassName("win");
+        for (let element of latestGames_typeGamesWonElements) {
+            let id = element.getAttribute("data-id");
+            element.innerText = "+ " + data.games[id].payout + " €";
+        }
+
+        const totalPayoutElement = document.getElementById("total-payout");
+        const totalPayout = data.winners[userId].payout;
+        totalPayoutElement.innerText = totalPayout + " €";
+
         const wins = data["winners"][userId].wins;
         const totalGames = label.length;
         const winRate = (wins / totalGames) * 100;
@@ -70,7 +80,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                         },
                     },
                 },
-                cutout: "80%",
+                maintainAspectRatio: false,
             },
         });
     }
