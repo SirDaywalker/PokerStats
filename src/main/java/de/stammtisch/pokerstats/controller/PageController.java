@@ -228,4 +228,10 @@ public class PageController {
         modelAndView.addObject("pot", pot);
         return modelAndView;
     }
+    @GetMapping("/my-invoices")
+    public ModelAndView myInvoices(@RequestHeader(name = "Cookie") String cookies) {
+        ModelAndView modelAndView = new ModelAndView("my-invoices");
+        return getModelAndView(cookies, modelAndView);
+
+    }
 }
