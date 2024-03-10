@@ -2,7 +2,7 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Rechnung erstellen</title>
+    <title>Rechnung erstellen - PokerStats</title>
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/buttons.css}" rel="stylesheet"/>
     <link th:href="@{/css/create-invoice.css}" rel="stylesheet"/>
@@ -18,7 +18,7 @@
     <label><input id="due" type="date" placeholder="Fälligkeitsdatum" required></label>
     <label><input id="interest" type="number" step="0.01" min="0" placeholder="Zinsen" required></label>
     <label><input id="interestIntervalDays" type="number" min="1" placeholder="Interval der Zinsen in Wochen" required></label>
-    <label><input id="notes" type="text" placeholder="Notizen" maxlength="128" required></label>
+    <label><input id="titel" type="text" placeholder="Titel" maxlength="32" required></label>
 
     <div id="user-selection">
         <div id="selected">

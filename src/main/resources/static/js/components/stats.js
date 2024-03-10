@@ -1,6 +1,6 @@
 export const sampleData = {
     "games": {
-        "0": {
+        "1709292625111": {
             "users": [],
             "payout": 7,
             "pot": 14,

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -39,6 +41,31 @@ public class PokerGame {
      */
     public boolean userHasPlayed(User user) {
         return this.users.stream().anyMatch(userGame -> userGame.getUser().equals(user));
+    }
+
+    /**
+     * Returns the date of the game.
+     * @return The date of the game.
+     */
+    public Date getDate() {
+        return new Date(this.id);
+    }
+
+    /**
+     * Returns the date of the game in the given format.
+     * @param format The format to use. See {@link SimpleDateFormat} for more information.
+     * @return The date of the game in the given format.
+     */
+    public String getFormattedDate(String format) {
+        return new SimpleDateFormat(format).format(this.getDate());
+    }
+
+    public double getBuyInForUser(User user) {
+        return this.users.stream()
+                .filter(userGame -> userGame.getUser().equals(user))
+                .map(UserGame::getBuyIn)
+                .findFirst()
+                .orElse(0.0);
     }
 
     public boolean equals(Object o) {
