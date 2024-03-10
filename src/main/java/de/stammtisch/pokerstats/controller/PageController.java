@@ -8,6 +8,7 @@ import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,18 +42,7 @@ public class PageController {
     @GetMapping("/home")
     public ModelAndView home(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("home");
-        try {
-            User account = this.authenticationService.getUserFromToken(
-                    this.authenticationService.getTokenFromCookie(cookies)
-            );
-            modelAndView.addObject("account", account);
-
-        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
-            modelAndView.setViewName("login");
-        }
-        final double pot = this.pokerGameService.getCurrentPot();
-        modelAndView.addObject("pot", pot);
-        return modelAndView;
+        return getModelAndView(cookies, modelAndView);
     }
 
     @GetMapping("/account")
@@ -93,12 +83,23 @@ public class PageController {
     @GetMapping("/statistics")
     public ModelAndView statistics(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("statistics");
+        return getModelAndView(cookies, modelAndView);
+    }
+
+    private ModelAndView getModelAndView(
+            @RequestHeader(name = "Cookie") String cookies,
+            @NonNull ModelAndView modelAndView
+    ) {
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
-            modelAndView.addObject("user", user);
+            User account = this.authenticationService.getUserFromToken(
+                    this.authenticationService.getTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
         }
+        final double pot = this.pokerGameService.getCurrentPot();
+        modelAndView.addObject("pot", pot);
         return modelAndView;
     }
 
