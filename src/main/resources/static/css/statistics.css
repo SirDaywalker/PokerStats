@@ -7,6 +7,7 @@
 
 #container > * {
     height: 200px;
+    overflow: hidden;
 }
 
 #match-history {
@@ -34,7 +35,7 @@
     justify-content: space-between;
 }
 
-.win, .lose, .player-amount, #total-payout {
+.win, .lose, .player-amount, #total-payout, #total-buyIn {
     border: var(--border);
     padding: 10px;
     border-radius: var(--border-radius);
@@ -47,7 +48,7 @@
     background: var(--blue_transparent);
 }
 
-.lose {
+.lose, #total-buyIn {
     border-color: var(--red);
     color: var(--red);
     background: var(--red_transparent);
@@ -59,4 +60,8 @@
     font-weight: 600;
 }
 
-.total
+#max-win {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

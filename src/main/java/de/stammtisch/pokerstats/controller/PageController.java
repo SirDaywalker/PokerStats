@@ -102,16 +102,19 @@ public class PageController {
 
         List<PokerGame> games = pokerGameService.getGames();
         List<PokerGame> latestGames = new ArrayList<>();
+        double totalBuyIn = 0;
 
         for (PokerGame game : games) {
             if (game.userHasPlayed(account)) {
                 latestGames.add(game);
+                totalBuyIn += game.getBuyInForUser(account);
             }
             if (latestGames.size() > 3) {
                 latestGames.remove(0);
             }
         }
         modelAndView.addObject("latestGames", latestGames);
+        modelAndView.addObject("totalBuyIn", totalBuyIn);
         final double pot = this.pokerGameService.getCurrentPot();
         modelAndView.addObject("pot", pot);
         return modelAndView;

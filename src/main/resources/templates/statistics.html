@@ -34,14 +34,10 @@
             </div>
         </div>
         <div class="container" id="max-win">
-            <div>
-                <p>Auszahlung</p>
-                <div id="total-payout"></div>
-            </div>
-            <div>
-                <p>Eingesetz</p>
-                <div id="total-buyIn"></div>
-            </div>
+            <p>Auszahlung</p>
+            <div id="total-payout"></div>
+            <p>Eingesetz</p>
+            <div th:text="${totalBuyIn} + ' €'" id="total-buyIn"></div>
         </div>
         <div class="container">
             <span class="notification"></span>
