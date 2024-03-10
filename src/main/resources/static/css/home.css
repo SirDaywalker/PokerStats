@@ -197,3 +197,13 @@
 .card-link-wrapper:hover #card-stack > div:nth-child(3) {
     rotate: 9deg;
 }
+
+@media only screen and (max-width: 720px) {
+    #card-centerbox {
+        margin-top: 15%;
+    }
+
+    .tilting-card-content > div:first-child, #card-stack, #card-stack > .card,  #card-stack > .card > img{
+        height: 45vw;
+    }
+}
