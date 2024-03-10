@@ -1,24 +1,10 @@
 import {sendDataToServer} from "./components/networking.js";
 import {setErrorNotification} from "./components/notifications.js";
+import {sampleData} from "./components/stats.js";
 
 sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
     function(response, status, isOK) {
-        let data = {
-            "games": {
-                "0": {
-                    "users": [],
-                    "payout": 7,
-                    "pot": 14,
-                }
-            },
-            "winners": {
-                "0": {
-                    "name": "Peter",
-                    "wins": 2,
-                    "payout": 14.0,
-                },
-            }
-        }
+        let data = sampleData;
 
         if (isOK) {
            data = JSON.parse(response);
