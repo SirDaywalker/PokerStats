@@ -2,11 +2,15 @@ package de.stammtisch.pokerstats.service;
 
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
+import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.ConfirmationRepository;
+import de.stammtisch.pokerstats.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -14,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class ConfirmationService {
     
 	private final ConfirmationRepository confirmationRepository;
+	private final UserRepository userRepository;
     private final EmailService emailService;
 
     public Confirmation createConfirmation(User user) {
@@ -27,8 +32,28 @@ public class ConfirmationService {
     }
 
     public void sendConfirmationMail(User user, Confirmation confirmation) {
-    	//900000ms = 15min (expiration)
-        this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken(), confirmation.getId()+900000);
+        this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken());
+    }
+    
+    public void confirmUser(@NonNull String confirmation) {
+		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
+		final User user = conf.getUser();
+		
+		long curTime = System.currentTimeMillis();
+		//900000ms = 15min
+		if(curTime - conf.getId() > 900000) {
+			throw new ConfirmationTimeExceededException(); 
+		}
+		if(user.isEnabled()) {
+			throw new UserAlreadyEnabledException();
+		}
+			
+		conf.setValidatedAt(curTime);
+		this.confirmationRepository.save(conf);
+		
+		user.setEnabled(true);
+		this.userRepository.save(user);
+		
     }
     
 }

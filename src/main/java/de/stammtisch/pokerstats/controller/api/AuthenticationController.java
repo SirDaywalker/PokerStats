@@ -76,24 +76,6 @@ public class AuthenticationController {
 		return new ResponseEntity<>("Mail zur Passwortzurücksetzung wurde gesendet.", HttpStatus.OK);
     }
 
-    @GetMapping("/confirm")
-    public ResponseEntity<String> confirmUser(@RequestParam("confirmation") String confirmation, HttpServletResponse response){
-    	final String token;
-    	try {
-    		token = this.authenticationService.confirmUser(confirmation);
-    	} catch (ConfirmationTimeExceededException e) {
-    		return new ResponseEntity<>("Bestätigungszeit ist abgelaufen.", HttpStatus.BAD_REQUEST);
-    	} catch (UserAlreadyEnabledException e) {
-    		return new ResponseEntity<>("Benutzer Email wurde bereits bestätigt.", HttpStatus.BAD_REQUEST);
-    	} catch (NoSuchElementException e) {
-    		return new ResponseEntity<>("Token ist fehlerhaft.", HttpStatus.BAD_REQUEST);
-    	}
-    	
-    	response.addCookie(AuthenticationService.generateCookie(token));
-    	
-		return new ResponseEntity<>("Benutzer Email erfolgreich bestätigt.", HttpStatus.OK);
-    }
-
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate (
             @RequestBody AuthenticationRequest request,

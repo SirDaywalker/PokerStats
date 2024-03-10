@@ -39,8 +39,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final ConfirmationRepository confirmationRepository;
     private final ConfirmationService confirmationService;
+    private final ConfirmationRepository confirmationRepository;
 
     /**
      * Generates the Cookie to safe the authentication to access the site.
@@ -173,27 +173,6 @@ public class AuthenticationService {
     	final Confirmation confirmation = this.confirmationService.createConfirmation(user);
         this.confirmationService.sendConfirmationMail(user, confirmation);
         return this.generateToken(user);
-    }
-    
-    public String confirmUser(@NonNull String confirmation) {
-		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
-		final User user = conf.getUser();
-		
-		long curTime = System.currentTimeMillis();
-		if(curTime - conf.getId() > 900000) {
-			throw new ConfirmationTimeExceededException(); 
-		}
-		if(user.isEnabled()) {
-			throw new UserAlreadyEnabledException();
-		}
-			
-		conf.setValidatedAt(curTime);
-		this.confirmationRepository.save(conf);
-		
-		user.setEnabled(true);
-		this.userRepository.save(user);
-		
-		return this.generateToken(user);
     }
     
     public String requestPasswordReset(@NonNull PasswordOrConfirmationRequest request) {

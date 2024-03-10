@@ -35,7 +35,8 @@ public class EmailService {
         }
     }
     
-    public void sendConfirmationMail(String username, String emailAddress, String token, long expirationDate) {
+	@Async
+    public void sendConfirmationMail(String username, String emailAddress, String token) {
     	String mail;
         try {
             mail = StreamUtils.copyToString(new ClassPathResource("mails/confirmation-mail.html").getInputStream(), Charset.defaultCharset());
@@ -43,12 +44,13 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/api/v1/auth/confirm?confirmation=" + token);
+        mail = mail.replace("{LINK}", "http://localhost:8080/confirm-redirect?confirmation=" + token);
         
         this.send(emailAddress, mail, "Email Bestätigung");
     }
     
-    public void sendPasswordResetMail(String username, String emailAddress, String token, long expirationDate) {
+	@Async
+    public void sendPasswordResetMail(String username, String emailAddress, String token) {
     	String mail;
         try {
             mail = StreamUtils.copyToString(new ClassPathResource("mails/password-reset-mail.html").getInputStream(), Charset.defaultCharset());

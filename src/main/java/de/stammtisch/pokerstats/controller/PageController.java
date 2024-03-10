@@ -1,14 +1,19 @@
 package de.stammtisch.pokerstats.controller;
 
+import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
+import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.service.AuthenticationService;
+import de.stammtisch.pokerstats.service.ConfirmationService;
 import de.stammtisch.pokerstats.service.PokerGameService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +31,7 @@ public class PageController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
     private final PokerGameService pokerGameService;
+    private final ConfirmationService confirmationService;
 
     @GetMapping("/")
     public ModelAndView landing(@RequestHeader(name = "Cookie", required = false) String cookies) {
@@ -138,7 +144,7 @@ public class PageController {
 
     @GetMapping("/confirm-invoice")
     public String confirmInvoice() {
-        return "confirmInvoice";
+        return "confirm-invoice";
     }
 
     @GetMapping("/request-password-reset")
@@ -152,7 +158,22 @@ public class PageController {
     }
     
     @GetMapping("/confirm")
-    public String confirm(@PathVariable String confirmation) {
-    	return "";
+    public ModelAndView confirm(@RequestParam("confirmation") String confirmation) {
+    	ModelAndView modelAndView = new ModelAndView("redirect:/home");
+    	try {
+    		this.confirmationService.confirmUser(confirmation);
+    	} catch (ConfirmationTimeExceededException | NoSuchElementException e) {
+    		modelAndView.setViewName("redirect:/request-confirmation");
+    	} catch (UserAlreadyEnabledException e) {
+    		;
+    	}
+		return modelAndView;
+    }
+    
+    @GetMapping("confirm-redirect")
+    public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
+    	ModelAndView modelAndView = new ModelAndView("redirection");
+    	modelAndView.addObject("confirmation", confirmation);
+    	return modelAndView;
     }
 }

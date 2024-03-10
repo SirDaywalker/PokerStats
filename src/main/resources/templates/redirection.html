@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weiterleitung</title>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link th:href="@{/css/redirection.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
+</head>
+<body>
+	<form id="redirection-form" class="container">
+	    <p>Wenn Sie nicht automatisch weitergeleitet wurden, klicken Sie <a th:href="'/confirm?confirmation=' + ${confirmation}" style="text-decoration: underline" id="redirect">hier</a></p>
+	</form>
+	<script type="module" th:src="@{/js/redirection.js}"></script>
+	</body>
+</html>

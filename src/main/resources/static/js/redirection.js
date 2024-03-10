@@ -1,0 +1,1 @@
+window.location.href = document.getElementById('redirect').getAttribute('href');
