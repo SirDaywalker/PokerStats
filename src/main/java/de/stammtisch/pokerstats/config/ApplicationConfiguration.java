@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableAsync
 @AllArgsConstructor
-public class ApplicationConfiguration implements AsyncConfigurer{
+public class ApplicationConfiguration implements AsyncConfigurer {
     private final UserService userService;
 
     @Bean

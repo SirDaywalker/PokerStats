@@ -154,6 +154,7 @@ public class AuthenticationService {
         
         final Confirmation confirmation = this.confirmationService.createConfirmation(user);
         this.confirmationService.sendConfirmationMail(user, confirmation);
+        this.confirmationRepository.save(confirmation);
 
         final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
                 System.getProperty("user.dir"),

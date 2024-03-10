@@ -3,8 +3,6 @@ import {sendDataToServer} from "./components/networking.js";
 
 const newConfirmationForm = document.getElementById('newConfirmation-form');
 const formerUrl = document.referrer;
-alert(formerUrl);
-alert(formerUrl.split("?"));
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/request-confirmation") {
   	window.location.href = '/home';

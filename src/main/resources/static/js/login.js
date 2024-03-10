@@ -7,7 +7,7 @@ const formerUrl = document.referrer;
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
   	window.location.href = '/home';
 }
-else if(formerUrl === "http://localhost:8080/request-confirmation") {
+else if(formerUrl === "http://localhost:8080/request-confirmation" || formerUrl === "http://localhost:8080/register") {
 	setDefaultNotification("Bestätigungsmail wurde gesendet!", 0);
 	/*if (Notification.permission === "granted") {
         new Notification("Bestätigungsmail wurde gesendet!");
