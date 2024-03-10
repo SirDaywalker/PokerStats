@@ -22,12 +22,16 @@ header {
     line-height: 4rem;
 }
 
+#icon {
+    position: relative;
+}
+
 #icon-cards {
     display: block;
     position: absolute;
     height: 100%;
-    left: 14px;
-    top: 14px;
+    left: 6px;
+    top: 3px;
 }
 
 #icon-cards .card > * {
@@ -58,7 +62,6 @@ header {
     min-width: max-content;
     width: min-content;
     text-align: right;
-    transition: all 0.5s ease-in-out;
     white-space: nowrap;
     position: relative;
     background: var(--container);
@@ -78,6 +81,7 @@ header {
     display: flex;
     gap: 5%;
     height: 100%;
+    width: 100%;
     align-items: center;
 }
 
@@ -92,6 +96,7 @@ header {
 #account-section svg {
     width: 50px;
     transition: all 0.5s ease-in-out;
+    margin-left: auto;
 }
 
 #account-section svg > path {
@@ -160,4 +165,24 @@ header {
 
 #pott-badge > div > span {
     width: max-content;
+}
+
+@media only screen and (max-width: 720px) {
+    header {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    #account-section {
+        height: 4em;
+        width: 345px;
+        margin: 0.5em 0 0 1em;
+    }
+
+    #pott-badge {
+        top: -103px;
+        right: -1px;
+    }
 }
