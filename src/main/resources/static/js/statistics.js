@@ -24,6 +24,9 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
         }
 
         const wins = data["winners"][userId].wins;
+        const totalGames = label.length;
+        const winRate = (wins / totalGames) * 100;
+
         new Chart("win-rate", {
             type: "doughnut",
             data: {
@@ -31,7 +34,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                 datasets: [
                     {
                         label: "Siege",
-                        data: [wins, label.length - wins],
+                        data: [wins, totalGames - wins],
                         backgroundColor: ["#0061df1A", "#df00001A"],
                         borderColor: ["#0061df", "#df0000"],
                     }
@@ -50,8 +53,22 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                             }
                         }
                     },
-                }
-            }
+                    legend: {
+                        display: false, // Die Legende ausblenden
+                    },
+                    title: {
+                        display: true,
+                        text: `Siegesrate: ${winRate.toFixed(2)}%`, // Die Gewinnrate in Prozent anzeigen
+                        position: "bottom",
+                        padding: 10,
+                        font: {
+                            size: 16,
+                            weight: "bold",
+                        },
+                    },
+                },
+                cutout: "80%", // Die Größe des inneren Lochs anpassen
+            },
         });
     }
 );
