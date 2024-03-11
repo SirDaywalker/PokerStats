@@ -1,5 +1,6 @@
 package de.stammtisch.pokerstats.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -30,12 +31,16 @@ public class ConfirmationService {
         confirmation.setValidatedAt(0);
         confirmation.setUser(user);
 
-        return confirmation;
+        return this.confirmationRepository.save(confirmation);
     }
 
     public void sendConfirmationMail(User user, Confirmation confirmation) {
         this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken());
     }
+
+	public void sendPasswordResetMail(User user, Confirmation confirmation) {
+		this.emailService.sendPasswordResetMail(user.getUsername(), user.getEmail(), confirmation.getToken());
+	}
     
     public void confirmUser(@NonNull String confirmation) {
 		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
@@ -44,9 +49,11 @@ public class ConfirmationService {
 		long curTime = System.currentTimeMillis();
 		//900000ms = 15min
 		if(curTime - conf.getId() > 900000) {
+			this.confirmationRepository.deleteById(conf.getId());
 			throw new ConfirmationTimeExceededException(); 
 		}
 		if(user.isEnabled()) {
+			this.confirmationRepository.deleteById(conf.getId());
 			throw new UserAlreadyEnabledException();
 		}
 			
@@ -55,6 +62,12 @@ public class ConfirmationService {
 		
 		user.setEnabled(true);
 		this.userRepository.save(user);
+
+		List<Confirmation> confs = this.confirmationRepository.findByUser(user);
+		for(Confirmation con : confs){
+			if(con.getValidatedAt() != 0) { continue; }
+			this.confirmationRepository.deleteById(con.getId());
+		}
 		
     }
     

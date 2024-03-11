@@ -1,10 +1,13 @@
 package de.stammtisch.pokerstats.controller;
 
+import de.stammtisch.pokerstats.controller.dtos.PasswordResetRequest;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
+import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
+import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.ConfirmationService;
 import de.stammtisch.pokerstats.service.PokerGameService;
@@ -15,9 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class PageController {
     private final UserService userService;
     private final PokerGameService pokerGameService;
     private final ConfirmationService confirmationService;
+    private final ConfirmationRepository confirmationRepository;
 
     @GetMapping("/")
     public ModelAndView landing(@RequestHeader(name = "Cookie", required = false) String cookies) {
@@ -119,6 +121,8 @@ public class PageController {
                 latestGames.remove(0);
             }
         }
+        totalBuyIn = Math.round(totalBuyIn * 100.0) / 100.0;
+
         modelAndView.addObject("latestGames", latestGames);
         modelAndView.addObject("totalBuyIn", totalBuyIn);
         final double pot = this.pokerGameService.getCurrentPot();
@@ -208,13 +212,39 @@ public class PageController {
     @GetMapping("confirm-redirect")
     public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
     	ModelAndView modelAndView = new ModelAndView("redirection");
-    	modelAndView.addObject("confirmation", confirmation);
+        if (!this.confirmationRepository.existsByToken(confirmation)) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+    	modelAndView.addObject("url", "/confirm?confirmation=" + confirmation);
     	return modelAndView;
     }
 
-    @GetMapping("/password-reset")
-    public String passwordReset() {
-    	return "password-reset";
+    @PostMapping("/password-reset")
+    public ModelAndView passwordReset(
+            @RequestParam("confirmation") String confirmation,
+            @RequestBody PasswordResetRequest request
+    ) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        try {
+            this.authenticationService.resetPassword(request, confirmation);
+        } catch (NoSuchElementException | ConfirmationTimeExceededException e) {
+            modelAndView.setViewName("redirect:/request-password-reset");
+        } catch (UserNotEnabledException e){
+            modelAndView.setViewName("redirect:/request-confirmation");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/password-reset-form")
+    public ModelAndView passwordResetRedirect(@RequestParam("confirmation") String confirmation) {
+        ModelAndView modelAndView = new ModelAndView("password-reset");
+        if (!this.confirmationRepository.existsByToken(confirmation)) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        modelAndView.addObject("confirmation", confirmation);
+        return modelAndView;
     }
 
     @GetMapping("/users")

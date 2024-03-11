@@ -3,6 +3,8 @@ import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
 const formerUrl = document.referrer;
+alert(formerUrl);
+alert(formerUrl.split("?")[0]);
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
   	window.location.href = '/home';
@@ -27,6 +29,30 @@ else if(formerUrl === "http://localhost:8080/request-password-reset") {
         Notification.requestPermission().then(function(permission) {
             if (permission === "granted") {
                 new Notification("Email zur Passwortzurücksetzung wurde gesendet!");
+            }
+        });
+    }*/
+}
+else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset") {
+    setDefaultNotification("Password wurde erfolgreich zurückgesetzt!", 0);
+    /*if (Notification.permission === "granted") {
+        new Notification("Password wurde erfolgreich zurückgesetzt!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                new Notification("Password wurde erfolgreich zurückgesetzt!");
+            }
+        });
+    }*/
+}
+else if(formerUrl.split("?")[0] === "http://localhost:8080/confirm-redirect" || formerUrl.split("?")[0] === "http://localhost:8080/password-reset-form") {
+    setDefaultNotification("Password wurde erfolgreich zurückgesetzt!", 0);
+    /*if (Notification.permission === "granted") {
+        new Notification("Password wurde erfolgreich zurückgesetzt!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                new Notification("Password wurde erfolgreich zurückgesetzt!");
             }
         });
     }*/

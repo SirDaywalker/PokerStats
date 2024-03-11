@@ -39,9 +39,9 @@ public class PokerGameController {
             double pot = this.pokerGameService.getPot(game);
             double payout = Math.round((pot / 2) * 100.0) / 100.0;
 
-            ArrayList<String> users = new ArrayList<>();
+            Map<Long, String> users = new HashMap<>();
             for (UserGame userGame : game.getUsers()) {
-                users.add(userGame.getUser().getUsername());
+                users.put(userGame.getUser().getId(), userGame.getUser().getUsername());
             }
             gameStats.put(
                     game.getId(),

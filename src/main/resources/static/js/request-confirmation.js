@@ -19,6 +19,18 @@ else if(formerUrl.split("?")[0] === "http://localhost:8080/confirm-redirect") {
         });
     }*/
 }
+else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset") {
+    setErrorNotification("Benutzer muss vor Passwortänderung bestätigt werden!", 0);
+    /*if (Notification.permission === "granted") {
+        new Notification("Benutzer muss vor Passwortänderung bestätigt werden!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                new Notification("Benutzer muss vor Passwortänderung bestätigt werden!");
+            }
+        });
+    }*/
+}
 
 newConfirmationForm.addEventListener('submit', function(event) {
 	event.preventDefault();

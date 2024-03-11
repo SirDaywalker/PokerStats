@@ -1,6 +1,6 @@
 #container {
-    margin: 2em 2em 0;
-    flex-direction: column;
+    margin: 2em;
+    flex-direction: column-reverse;
     gap: 1em;
     display: flex;
 }

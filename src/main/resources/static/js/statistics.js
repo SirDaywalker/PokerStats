@@ -11,8 +11,6 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
             setErrorNotification(e.message, -1);
             return;
         }
-
-        let label = Object.keys(data["games"]).map((x) => parseInt(x) + 1);
         const userId = document.getElementById("win-rate").getAttribute("data-user-id");
 
         if (data["winners"][userId] === undefined) {
@@ -31,11 +29,17 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
 
         const totalPayoutElement = document.getElementById("total-payout");
         const totalPayout = data.winners[userId].payout;
-        totalPayoutElement.innerText = totalPayout + " €";
+        totalPayoutElement.innerText = totalPayout.toFixed(2) + " €";
 
         const wins = data["winners"][userId].wins;
-        const totalGames = label.length;
-        const winRate = (wins / totalGames) * 100;
+        const totalGames = [];
+        for (let game in data["games"]) {
+            let users = data["games"][game].users;
+            if (Object.keys(users).includes(userId)) {
+                totalGames.push(data["games"][game]);
+            }
+        }
+        const winRate = (wins / totalGames.length) * 100;
 
         new Chart("win-rate", {
             type: "doughnut",
@@ -44,7 +48,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                 datasets: [
                     {
                         label: "Siege",
-                        data: [wins, totalGames - wins],
+                        data: [wins, totalGames.length - wins],
                         backgroundColor: ["#0061df1A", "#df00001A"],
                         borderColor: ["#0061df", "#df0000"],
                     }
