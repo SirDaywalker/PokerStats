@@ -30,12 +30,12 @@
 					<span>Betrag</span>
 				</div>
 			</div>
-			<div id="pendingInvoices">
+			<div id="pendingInvoices" th:each="invoice : ${creditorInvoices}">
 				<div class="invoice">
-					<span>Scooter Konzert</span>
-					<span>Julian Benedikt Kirchner</span>
-					<span>28.03.2024</span>
-					<span>84,50€</span>
+					<span th:text="${invoice.getTitle()}"></span>
+					<span th:text="${invoice.getCreditor().getUsername()}"></span>
+					<span th:text="${#dates.format(invoice.getDue(), 'dd.MM.yyyy')}"></span>
+					<span th:text="${#numbers.formatDecimal(invoice.getAmount(), 1, 2, 'COMMA') + '€'}"></span>
 				</div>
 			</div>
 		</div>
@@ -44,18 +44,18 @@
 			<div id="selected">
 				<span>Aufgegebene Rechnungen:</span>
 				<div class="labels">
-					<span class="inner">Titel</span>
-					<span class="inner">Schuldner</span>
-					<span class="inner">Fällig bis</span> 
-					<span class="inner">Betrag</span>
+					<span>Titel</span>
+					<span>Schuldner</span>
+					<span>Fällig bis</span> 
+					<span>Betrag</span>
 				</div>
 			</div>
-			<div id="pendingInvoices">
+			<div id="pendingInvoices" th:each="invoice : ${debtorInvoices}">
 				<div class="invoice">
-					<span>Scooter Konzert</span>
-					<span>Julian Benedikt Kirchner</span>
-					<span>28.03.2024</span>
-					<span>84,50€</span>
+					<span th:text="${invoice.getTitle()}"></span>
+					<span th:text="${invoice.getCreditor().getUsername()}"></span>
+					<span th:text="${#dates.format(invoice.getDue(), 'dd.MM.yyyy')}"></span>
+					<span th:text="${#numbers.formatDecimal(invoice.getAmount(), 1, 2, 'COMMA') + '€'}"></span>
 				</div>
 			</div>
 		</div>
