@@ -121,12 +121,25 @@ form>button[type="submit"] {
 }
 
 @media only screen and (max-width: 850px) {
+	#selected {
+	    margin 1em;
+        min-height: 2em;
+	}
+
 	.labels {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	margin: 1em 1em 1em 12.3%;
 	}
-	
+
+	.labels > span {
+    	display: none;
+    }
+
+    .labels > span:nth-child(4) {
+    	display: none;
+    }
+
 	.invoice {
 	height: 5em;
 	flex-direction: column;
