@@ -3,8 +3,6 @@ import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
 const formerUrl = document.referrer;
-alert(formerUrl);
-alert(formerUrl.split("?")[0]);
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
   	window.location.href = '/login';
