@@ -57,9 +57,34 @@ form.addEventListener('submit', function(event) {
         'application/json',
         function(response, status, isOK) {
                if (isOK) {
-                    window.location.href = '/confirm-invoice';
+                    window.location.href = '/home';
                } else {
                     setErrorNotification(response, 0);
                }
         })
 });
+
+function blockNonNumericInput(event) {
+	var regex = new RegExp("^[0-9,.]+$");
+	var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+	if (!regex.test(key)) {
+   	 event.preventDefault();
+    	return false;
+	}
+}
+
+function blockNonNumericInputAndCommaPoint(event) {
+	var regex = new RegExp("^[0-9]+$");
+	var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+	if (!regex.test(key)) {
+   	 event.preventDefault();
+    	return false;
+	}
+}
+
+const inputFieldAmount = document.getElementById('amount');
+inputFieldAmount.addEventListener('keypress', blockNonNumericInput);
+const inputFieldInterest = document.getElementById('interest');
+inputFieldInterest.addEventListener('keypress', blockNonNumericInput);
+const inputFieldInterestIntervalDays = document.getElementById('interestIntervalDays');
+inputFieldInterestIntervalDays.addEventListener('keypress', blockNonNumericInputAndCommaPoint);
