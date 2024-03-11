@@ -37,7 +37,7 @@
             </svg>
             <div id="account-popup">
                 <ul>
-                    <li><a href="#">Deine Statistiken</a></li>
+                    <li><a href="/statistics">Deine Statistiken</a></li>
                     <li><a href="/account">Account</a></li>
                     <li th:if="${account.getRole().name().equals('ADMIN')}"><a href="/users">User Bearbeiten</a></li>
                     <li><a id="logout" href="/login?logout">Logout</a></li>

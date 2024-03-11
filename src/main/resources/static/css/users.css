@@ -17,7 +17,7 @@ body {
     border-radius: var(--border-radius);
     margin: 1em 0;
     padding: 0.5em;
-    transition: border-color 500ms ease-in-out;
+    transition: border-color 300ms ease-in-out;
 }
 
 .user > img {
@@ -35,4 +35,10 @@ body {
 .user:hover {
     border-color: var(--blue);
     transition: border-color 500ms ease-in-out;
+}
+
+@media only screen and (max-width: 850px) {
+    .container > h1 {
+        font-size: medium;
+    }
 }
