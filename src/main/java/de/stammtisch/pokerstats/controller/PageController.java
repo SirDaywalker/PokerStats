@@ -7,6 +7,7 @@ import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
+import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.ConfirmationService;
 import de.stammtisch.pokerstats.service.PokerGameService;
@@ -31,6 +32,7 @@ public class PageController {
     private final UserService userService;
     private final PokerGameService pokerGameService;
     private final ConfirmationService confirmationService;
+    private final ConfirmationRepository confirmationRepository;
 
     @GetMapping("/")
     public ModelAndView landing(@RequestHeader(name = "Cookie", required = false) String cookies) {
@@ -208,6 +210,10 @@ public class PageController {
     @GetMapping("confirm-redirect")
     public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
     	ModelAndView modelAndView = new ModelAndView("redirection");
+        if (!this.confirmationRepository.existsByToken(confirmation)) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
     	modelAndView.addObject("url", "/confirm?confirmation=" + confirmation);
     	return modelAndView;
     }
@@ -231,6 +237,10 @@ public class PageController {
     @GetMapping("/password-reset-form")
     public ModelAndView passwordResetRedirect(@RequestParam("confirmation") String confirmation) {
         ModelAndView modelAndView = new ModelAndView("password-reset");
+        if (!this.confirmationRepository.existsByToken(confirmation)) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
         modelAndView.addObject("confirmation", confirmation);
         return modelAndView;
     }
