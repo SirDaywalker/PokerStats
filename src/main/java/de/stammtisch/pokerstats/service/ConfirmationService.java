@@ -30,7 +30,7 @@ public class ConfirmationService {
         confirmation.setValidatedAt(0);
         confirmation.setUser(user);
 
-        return confirmation;
+        return this.confirmationRepository.save(confirmation);
     }
 
     public void sendConfirmationMail(User user, Confirmation confirmation) {
@@ -44,9 +44,11 @@ public class ConfirmationService {
 		long curTime = System.currentTimeMillis();
 		//900000ms = 15min
 		if(curTime - conf.getId() > 900000) {
+			this.confirmationRepository.deleteById(conf.getId());
 			throw new ConfirmationTimeExceededException(); 
 		}
 		if(user.isEnabled()) {
+			this.confirmationRepository.deleteById(conf.getId());
 			throw new UserAlreadyEnabledException();
 		}
 			

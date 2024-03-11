@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                            "/api/v1/auth/authenticate",
                            "/confirm",
                            "/confirm-redirect",
+                           "/password-reset",
                            "/api/v1/auth/request-password-reset",
                            "/api/v1/auth/request-confirmation",
                            "/cdn/**",
