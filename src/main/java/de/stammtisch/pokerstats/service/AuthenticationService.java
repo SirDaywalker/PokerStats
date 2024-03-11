@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import de.stammtisch.pokerstats.controller.dtos.*;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
+import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
+import de.stammtisch.pokerstats.controller.dtos.PasswordOrConfirmationRequest;
+import de.stammtisch.pokerstats.controller.dtos.PasswordResetRequest;
+import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
+import de.stammtisch.pokerstats.exceptions.ConfirmationAlreadyUsedException;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
@@ -197,6 +202,10 @@ public class AuthenticationService {
         if(!user.isEnabled()) {
             throw new UserNotEnabledException();
         }
+        if(conf.getValidatedAt() != 0) {
+			this.confirmationRepository.deleteById(conf.getId());
+			throw new ConfirmationAlreadyUsedException();
+		}
 
         conf.setValidatedAt(curTime);
         this.confirmationRepository.save(conf);

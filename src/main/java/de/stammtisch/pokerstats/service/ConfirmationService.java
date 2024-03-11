@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
+import de.stammtisch.pokerstats.exceptions.ConfirmationAlreadyUsedException;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.models.Confirmation;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
-import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -55,6 +54,10 @@ public class ConfirmationService {
 		if(user.isEnabled()) {
 			this.confirmationRepository.deleteById(conf.getId());
 			throw new UserAlreadyEnabledException();
+		}
+		if(conf.getValidatedAt() != 0) {
+			this.confirmationRepository.deleteById(conf.getId());
+			throw new ConfirmationAlreadyUsedException();
 		}
 			
 		conf.setValidatedAt(curTime);

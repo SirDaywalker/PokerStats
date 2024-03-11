@@ -1,6 +1,21 @@
 package de.stammtisch.pokerstats.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import de.stammtisch.pokerstats.controller.dtos.PasswordResetRequest;
+import de.stammtisch.pokerstats.exceptions.ConfirmationAlreadyUsedException;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
@@ -18,16 +33,6 @@ import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -207,7 +212,7 @@ public class PageController {
     	ModelAndView modelAndView = new ModelAndView("redirect:/home");
     	try {
     		this.confirmationService.confirmUser(confirmation);
-    	} catch (ConfirmationTimeExceededException | NoSuchElementException e) {
+    	} catch (ConfirmationTimeExceededException | NoSuchElementException | ConfirmationAlreadyUsedException e) {
     		modelAndView.setViewName("redirect:/request-confirmation");
     	} catch (UserAlreadyEnabledException ignored) {
     	}
@@ -217,10 +222,6 @@ public class PageController {
     @GetMapping("confirm-redirect")
     public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
     	ModelAndView modelAndView = new ModelAndView("redirection");
-        if (!this.confirmationRepository.existsByToken(confirmation)) {
-            modelAndView.setViewName("login");
-            return modelAndView;
-        }
     	modelAndView.addObject("url", "/confirm?confirmation=" + confirmation);
     	return modelAndView;
     }
@@ -233,19 +234,20 @@ public class PageController {
         ModelAndView modelAndView = new ModelAndView("redirect:/login");
         try {
             this.authenticationService.resetPassword(request, confirmation);
-        } catch (NoSuchElementException | ConfirmationTimeExceededException e) {
+        } catch (NoSuchElementException | ConfirmationTimeExceededException | ConfirmationAlreadyUsedException e) {
             modelAndView.setViewName("redirect:/request-password-reset");
-        } catch (UserNotEnabledException e){
+        } catch (UserNotEnabledException e) {
             modelAndView.setViewName("redirect:/request-confirmation");
         }
         return modelAndView;
     }
 
     @GetMapping("/password-reset-form")
-    public ModelAndView passwordResetRedirect(@RequestParam("confirmation") String confirmation) {
+    public ModelAndView passwordResetForm(@RequestParam("confirmation") String confirmation) {
         ModelAndView modelAndView = new ModelAndView("password-reset");
-        if (!this.confirmationRepository.existsByToken(confirmation)) {
-            modelAndView.setViewName("login");
+        if (!this.confirmationRepository.existsByToken(confirmation) || this.confirmationRepository.findByToken(confirmation).orElseThrow().getValidatedAt() != 0) {
+            modelAndView.setViewName("redirection");
+            modelAndView.addObject("url", "/request-password-reset");
             return modelAndView;
         }
         modelAndView.addObject("confirmation", confirmation);

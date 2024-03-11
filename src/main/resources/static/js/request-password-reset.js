@@ -4,20 +4,11 @@ import {sendDataToServer} from "./components/networking.js";
 const resetPasswordForm = document.getElementById('resetPassword-form');
 const formerUrl = document.referrer;
 
-if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
-    window.location.href = '/home';
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/request-password-reset") {
+    window.location.href = '/request-password-reset';
 }
-else if(formerUrl === "http://localhost:8080/password-reset") {
-    setDefaultNotification("Anfrage zur Passwort Zurücksetzung invalide oder abgelaufen. Bitte erneut anfordern!", 0);
-    /*if (Notification.permission === "granted") {
-        new Notification("Anfrage zur Passwort Zurücksetzung invalide oder abgelaufen. Bitte erneut anfordern!");
-    } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(function(permission) {
-            if (permission === "granted") {
-                new Notification("Anfrage zur Passwort Zurücksetzung invalide oder abgelaufen. Bitte erneut anfordern!");
-            }
-        });
-    }*/
+else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset-form") {
+    setErrorNotification("Anfrage zur Passwort Zurücksetzung invalide oder abgelaufen. Bitte erneut anfordern!", 0);
 }
 
 resetPasswordForm.addEventListener('submit', function(event) {

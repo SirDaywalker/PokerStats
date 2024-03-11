@@ -1,10 +1,24 @@
 package de.stammtisch.pokerstats.controller.api;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
 import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
 import de.stammtisch.pokerstats.controller.dtos.PasswordOrConfirmationRequest;
 import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
-import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
@@ -13,14 +27,6 @@ import de.stammtisch.pokerstats.service.AuthenticationService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -52,13 +58,13 @@ public class AuthenticationController {
         try {
         	token = this.authenticationService.requestConfirmation(request);
         } catch (UserAlreadyEnabledException e) {
-        	return new ResponseEntity<>("Benutzer Email wurde bereits bestätigt.", HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<>("Benutzer Email wurde bereits best&aumltigt.", HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e) {
     		return new ResponseEntity<>("Benutzer konnte nicht gefunden werden.", HttpStatus.BAD_REQUEST);
     	}
         
         response.addCookie(AuthenticationService.generateCookie(token));
-		return new ResponseEntity<>("Bestätigunsmail wurde gesendet.", HttpStatus.OK);
+		return new ResponseEntity<>("Best&aumltigunsmail wurde gesendet.", HttpStatus.OK);
     }
 
     @PutMapping("/request-password-reset")
@@ -69,11 +75,11 @@ public class AuthenticationController {
         } catch (NoSuchElementException e) {
     		return new ResponseEntity<>("Benutzer konnte nicht gefunden werden.", HttpStatus.BAD_REQUEST);
     	} catch (UserNotEnabledException e) {
-    		return new ResponseEntity<>("Benutzer Email wurde noch nicht bestätigt.", HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<>("Benutzer Email wurde noch nicht best&aumltigt.", HttpStatus.BAD_REQUEST);
     	}
         
         response.addCookie(AuthenticationService.generateCookie(token));
-		return new ResponseEntity<>("Mail zur Passwortzurücksetzung wurde gesendet.", HttpStatus.OK);
+		return new ResponseEntity<>("Mail zur Passwortzur&uumlcksetzung wurde gesendet.", HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
@@ -88,7 +94,7 @@ public class AuthenticationController {
             return new ResponseEntity<>("Die Anmeldedaten sind falsch.", HttpStatus.UNAUTHORIZED);
         } catch (DisabledException e) {
             return new ResponseEntity<>(
-                    "Der Account ist entweder nicht bestätigt oder gesperrt. Bitte überprüfen Sie Ihre E-Mails.",
+                    "Der Account ist entweder nicht best&aumltigt oder gesperrt. Bitte &uumlberprüfen Sie Ihre E-Mails.",
                     HttpStatus.UNAUTHORIZED
             );
         }
@@ -115,6 +121,6 @@ public class AuthenticationController {
             return new ResponseEntity<>("Die E-Mail-Adresse ist bereits in Benutzung.", HttpStatus.BAD_REQUEST);
         }
         response.addCookie(AuthenticationService.generateCookie(token));
-        return new ResponseEntity<>("Erfolgreich geändert.", HttpStatus.OK);
+        return new ResponseEntity<>("Erfolgreich ge&aumlndert.", HttpStatus.OK);
     }
 }
