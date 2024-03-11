@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Rechnung erstellen - PokerStats</title>
-    <link th:href="@{/css/default.css}" rel="stylesheet"/>
-    <link th:href="@{/css/components/buttons.css}" rel="stylesheet"/>
-    <link th:href="@{/css/create-invoice.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/default.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/components/buttons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/create-invoice.css}"/>
     <link rel="stylesheet" th:href="@{/css/components/container.css}">
-    <link th:href="@{/css/components/notifications.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/components/notifications.css}"/>
     <link rel="icon" type="image/png" th:href="@{/assets/favicon/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/components/card.css}" />
+    <link rel="stylesheet" th:href="@{/css/components/badges.css}" />
 </head>
 <body>
+<header th:replace="~{header.html :: header}"></header>
 <h1>Rechnung</h1>
 <span class="notification"></span>
 <form id="invoice-form">
-    <label><input id="titel" type="text" placeholder="Titel" maxlength="32" required></label>
+    <label><input id="title" type="text" placeholder="Titel" maxlength="32" required></label>
     <label><input id="amount" type="number" step="0.01" min="0" placeholder="Höhe der Rechnung" required></label>
     <label><input id="due" type="date" placeholder="Fälligkeitsdatum" required></label>
     <label><input id="interest" type="number" step="0.01" min="0" placeholder="Zinsen" required></label>
@@ -30,6 +34,7 @@
                 <img th:src="${user.getProfilePictureURL()}" alt="">
                 <span th:text="${user.getUsername()}"></span>
                 <span style="display: none" th:text="${user.getBuyIn()}"></span>
+                <span class="email" style="display: none" th:text="${user.getEmail()}"></span>
             </label>
         </div>
     </div>

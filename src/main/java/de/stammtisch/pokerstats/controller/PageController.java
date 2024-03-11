@@ -171,6 +171,8 @@ public class PageController {
             modelAndView.setViewName("login");
             return modelAndView;
         }
+        final double pot = this.pokerGameService.getCurrentPot();
+        modelAndView.addObject("pot", pot);
         final List<User> users = this.userService.getAllUsers();
         modelAndView.addObject("users", users);
         return modelAndView;

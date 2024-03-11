@@ -29,8 +29,8 @@ public class Invoice {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User creditor;
 	
-	@Column(length = 4096, nullable = false)
-	private String notes;
+	@Column(length = 32, nullable = false)
+	private String title;
 	
 	@PrePersist
     public void prePersist() {

@@ -1,4 +1,5 @@
 import {setErrorNotification} from "./components/notifications.js";
+import {sendDataToServer} from "./components/networking.js";
 
 const users_element = document.getElementById('users');
 const selected_users = document.getElementById('selected');
@@ -31,34 +32,34 @@ form.addEventListener('submit', function(event) {
             if (user.localName === "span") {
                 continue;
             }
-            users.push(user.children[2].innerText);
+            users.push(user.children[4].innerText);
     }
 
-    const titel = document.getElementById('titel');
-    const amount = document.getElementById('amount');
-    const due = document.getElementById('due');
-    const interest = document.getElementById('interest');
-    const interestIntervalDays = document.getElementById('interestIntervalDays');
+    const title = document.getElementById('title').value;
+    const amount = document.getElementById('amount').value;
+    const due = document.getElementById('due').value;
+    const interest = document.getElementById('interest').value;
+    const interestIntervalDays = document.getElementById('interestIntervalDays').value;
 
-    const formData = new FormData();
-    formData.append('titel', titel);
-    formData.append('amount', amount);
-    formData.append('due', due);
-    formData.append('interest', interest);
-    formData.append('interestIntervalDays', interestIntervalDays);
+    const data = {
+        title: title,
+        amount: amount,
+        due: due,
+        interest: interest,
+        interestIntervalDays: interestIntervalDays,
+        users: users
+    }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/auth/create-invoice', true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            window.location.href = '/confirm-invoice';
-            return;
-        }
-        if (xhr.status === 400) {
-            setErrorNotification('Ein Fehler ist aufgetreten. Haben Sie alle Felder ausgefüllt?', 0);
-        } else {
-            setErrorNotification('Status ' + xhr.status.toString(), 0);
-        }
-    };
-    xhr.send(formData);
+    sendDataToServer(
+        JSON.stringify(data),
+        "/api/v1/invoice/create-invoice",
+        'POST',
+        'application/json',
+        function(response, status, isOK) {
+               if (isOK) {
+                    window.location.href = '/confirm-invoice';
+               } else {
+                    setErrorNotification(response, 0);
+               }
+        })
 });
