@@ -119,6 +119,8 @@ public class PageController {
                 latestGames.remove(0);
             }
         }
+        totalBuyIn = Math.round(totalBuyIn * 100.0) / 100.0;
+
         modelAndView.addObject("latestGames", latestGames);
         modelAndView.addObject("totalBuyIn", totalBuyIn);
         final double pot = this.pokerGameService.getCurrentPot();

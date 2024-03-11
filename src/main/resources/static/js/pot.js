@@ -49,7 +49,7 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                         borderColor: "#0061df1A",
 
                         // Use the length of the array in data.users as the x-axis.
-                        data: Object.values(data["games"]).map((x) => x.users.length),
+                        data: Object.values(data["games"]).map((x) => Object.keys(x.users).length),
                     },
                     {
                         label: "Payout",
@@ -72,7 +72,8 @@ sendDataToServer(null, "/api/v1/games/poker/stats", "GET", null,
                                     }
 
                                     // Return all users and sort them by length.
-                                    return [...data["games"][context.parsed.x].users].sort(compareLength);
+                                    let gameId = Object.keys(data["games"])[context.parsed.x];
+                                    return [...Object.values(data["games"][gameId].users)].sort(compareLength);
                                 }
                                 // Add the currency to the pot and payout. in euro
                                 return label + ': €' + context.parsed.y;
