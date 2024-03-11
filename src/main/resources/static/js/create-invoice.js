@@ -34,12 +34,14 @@ form.addEventListener('submit', function(event) {
             users.push(user.children[2].innerText);
     }
 
+    const titel = document.getElementById('titel');
     const amount = document.getElementById('amount');
     const due = document.getElementById('due');
     const interest = document.getElementById('interest');
     const interestIntervalDays = document.getElementById('interestIntervalDays');
 
     const formData = new FormData();
+    formData.append('titel', titel);
     formData.append('amount', amount);
     formData.append('due', due);
     formData.append('interest', interest);
