@@ -35,6 +35,7 @@ resetPasswordForm.addEventListener('submit', function(event) {
         function(response, status, isOK) {
             if (isOK) {
                 window.location.href = '/login';
+                return;
             } else {
                 setErrorNotification(response, 0);
             }

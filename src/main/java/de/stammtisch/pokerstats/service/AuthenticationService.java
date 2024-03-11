@@ -178,6 +178,8 @@ public class AuthenticationService {
     	if(!user.isEnabled()) {
     		throw new UserNotEnabledException();
     	}
+        final Confirmation confirmation = this.confirmationService.createConfirmation(user);
+        this.confirmationService.sendPasswordResetMail(user, confirmation);
     	return this.generateToken(user);
     }
 

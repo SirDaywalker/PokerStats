@@ -36,6 +36,10 @@ public class ConfirmationService {
     public void sendConfirmationMail(User user, Confirmation confirmation) {
         this.emailService.sendConfirmationMail(user.getUsername(), user.getEmail(), confirmation.getToken());
     }
+
+	public void sendPasswordResetMail(User user, Confirmation confirmation) {
+		this.emailService.sendPasswordResetMail(user.getUsername(), user.getEmail(), confirmation.getToken());
+	}
     
     public void confirmUser(@NonNull String confirmation) {
 		final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();

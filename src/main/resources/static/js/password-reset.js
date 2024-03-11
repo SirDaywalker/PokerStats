@@ -1,6 +1,6 @@
 import {calculatePasswordStrength} from "./components/security.js";
-import {sendDataToServer} from "./components/networking";
-import {setErrorNotification} from "./components/notifications";
+import {sendDataToServer} from "./components/networking.js";
+import {setErrorNotification} from "./components/notifications.js";
 
 const form = document.getElementsByTagName('form')[0];
 const password = document.getElementById('password');
@@ -23,18 +23,19 @@ form.addEventListener('submit', function(event) {
         return;
     }
 
-    const formData = new FormData();
-    formData.append('password', password.value);
-    formData.append("confirmation", )
+    const data = {
+        password: confirmPassword
+    };
+    const url = '/password-reset?confirmation='+document.getElementById('confirmation').getAttribute('data-token');
 
     sendDataToServer(
-        formData,
-        '/api/v1/auth/register',
+        JSON.stringify(data),
+        url,
         'POST',
-        null,
+        'application/json',
         function(text, status, isOK) {
             if (isOK) {
-                window.location.href = '/home';
+                window.location.href = '/login';
                 return;
             }
             setErrorNotification(text, 0);

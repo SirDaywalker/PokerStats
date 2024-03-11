@@ -17,10 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -211,11 +208,11 @@ public class PageController {
     @GetMapping("confirm-redirect")
     public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
     	ModelAndView modelAndView = new ModelAndView("redirection");
-    	modelAndView.addObject("confirmation", "/confirm?confirmation=" + confirmation);
+    	modelAndView.addObject("url", "/confirm?confirmation=" + confirmation);
     	return modelAndView;
     }
 
-    @GetMapping("/password-reset")
+    @PostMapping("/password-reset")
     public ModelAndView passwordReset(
             @RequestParam("confirmation") String confirmation,
             @RequestBody PasswordResetRequest request

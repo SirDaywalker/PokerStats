@@ -59,7 +59,7 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/confirm-redirect?confirmation=" + token);
+        mail = mail.replace("{LINK}", "http://localhost:8080/password-reset-form?confirmation=" + token);
 
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }

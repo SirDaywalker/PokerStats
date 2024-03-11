@@ -25,6 +25,7 @@ public class User implements UserDetails {
     private long id;
 
     @Getter(AccessLevel.NONE)
+    @Column(unique = true)
     private String name;
 
     @Column(length = 60, nullable = false)
