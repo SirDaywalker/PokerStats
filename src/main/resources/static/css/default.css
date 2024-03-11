@@ -37,6 +37,7 @@ a {
 body {
     margin: 0;
     background: var(--background);
+    overflow-x: hidden;
 }
 
 input:focus {
