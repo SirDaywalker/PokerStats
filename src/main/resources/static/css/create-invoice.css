@@ -1,21 +1,15 @@
-h1 {
-    text-align: center;
-    font-weight: 500;
-    margin: 2em 0 1em;
-    font-size: 3rem;
-}
-
 span.notification {
     margin: 0 auto 2em;
 }
 
-form {
-    background: var(--container);
-    width: 25em;
-    margin: 0 auto;
-    border-radius: 10px;
-    border: 2px solid black;
-    padding: 2em;
+.container {
+	width: 25em;
+	margin: 5em auto;
+}
+
+.container > p {
+    margin: 0 0 2rem;
+    font-size: 1.8rem;
 }
 
 label {
@@ -34,7 +28,7 @@ input {
 
 form button[type="submit"] {
     width: 50%;
-    margin: 0 auto 2em;
+    margin: 0 auto;
 }
 
 
