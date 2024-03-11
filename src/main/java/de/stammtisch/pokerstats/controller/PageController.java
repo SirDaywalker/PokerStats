@@ -4,12 +4,14 @@ import de.stammtisch.pokerstats.controller.dtos.PasswordResetRequest;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.UserAlreadyEnabledException;
 import de.stammtisch.pokerstats.exceptions.UserNotEnabledException;
+import de.stammtisch.pokerstats.models.Invoice;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.ConfirmationService;
+import de.stammtisch.pokerstats.service.InvoiceService;
 import de.stammtisch.pokerstats.service.PokerGameService;
 import de.stammtisch.pokerstats.service.UserService;
 import io.jsonwebtoken.JwtException;
@@ -24,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -32,6 +36,7 @@ public class PageController {
     private final UserService userService;
     private final PokerGameService pokerGameService;
     private final ConfirmationService confirmationService;
+    private final InvoiceService invoiceService;
     private final ConfirmationRepository confirmationRepository;
 
     @GetMapping("/")
@@ -266,7 +271,22 @@ public class PageController {
     @GetMapping("/my-invoices")
     public ModelAndView myInvoices(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("my-invoices");
-        return getModelAndView(cookies, modelAndView);
-
+        final User user;
+        try {
+            user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            modelAndView.addObject("account", user);
+        } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        final double pot = this.pokerGameService.getCurrentPot();
+        modelAndView.addObject("pot", pot);
+        
+        final Set<Invoice> debtorInvoices = this.invoiceService.findByDebtor(user);
+        modelAndView.addObject("debtorInvoices", debtorInvoices);
+        
+        final Set<Invoice> creditorInvoices = this.invoiceService.findByCreditor(user);
+        modelAndView.addObject("creditorInvoices", creditorInvoices);
+        return modelAndView;
     }
 }
