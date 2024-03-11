@@ -58,7 +58,9 @@ public class EmailService {
         } catch (IOException e) {
             return;
         }
-        
+        mail = mail.replace("{USERNAME}", username);
+        mail = mail.replace("{LINK}", "http://localhost:8080/confirm-redirect?confirmation=" + token);
+
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }
 }

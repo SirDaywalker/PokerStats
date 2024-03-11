@@ -31,6 +31,18 @@ else if(formerUrl === "http://localhost:8080/request-password-reset") {
         });
     }*/
 }
+else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset") {
+    setDefaultNotification("Password wurde erfolgreich zurückgesetzt!", 0);
+    /*if (Notification.permission === "granted") {
+        new Notification("Password wurde erfolgreich zurückgesetzt!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+                new Notification("Password wurde erfolgreich zurückgesetzt!");
+            }
+        });
+    }*/
+}
 
 loginForm.addEventListener('submit', function(event) {
     event.preventDefault();

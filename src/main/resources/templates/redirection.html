@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form id="redirection-form" class="container">
-	    <p>Wenn Sie nicht automatisch weitergeleitet wurden, klicken Sie <a th:href="'/confirm?confirmation=' + ${confirmation}" style="text-decoration: underline" id="redirect">hier</a></p>
+	    <p>Wenn Sie nicht automatisch weitergeleitet wurden, klicken Sie <a th:href="${url}" style="text-decoration: underline" id="redirect">hier</a></p>
 	</form>
 	<script type="module" th:src="@{/js/redirection.js}"></script>
 	</body>

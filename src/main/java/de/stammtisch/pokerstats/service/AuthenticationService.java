@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import de.stammtisch.pokerstats.controller.dtos.*;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,10 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import de.stammtisch.pokerstats.controller.dtos.AuthenticationRequest;
-import de.stammtisch.pokerstats.controller.dtos.EditAccountRequest;
-import de.stammtisch.pokerstats.controller.dtos.PasswordOrConfirmationRequest;
-import de.stammtisch.pokerstats.controller.dtos.RegisterRequest;
 import de.stammtisch.pokerstats.exceptions.ConfirmationTimeExceededException;
 import de.stammtisch.pokerstats.exceptions.EmailAlreadyInUseException;
 import de.stammtisch.pokerstats.exceptions.InvalidRequestParameterException;
@@ -182,6 +179,27 @@ public class AuthenticationService {
     		throw new UserNotEnabledException();
     	}
     	return this.generateToken(user);
+    }
+
+    public void resetPassword(@NonNull PasswordResetRequest request, String confirmation) {
+        final Confirmation conf = this.confirmationRepository.findByToken(confirmation).orElseThrow();
+        final User user = conf.getUser();
+
+        long curTime = System.currentTimeMillis();
+        //900000ms = 15min
+        if(curTime - conf.getId() > 900000) {
+            this.confirmationRepository.deleteById(conf.getId());
+            throw new ConfirmationTimeExceededException();
+        }
+        if(!user.isEnabled()) {
+            throw new UserNotEnabledException();
+        }
+
+        conf.setValidatedAt(curTime);
+        this.confirmationRepository.save(conf);
+
+        user.setPassword(passwordEncoder.encode(request.password()));
+        this.userRepository.save(user);
     }
 
     public String changeDetails(@NonNull EditAccountRequest request, String cookies) throws IOException {
