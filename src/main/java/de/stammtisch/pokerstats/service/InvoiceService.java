@@ -6,6 +6,11 @@ import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.InvoiceRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,9 +27,21 @@ public class InvoiceService {
             invoice.setInterest(request.interest());
             invoice.setInterestIntervalDays(request.interestIntervalDays());
             invoice.setTitle(request.title());
-            invoice.setCreditor(user);
-            invoice.setDebtor(this.userRepository.findByEmail(email));
+            invoice.setDebtor(user);
+            invoice.setCreditor(this.userRepository.findByEmail(email));
             this.invoiceRepository.save(invoice);
         }
+    }
+    
+    public Set<Invoice> findByDebtor(User debtor) {
+    	return this.invoiceRepository.findByDebtor(debtor).orElseThrow();
+    }
+    
+    public Set<Invoice> findByCreditor(User creditor) {
+    	return this.invoiceRepository.findByCreditor(creditor).orElseThrow();
+    }
+    
+    public List<Invoice> getAllInvoices() {
+    	return this.invoiceRepository.findAll();
     }
 }
