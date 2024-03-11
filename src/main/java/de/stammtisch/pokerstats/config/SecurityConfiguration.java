@@ -44,6 +44,9 @@ public class SecurityConfiguration {
                            "/img/**",
                            "/assets/**"
                     ).permitAll();
+                    auth.requestMatchers(
+                            "/users"
+                    ).hasAnyAuthority("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
