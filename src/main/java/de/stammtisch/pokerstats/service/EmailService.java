@@ -21,8 +21,12 @@ public class EmailService {
 	private JavaMailSender mailSender;
 
 	@Async
-    public void send(String emailAddress, String email, String subject) {
-        try {
+    public void send(
+    		String emailAddress, 
+    		String email, 
+    		String subject
+    ) {
+		try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
@@ -37,7 +41,11 @@ public class EmailService {
     }
     
 	@Async
-    public void sendConfirmationMail(String username, String emailAddress, String token) {
+    public void sendConfirmationMail(
+    		String username, 
+    		String emailAddress, 
+    		String token
+    ) {
     	String mail;
         try {
             mail = StreamUtils.copyToString(new ClassPathResource("mails/confirmation-mail.html").getInputStream(), Charset.defaultCharset());
@@ -51,7 +59,11 @@ public class EmailService {
     }
     
 	@Async
-    public void sendPasswordResetMail(String username, String emailAddress, String token) {
+    public void sendPasswordResetMail(
+    		String username, 
+    		String emailAddress, 
+    		String token
+    ) {
     	String mail;
         try {
             mail = StreamUtils.copyToString(new ClassPathResource("mails/password-reset-mail.html").getInputStream(), Charset.defaultCharset());
@@ -62,5 +74,33 @@ public class EmailService {
         mail = mail.replace("{LINK}", "http://localhost:8080/password-reset-form?confirmation=" + token);
 
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
+    }
+	
+	@Async
+    public void sendInvoiceMail(
+    		String username, 
+    		String emailAddress, 
+    		String title,
+    		String creditor, 
+    		String amount, 
+    		String date, 
+    		String interest,
+    		String interestInterval
+    ) {
+    	String mail;
+        try {
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/invoice-mail.html").getInputStream(), Charset.defaultCharset());
+        } catch (IOException e) {
+            return;
+        }
+        mail = mail.replace("{USERNAME}", username);
+        mail = mail.replace("{TITLE}", title);
+        mail = mail.replace("{CREDITOR}", creditor);
+        mail = mail.replace("{AMOUNT}", amount);
+        mail = mail.replace("{DATE}", date);
+        mail = mail.replace("{INTEREST}", interest);
+        mail = mail.replace("{INTERESTINTERVAL}", interestInterval);
+
+        this.send(emailAddress, mail, "Rechnung erhalten");
     }
 }

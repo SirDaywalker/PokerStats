@@ -7,6 +7,10 @@ import de.stammtisch.pokerstats.repository.InvoiceRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,19 +20,36 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class InvoiceService {
+	
     private final InvoiceRepository invoiceRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
+    
     public void createInvoice(User user, InvoiceCreatingRequest request) {
         for (String email : request.users()) {
             Invoice invoice = new Invoice();
-
-            invoice.setAmount(request.amount());
-            invoice.setDue(request.due());
+            User creditor = this.userRepository.findByEmail(email);
+            
+            invoice.setDue(request.due()+ZonedDateTime.now().getOffset().getTotalSeconds()*1000);
             invoice.setInterest(request.interest());
-            invoice.setInterestIntervalDays(request.interestIntervalDays());
+            invoice.setInterestIntervalWeeks(request.interestIntervalWeeks());
             invoice.setTitle(request.title());
             invoice.setDebtor(user);
-            invoice.setCreditor(this.userRepository.findByEmail(email));
+            invoice.setCreditor(creditor);
+            
+            String[] date = new Date(request.due()).toString().split(" ");
+            
+            this.emailService.sendInvoiceMail(
+            		user.getUsername(), 
+            		user.getEmail(),
+            		request.title(),
+            		creditor.getUsername(), 
+            		request.amount().toString(), 
+            		date[0] + ", " + date[2] + ". " + date[1] + " " + date[5] + ", " + date[3], 
+            		request.interest().toString(), 
+            		request.interestIntervalWeeks().toString()
+            	);
+            
             this.invoiceRepository.save(invoice);
         }
     }

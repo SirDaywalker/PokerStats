@@ -42,7 +42,6 @@ public class PageController {
     private final PokerGameService pokerGameService;
     private final ConfirmationService confirmationService;
     private final InvoiceService invoiceService;
-    private final ConfirmationRepository confirmationRepository;
 
     @GetMapping("/")
     public ModelAndView landing(@RequestHeader(name = "Cookie", required = false) String cookies) {
@@ -219,7 +218,7 @@ public class PageController {
 		return modelAndView;
     }
     
-    @GetMapping("confirm-redirect")
+    @GetMapping("/confirm-redirect")
     public ModelAndView confirmRedirect(@RequestParam("confirmation") String confirmation) {
     	ModelAndView modelAndView = new ModelAndView("redirection");
     	modelAndView.addObject("url", "/confirm?confirmation=" + confirmation);
@@ -245,7 +244,7 @@ public class PageController {
     @GetMapping("/password-reset-form")
     public ModelAndView passwordResetForm(@RequestParam("confirmation") String confirmation) {
         ModelAndView modelAndView = new ModelAndView("password-reset");
-        if (!this.confirmationRepository.existsByToken(confirmation) || this.confirmationRepository.findByToken(confirmation).orElseThrow().getValidatedAt() != 0) {
+        if (!this.confirmationService.existsByToken(confirmation) || this.confirmationService.findByToken(confirmation).getValidatedAt() != 0) {
             modelAndView.setViewName("redirection");
             modelAndView.addObject("url", "/request-password-reset");
             return modelAndView;

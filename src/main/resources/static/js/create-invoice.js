@@ -37,16 +37,17 @@ form.addEventListener('submit', function(event) {
 
     const title = document.getElementById('title').value;
     const amount = document.getElementById('amount').value;
-    const due = document.getElementById('due').value;
+    const date = document.getElementById('due').value;
+    const due = new Date(date+"T23:59:59").getTime();
     const interest = document.getElementById('interest').value;
-    const interestIntervalDays = document.getElementById('interestIntervalDays').value;
+    const interestIntervalWeeks = document.getElementById('interestIntervalWeeks').value;
 
     const data = {
         title: title,
         amount: amount,
         due: due,
         interest: interest,
-        interestIntervalDays: interestIntervalDays,
+        interestIntervalWeeks: interestIntervalWeeks,
         users: users
     }
 
@@ -86,5 +87,5 @@ const inputFieldAmount = document.getElementById('amount');
 inputFieldAmount.addEventListener('keypress', blockNonNumericInput);
 const inputFieldInterest = document.getElementById('interest');
 inputFieldInterest.addEventListener('keypress', blockNonNumericInput);
-const inputFieldInterestIntervalDays = document.getElementById('interestIntervalDays');
-inputFieldInterestIntervalDays.addEventListener('keypress', blockNonNumericInputAndCommaPoint);
+const inputFieldInterestIntervalWeeks = document.getElementById('interestIntervalWeeks');
+inputFieldInterestIntervalWeeks.addEventListener('keypress', blockNonNumericInputAndCommaPoint);

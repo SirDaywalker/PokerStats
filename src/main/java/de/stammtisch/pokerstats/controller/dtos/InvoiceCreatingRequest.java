@@ -1,12 +1,10 @@
 package de.stammtisch.pokerstats.controller.dtos;
 
-import java.util.Date;
-
 public record InvoiceCreatingRequest(
     String title,
     Double amount,
-    Date due,
+    Long due,
     Double interest,
-    Integer interestIntervalDays,
+    Integer interestIntervalWeeks,
     String[] users
 ) {}

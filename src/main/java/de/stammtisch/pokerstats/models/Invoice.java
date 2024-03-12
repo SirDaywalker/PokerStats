@@ -1,8 +1,12 @@
 package de.stammtisch.pokerstats.models;
 
-import java.util.Date;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +23,9 @@ public class Invoice {
 	private Long id;
 	
 	private double amount;
-	private Date due;
+	private long due;
 	private double interest;
-	private int interestIntervalDays;
+	private int interestIntervalWeeks;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User debtor;

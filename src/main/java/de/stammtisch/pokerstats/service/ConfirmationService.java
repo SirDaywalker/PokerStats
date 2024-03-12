@@ -74,4 +74,12 @@ public class ConfirmationService {
 		
     }
     
+    public boolean existsByToken(String token) {
+    	return this.confirmationRepository.existsByToken(token);
+    }
+    
+    public Confirmation findByToken(String confirmation) {
+    	return this.confirmationRepository.findByToken(confirmation).orElseThrow();
+    }
+    
 }

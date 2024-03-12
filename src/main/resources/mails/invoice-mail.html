@@ -4,7 +4,7 @@
 
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Email Best&auml;tigung</title>
+  <title>Rechnung erhalten</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style type="text/css">
 
@@ -121,7 +121,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="left" bgcolor="#1E1E1E" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #1E1E1E; color: #ffffff;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Best&auml;tige deine Email Addresse</h1>
+              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Schulden-Meldung</h1>
             </td>
           </tr>
         </table>
@@ -147,7 +147,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#1E1E1E" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; color: #ffffff;">
-              <p style="margin: 0;">Hi {USERNAME},<br>schon bald hast du es geschafft und bist ein offizielles Mitglied der <a href="http://localhost:8080" style="color: #1a82e2;">StammtischHub</a> Familie. Best&auml;tige durch Anklicken des untenstehenden Buttons deine Email Addresse.</p>
+              <p style="margin: 0;">Hi {USERNAME},<br>du hast schon wieder einmal Schulden auf <a href="http://localhost:8080" style="color: #1a82e2;">StammtischHub</a> gemacht. Im Folgenden siehst du alle Details &uuml;ber <a href="http://localhost:8080/my-invoices" style="color: #1a82e2;">deine Rechnung</a>.</p>
             </td>
           </tr>
           <!-- end copy -->
@@ -158,10 +158,32 @@
               <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                   <td align="center" bgcolor="#1E1E1E" style="padding: 12px;">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
                       <tr>
-                        <td align="center" bgcolor="#df0000" style="border-radius: 6px;">
-                          <a href="{LINK}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">Email best&auml;tigen</a>
+                        <td align="center">
+                          <table cellpadding="8" cellspacing="0" width="95%" border="1" bgcolor="#df0000" style="color: #ffffff; word-spacing: 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;" >
+                            <caption style="margin-bottom: 16px; font-size: 20px; line-height: 24px;">{TITLE}</caption>
+                            <tr>
+                              <th width="22%" style="font-size: 16px;">Schuldner</th>
+                              <td>{CREDITOR}</td>
+                            </tr>
+                            <tr>
+                              <th>Betrag</th>
+                              <td>{AMOUNT}€</td>
+                            </tr>
+                            <tr>
+                              <th>F&auml;llig bis</th>
+                              <td>{DATE}</td>
+                            </tr>
+                            <tr>
+                              <th>Zinssatz</th>
+                              <td>{INTEREST}%</td>
+                            </tr>
+                            <tr>
+                              <th>Zins-Interval</th>
+                              <td>{INTERESTINTERVAL} Woche(n)</td>
+                            </tr>
+                          </table>
                         </td>
                       </tr>
                     </table>
@@ -174,9 +196,7 @@
 
           <!-- start copy -->
           <tr>
-            <td align="left" bgcolor="#1E1E1E" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0; color: #ffffff;">Wenn das nicht funktionieren sollte, gebe den folgenden Link im Browser ein:</p>
-              <p style="margin: 0;"><a href="{LINK}" target="_blank" style="color: #1a82e2;">{LINK}</a></p>
+            <td align="left" bgcolor="#1E1E1E" style="padding: 0px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
             </td>
           </tr>
           <!-- end copy -->
@@ -212,8 +232,8 @@
           <!-- start permission -->
           <tr>
             <td align="center" bgcolor="#000000" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">Sie haben diese Email erhalten, weil eine Best&auml;tigung der Email Addresse ben&ouml;tigt wird, um sich auf <a href="http://localhost:8080" style="color: #999;">StammtischHub</a> anzumelden.
-                Wenn Sie diese Anfrage nicht get&auml;tigt haben, k&ouml;nnen Sie diese Email sorglos l&ouml;schen.</p>
+              <p style="margin: 0;">Sie haben diese Email erhalten, weil eine Rechnung auf <a href="http://localhost:8080" style="color: #999;">StammtischHub</a> mit Ihnen als Gl&auml;ubiger erstellt wurde.
+                Wenn Sie von dieser Aktion nichts wissen, dann gehen Sie zu der Person hin und verteilen Sie eine Bombe. Wenn Sie garnicht wissen, was hier abgeht, dann k&ouml;nnen Sie diese Email sorglos l&ouml;schen.</p>
             </td>
           </tr>
           <!-- end permission -->
