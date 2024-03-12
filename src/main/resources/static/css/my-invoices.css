@@ -52,19 +52,42 @@ form>button[type="submit"] {
 	flex-wrap: wrap;
 }
 
-.labels {
+.labels1 {
 	display: flex;
 	justify-content: space-between;
 	margin: 1em;
 }
 
-.labels > span {
+.labels1 > span {
 	width: 31%;
 }
 
-.labels > span:nth-child(4) {
+.labels1 > span:nth-child(4) {
 	width: 7%;
 	text-align: right;
+}
+
+.labels2 {
+	display: flex;
+	justify-content: space-between;
+	margin: 1em;
+}
+
+.labels2 > span {
+	width: 30.2%;
+}
+
+.labels2 > span:nth-child(4) {
+	width: 7%;
+	text-align: right;
+}
+
+.labels2 > span:nth-child(5) {
+	width: 100px;
+}
+
+.delete {
+	margin-left: 2em; 
 }
 
 #selected > span {
@@ -115,28 +138,27 @@ form>button[type="submit"] {
 }
 
 #invoice .invoice > span {
-	color: var(--placeholder);
 	flex: 1;
 	white-space: nowrap;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1000px) {
 	#selected {
 	    margin: 1em;
         min-height: 2em;
 	}
 
-	.labels {
+	.labels1, .labels2 {
 	display: none;
 	flex-direction: column;
 	margin: 1em 1em 1em 12.3%;
 	}
 
-	.labels > span {
+	.labels1, .labels2 > span {
     	display: none;
     }
 
-    .labels > span:nth-child(4) {
+    .labels1, .labels2 > span:nth-child(4) {
     	display: none;
     }
 
@@ -155,5 +177,10 @@ form>button[type="submit"] {
 	.invoice > span:nth-child(4) {
 	width: 80%;
 	text-align: left;
+	}
+	
+	.delete {
+		position: relative;
+		margin-left: 0 5em 0 10.5em;
 	}
 }

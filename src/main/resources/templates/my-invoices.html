@@ -23,7 +23,7 @@
 		<div id="invoice-selection">
 			<div id="selected">
 				<span>Zu zahlende Rechnungen:</span>
-				<div class="labels">
+				<div class="labels1">
 					<span>Titel</span>
 					<span>Gläubiger</span>
 					<span>Fällig bis</span> 
@@ -43,11 +43,12 @@
 		<div id="invoice-selection">
 			<div id="selected">
 				<span>Aufgegebene Rechnungen:</span>
-				<div class="labels">
+				<div class="labels2">
 					<span>Titel</span>
 					<span>Schuldner</span>
 					<span>Fällig bis</span> 
 					<span>Betrag</span>
+					<span></span>
 				</div>
 			</div>
 			<div id="pendingInvoices" th:each="invoice : ${debtorInvoices}">
@@ -56,6 +57,7 @@
 					<span th:text="${invoice.getCreditor().getUsername()}"></span>
 					<span th:text="${#dates.format(invoice.getDue(), 'dd.MM.yyyy')}"></span>
 					<span th:text="${#numbers.formatDecimal(invoice.getAmount(), 1, 2, 'COMMA') + '€'}"></span>
+					<button class="button red filled delete" type="submit">🗑️</button>
 				</div>
 			</div>
 		</div>
