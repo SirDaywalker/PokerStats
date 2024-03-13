@@ -177,8 +177,9 @@ public class PageController {
     @GetMapping("/create-invoice")
     public ModelAndView createInvoice(@RequestHeader(name = "Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("create-invoice");
+        User user;
         try {
-            User user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
+            user = this.authenticationService.getUserFromToken(this.authenticationService.getTokenFromCookie(cookies));
             modelAndView.addObject("account", user);
         } catch (IllegalArgumentException | JwtException | NoSuchElementException e) {
             modelAndView.setViewName("login");
@@ -187,6 +188,7 @@ public class PageController {
         final double pot = this.pokerGameService.getCurrentPot();
         modelAndView.addObject("pot", pot);
         final List<User> users = this.userService.getAllUsers();
+        users.remove(user);
         modelAndView.addObject("users", users);
         return modelAndView;
     }

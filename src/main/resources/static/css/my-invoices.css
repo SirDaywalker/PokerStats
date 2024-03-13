@@ -56,38 +56,23 @@ label[for="notes"] {
 	flex-wrap: wrap;
 }
 
-.labels1 {
+.labels {
 	display: flex;
 	justify-content: space-between;
 	margin: 1em;
 }
 
-.labels1 > span {
-	width: 31%;
+.labels > span {
+	width: 32%;
 }
 
-.labels1 > span:nth-child(4) {
+.labels > span:nth-child(4) {
 	width: 7%;
 	text-align: right;
 }
 
-.labels2 {
-	display: flex;
-	justify-content: space-between;
-	margin: 1em;
-}
-
-.labels2 > span {
-	width: 30.2%;
-}
-
-.labels2 > span:nth-child(4) {
-	width: 7%;
-	text-align: right;
-}
-
-.labels2 > span:nth-child(5) {
-	width: 100px;
+.labels > span:nth-child(5) {
+	width: 6.7em;
 }
 
 .delete {
@@ -142,17 +127,17 @@ label[for="notes"] {
         min-height: 2em;
 	}
 
-	.labels1, .labels2 {
+	.labels {
 	display: none;
 	flex-direction: column;
 	margin: 1em 1em 1em 12.3%;
 	}
 
-	.labels1, .labels2 > span {
+	.labels > span {
     	display: none;
     }
 
-    .labels1, .labels2 > span:nth-child(4) {
+    .labels > span:nth-child(4) {
     	display: none;
     }
 
