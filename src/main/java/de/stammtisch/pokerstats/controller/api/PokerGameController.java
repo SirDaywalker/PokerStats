@@ -2,15 +2,20 @@ package de.stammtisch.pokerstats.controller.api;
 
 import com.google.gson.Gson;
 import de.stammtisch.pokerstats.controller.dtos.CreatePokerGameRequest;
+import de.stammtisch.pokerstats.controller.dtos.UpdatePokerGameRequest;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.UserGame;
 import de.stammtisch.pokerstats.service.PokerGameService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/games/poker")
@@ -26,6 +31,16 @@ public class PokerGameController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Successfully created Poker Game.", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/update-winner")
+    public ResponseEntity<String> updateWinner(@NonNull @RequestBody UpdatePokerGameRequest request) {
+        try {
+            this.pokerGameService.updateWinner(request.gameId(), request.userId());
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully updated winner.", HttpStatus.OK);
     }
 
     @GetMapping("/stats")

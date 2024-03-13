@@ -50,6 +50,18 @@ public class PokerGameService {
         this.userGameRepository.saveAll(usersGames);
     }
 
+    public void updateWinner(Long gameId, Long userId) {
+        PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
+
+        if (userId == null) {
+            game.setWinner(null);
+        } else {
+            User user = this.userRepository.findById(userId).orElseThrow();
+            game.setWinner(user);
+        }
+        this.pokerGameRepository.save(game);
+    }
+
     public List<PokerGame> getGames() {
         List<PokerGame> games = this.pokerGameRepository.findAll();
 
