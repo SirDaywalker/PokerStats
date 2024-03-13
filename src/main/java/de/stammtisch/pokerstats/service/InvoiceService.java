@@ -23,23 +23,24 @@ public class InvoiceService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     
-    public void createInvoice(User user, InvoiceCreatingRequest request) {
-        for (String email : request.users()) {
+    public void createInvoice(User creditor, InvoiceCreatingRequest request) {
+        for (String debtorEmail : request.users()) {
             Invoice invoice = new Invoice();
-            User creditor = this.userRepository.findByEmail(email);
+            User debtor = this.userRepository.findByEmail(debtorEmail);
             
             invoice.setDue(request.due()+ZonedDateTime.now().getOffset().getTotalSeconds()*1000);
+            invoice.setAmount(request.amount());
             invoice.setInterest(request.interest());
             invoice.setInterestIntervalWeeks(request.interestIntervalWeeks());
             invoice.setTitle(request.title());
-            invoice.setDebtor(user);
+            invoice.setDebtor(debtor);
             invoice.setCreditor(creditor);
             
             String[] date = new Date(request.due()).toString().split(" ");
             
             this.emailService.sendInvoiceMail(
-            		user.getUsername(), 
-            		user.getEmail(),
+            		debtor.getUsername(), 
+            		debtorEmail,
             		request.title(),
             		creditor.getUsername(), 
             		request.amount().toString(), 

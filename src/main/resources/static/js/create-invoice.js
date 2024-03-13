@@ -37,8 +37,7 @@ form.addEventListener('submit', function(event) {
 
     const title = document.getElementById('title').value;
     const amount = document.getElementById('amount').value;
-    const date = document.getElementById('due').value;
-    const due = new Date(date+"T23:59:59").getTime();
+    const due = new Date(document.getElementById('due').value+"T23:59:59").getTime();
     const interest = document.getElementById('interest').value;
     const interestIntervalWeeks = document.getElementById('interestIntervalWeeks').value;
 

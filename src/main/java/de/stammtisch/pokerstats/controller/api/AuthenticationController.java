@@ -94,7 +94,7 @@ public class AuthenticationController {
             return new ResponseEntity<>("Die Anmeldedaten sind falsch.", HttpStatus.UNAUTHORIZED);
         } catch (DisabledException e) {
             return new ResponseEntity<>(
-                    "Der Account ist entweder nicht best&aumltigt oder gesperrt. Bitte &uumlberprüfen Sie Ihre E-Mails.",
+                    "Der Account ist entweder nicht best&aumltigt oder gesperrt. Bitte &uumlberpr&uumlfen Sie Ihre E-Mails.",
                     HttpStatus.UNAUTHORIZED
             );
         }

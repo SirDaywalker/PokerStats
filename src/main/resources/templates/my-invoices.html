@@ -29,7 +29,7 @@
 					<span>Betrag</span>
 				</div>
 			</div>
-			<div id="pendingInvoices" th:each="invoice : ${creditorInvoices}">
+			<div id="pendingInvoices" th:each="invoice : ${debtorInvoices}">
 				<div class="invoice">
 					<span th:text="${invoice.getTitle()}"></span>
 					<span th:text="${invoice.getCreditor().getUsername()}"></span>
@@ -50,10 +50,10 @@
 					<span></span>
 				</div>
 			</div>
-			<div id="pendingInvoices" th:each="invoice : ${debtorInvoices}">
+			<div id="pendingInvoices" th:each="invoice : ${creditorInvoices}">
 				<div class="invoice">
 					<span th:text="${invoice.getTitle()}"></span>
-					<span th:text="${invoice.getCreditor().getUsername()}"></span>
+					<span th:text="${invoice.getDebtor().getUsername()}"></span>
 					<span th:text="${#dates.format(invoice.getDue(), 'dd.MM.yyyy')}"></span>
 					<span th:text="${#numbers.formatDecimal(invoice.getAmount(), 1, 2, 'COMMA') + '€'}"></span>
  					<button th:onclick="'deleteInvoice(' + ${invoice.getId()} + ')'" class="button red filled delete">🗑️</button>
