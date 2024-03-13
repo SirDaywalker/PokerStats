@@ -26,10 +26,23 @@
                             <span>Running</span>
                         </div>
                     </div>
-                    <span th:if="${game.getWinner() != null}" th:text="${game.getWinner().getUsername()}"></span>
+                    <div class="winner" th:if="${game.getWinner() != null}">
+                        <span th:text="${game.getWinner().getUsername()}"></span>
+                        <div>
+                            <span>Gewinner</span>
+                        </div>
+                    </div>
                     <svg width="16" height="9" viewBox="0 0 16 9" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.29289 8.2741C7.68342 8.66463 8.31658 8.66463 8.70711 8.2741L15.0711 1.91014C15.4616 1.51962 15.4616 0.886455 15.0711 0.49593C14.6805 0.105406 14.0474 0.105406 13.6569 0.49593L8 6.15278L2.34315 0.49593C1.95262 0.105406 1.31946 0.105406 0.928932 0.49593C0.538408 0.886455 0.538408 1.51962 0.928932 1.91014L7.29289 8.2741ZM7 6.55005V7.567H9V6.55005H7Z" fill="black"/>
                     </svg>
+                </div>
+            </div>
+            <div>
+                <div class="winner-input">
+                    <div th:each="userGame : ${game.getUsers()}">
+                        <img th:src="${userGame.getUser().getProfilePictureURL()}" alt="">
+                        <span th:text="${userGame.getUser().getUsername()}"></span>
+                    </div>
                 </div>
             </div>
         </div>
