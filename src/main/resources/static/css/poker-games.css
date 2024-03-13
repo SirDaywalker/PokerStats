@@ -8,12 +8,12 @@
 .game {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
 .game > div:last-child {
     display: none;
+    margin: 2em 0 0;
 }
 
 .game.expanded > div:last-child {
@@ -31,6 +31,7 @@
     padding: 10px;
     border: var(--border);
     border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
+    min-width: 4em;
 }
 
 .winner > div {
@@ -60,6 +61,11 @@
     display: flex;
     justify-content: space-between;
     gap: 2em;
+    cursor: pointer;
+}
+
+.game > div:first-child:hover svg > path {
+    fill: var(--red);
 }
 
 .picture-row {
@@ -97,23 +103,71 @@
     transition: all 0.3s ease-in-out;
 }
 
-.game:hover .picture-row + div > svg > path {
-    fill: var(--red);
+.winner-input {
+    width: 15em;
+    min-width: max-content;
 }
 
-
-.winner-input > * {
-    height: 3em;
+.winner-input .selected {
+    background: var(--background);
+    padding: 10px;
+    border: var(--border);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    height: 2em;
     display: flex;
-    overflow: hidden;
-    gap: 1em;
+    align-items: center;
+    position: relative;
 }
 
-.winner-input > * > img {
+.winner-input .selected > span {
+    color: var(--placeholder);
+}
+
+.winner-input .selected:has(.user) > span {
+    display: none;
+}
+
+.winner-input .user-container {
+    max-height: 20em;
+    overflow-y: auto;
+    background: var(--background);
+    border: var(--border);
+    border-top: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    width: max-content;
+}
+
+.user {
+    height: 2em;
+    width: 100%;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user > img {
     height: 100%;
     aspect-ratio: 1 / 1;
-    border-radius: var(--border-radius);
     border: var(--border);
+    border-radius: var(--border-radius);
     object-fit: cover;
-    outline: 2px solid var(--container);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.user:hover > img {
+    border-color: var(--blue);
+}
+
+.user + .user {
+    border-top: var(--border);
+    padding-top: 1em;
+}
+
+.notification {
+    margin: 2em auto !important;
 }

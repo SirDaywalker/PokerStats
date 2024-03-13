@@ -10,12 +10,14 @@
     <link th:href="@{/css/components/container.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/card.css}" rel="stylesheet"/>
     <link th:href="@{/css/components/badges.css}" rel="stylesheet"/>
+    <link th:href="@{/css/components/notifications.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{/assets/favicon/favicon.png}">
 </head>
 <body>
     <header th:replace="~{header.html :: header}"></header>
+    <span class="notification"></span>
     <div id="container">
-        <div th:each="game : ${games}" class="game container">
+        <div th:each="game : ${games}" class="game container" th:data-game-id="${game.getId()}">
             <div>
                 <div class="picture-row">
                     <div th:each="userGame : ${game.getUsers()}"><img th:src="${userGame.getUser().getProfilePictureURL()}" alt=""></div>
@@ -39,13 +41,20 @@
             </div>
             <div>
                 <div class="winner-input">
-                    <div th:each="userGame : ${game.getUsers()}">
-                        <img th:src="${userGame.getUser().getProfilePictureURL()}" alt="">
-                        <span th:text="${userGame.getUser().getUsername()}"></span>
+                    <div class="selected">
+                        <span>Gewinner auswählen</span>
+                    </div>
+                    <div class="user-container">
+                        <div class="user" th:each="userGame : ${game.getUsers()}"
+                             th:data-user-id="${userGame.getUser().getId()}">
+                            <img th:src="${userGame.getUser().getProfilePictureURL()}" alt="">
+                            <span th:text="${userGame.getUser().getUsername()}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="module" th:src="@{/js/poker-games.js}"></script>
 </body>
 </html>
