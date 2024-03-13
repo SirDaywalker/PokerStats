@@ -53,7 +53,7 @@ form.addEventListener('submit', function(event) {
 
     sendDataToServer(
         JSON.stringify(data),
-        "/api/v1/invoice/create-invoice",
+        "/api/v1/invoice/create",
         'POST',
         'application/json',
         function(response, status, isOK) {

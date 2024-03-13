@@ -30,6 +30,10 @@ label[for="notes"] {
 	cursor: default;
 }
 
+#home {
+	margin:0 auto;
+}
+
 form>button[type="submit"] {
 	margin: 1em auto 0;
 }

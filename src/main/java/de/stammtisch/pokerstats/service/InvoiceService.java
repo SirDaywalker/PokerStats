@@ -1,18 +1,16 @@
 package de.stammtisch.pokerstats.service;
 
 import de.stammtisch.pokerstats.controller.dtos.InvoiceCreatingRequest;
+import de.stammtisch.pokerstats.exceptions.UnautherizedUserException;
 import de.stammtisch.pokerstats.models.Invoice;
 import de.stammtisch.pokerstats.models.User;
 import de.stammtisch.pokerstats.repository.InvoiceRepository;
 import de.stammtisch.pokerstats.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -65,4 +63,12 @@ public class InvoiceService {
     public List<Invoice> getAllInvoices() {
     	return this.invoiceRepository.findAll();
     }
+
+	public void deleteInvoice(User user, long id) throws UnautherizedUserException {
+		Invoice invoice = this.invoiceRepository.findById(id).orElseThrow();
+		if(!user.equals(invoice.getCreditor())) {
+			throw new UnautherizedUserException();
+		}
+		this.invoiceRepository.deleteById(id);
+	}
 }
