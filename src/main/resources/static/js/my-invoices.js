@@ -10,7 +10,7 @@ window.deleteInvoice = function(id) {
 	
 	sendDataToServer(
 		JSON.stringify(data),
-		"/api/v1/invoice/delete",
+		'/api/v1/invoice/delete',
 		'DELETE',
 		'application/json',
 		function(response, status, isOK) {

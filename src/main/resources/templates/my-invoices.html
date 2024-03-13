@@ -17,7 +17,7 @@
 	<header th:replace="~{header.html :: header}"></header>
 	<span class="notification"></span>
 
-	<form class="container" id="my-invoices">
+	<div class="container" id="my-invoices">
 		<p>Meine Rechnungen</p>
 		<div id="invoice-selection">
 			<div id="selected">
@@ -56,13 +56,13 @@
 					<span th:text="${invoice.getCreditor().getUsername()}"></span>
 					<span th:text="${#dates.format(invoice.getDue(), 'dd.MM.yyyy')}"></span>
 					<span th:text="${#numbers.formatDecimal(invoice.getAmount(), 1, 2, 'COMMA') + '€'}"></span>
- 					<button th:data-id="${invoice.getId()}" onclick="deleteInvoice('data-id')" class="button red filled delete">🗑️</button>
+ 					<button th:onclick="'deleteInvoice(' + ${invoice.getId()} + ')'" class="button red filled delete">🗑️</button>
 				</div>
 			</div>
 		</div>
 
 		<button class="button red filled" id="home">Zurück</button>
-	</form>
+	</div>
 	<script type="module" th:src="@{/js/my-invoices.js}"></script>
 </body>
 </html>

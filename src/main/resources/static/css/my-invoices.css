@@ -2,11 +2,11 @@ span.notification {
 	margin: 2em auto;
 }
 
-form {
+.container {
 	margin: 2em 2em 0;
 }
 
-form>p {
+.container>p {
 	margin: 0 0 2rem;
 	font-size: 1.8rem;
 }
@@ -34,7 +34,7 @@ label[for="notes"] {
 	margin:0 auto;
 }
 
-form>button[type="submit"] {
+.container>button {
 	margin: 1em auto 0;
 }
 
@@ -113,23 +113,13 @@ form>button[type="submit"] {
 .invoice {
 	height: 2em;
 	align-items: center;
-	cursor: pointer;
-	margin: 1em;
-	display: flex;
-	justify-content: space-between;
-}
-
-.invoice {
-	height: 2em;
-	align-items: center;
-	cursor: pointer;
 	margin: 1em;
 	display: flex;
 	justify-content: space-between;
 }
 
 .invoice > span {
-	width: 31%;
+	width: 32%;
 }
 
 .invoice > span:nth-child(4) {
