@@ -1,165 +1,185 @@
 span.notification {
-	margin: 2em auto;
+    margin: 2em auto;
 }
 
 .container {
-	margin: 2em 2em 0;
+    margin: 2em 2em 0;
 }
 
 .container>p {
-	margin: 0 0 2rem;
-	font-size: 1.8rem;
+    margin: 0 0 2rem;
+    font-size: 1.8rem;
 }
 
 *>label>input, *>label>select, *>label>textarea {
-	width: 100%;
-	margin: 1em 0;
-	background: var(--background);
-	border: var(--border);
-	border-radius: var(--border-radius);
-	padding: 10px;
-	resize: none;
+    width: 100%;
+    margin: 1em 0;
+    background: var(--background);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    resize: none;
 }
 
 label[for="notes"] {
-	height: 10em;
+    height: 10em;
 }
 
 #info>label>input {
-	color: var(--placeholder);
-	cursor: default;
+    color: var(--placeholder);
+    cursor: default;
 }
 
 #home {
-	margin:0 auto;
+    margin:0 auto;
 }
 
 .container>button {
-	margin: 1em auto 0;
+    margin: 1em auto 0;
 }
 
 #invoice-selection {
-	margin: 0 0 1em;
-	border: var(--border);
-	border-radius: var(--border-radius);
-	overflow: hidden;
+    margin: 0 0 1em;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+#pendingInvoices {
+    padding-top: 0.1em;
+}
+
+#pendingInvoices {
+    border-top: var(--border);
+}
+
+#invoice-selection > div:nth-child(2) {
+    border: none;
 }
 
 #selected {
-	min-height: 3em;
-	background: var(--background);
-	border-bottom: var(--border);
-	display: flex;
-	flex-direction: column;
-	padding-top: 1em;
-	gap: calc(1em - 7px);
-	flex-wrap: wrap;
+    min-height: 3em;
+    background: var(--background);
+    border-bottom: var(--border);
+    display: flex;
+    flex-direction: column;
+    padding-top: 1em;
+    gap: calc(1em - 7px);
+    flex-wrap: wrap;
 }
 
 .labels {
-	display: flex;
-	justify-content: space-between;
-	margin: 1em;
+    display: flex;
+    justify-content: space-between;
+    margin: 1em;
 }
 
 .labels > span {
-	width: 32%;
+    width: 32%;
 }
 
 .labels > span:nth-child(4) {
-	width: 7%;
-	text-align: right;
+    width: 7%;
+    text-align: right;
 }
 
 .labels > span:nth-child(5) {
-	width: 6.7em;
+    width: 6.7em;
 }
 
 .delete {
-	margin-left: 2em; 
+    margin-left: 2em;
 }
 
 #selected > span {
-	margin: 0 0 0 1em;
-	color: var(--placeholder);
+    margin: 0 0 0 1em;
+    color: var(--placeholder);
 }
 
 #invoice {
-	max-height: 15em;
-	overflow-y: auto;
-	background: var(--background);
-	border-radius: 0 0 var(--border-radius) var(--border-radius);
+    max-height: 15em;
+    overflow-y: auto;
+    background: var(--background);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
 #invoice:not(:has(.invoice)) {
-	display: none;
+    display: none;
 }
 
 .invoice {
-	height: 2em;
-	align-items: center;
-	margin: 1em;
-	display: flex;
-	justify-content: space-between;
+    height: 2em;
+    align-items: center;
+    margin: 1em;
+    display: flex;
+    justify-content: space-between;
 }
 
 .invoice > span {
-	width: 32%;
+    width: 32%;
 }
 
 .invoice > span:nth-child(4) {
-	width: 7%;
-	text-align: right;
+    width: 7%;
+    text-align: right;
 }
 
 #selected .invoice > span {
-	display: none;
+    display: none;
 }
 
 #invoice .invoice > span {
-	flex: 1;
-	white-space: nowrap;
+    flex: 1;
+    white-space: nowrap;
 }
 
-@media only screen and (max-width: 1000px) {
-	#selected {
-	    margin: 1em;
+@media only screen and (max-width: 850px) {
+    #selected {
+        margin: 1em;
         min-height: 2em;
-	}
+    }
 
-	.labels {
-	display: none;
-	flex-direction: column;
-	margin: 1em 1em 1em 12.3%;
-	}
+    #pendingInvoices {
+        padding-top: 0;
+    }
 
-	.labels > span {
-    	display: none;
+    .labels {
+        display: none;
+        flex-direction: column;
+        margin: 1em 1em 1em 12.3%;
+    }
+
+    .labels > span {
+        display: none;
     }
 
     .labels > span:nth-child(4) {
-    	display: none;
+        display: none;
     }
 
-	.invoice {
-	height: 5em;
-	flex-direction: column;
-	cursor: pointer;
-	margin: 1em;
-	display: flex;
-	}
+    .invoice {
+        height: 5em;
+        flex-direction: column;
+        align-items: normal;
+        cursor: pointer;
+        margin: 1em;
+        display: flex;
+        position: relative;
+    }
 
-	.invoice > span {
-	width: 80%;
-	}
-	
-	.invoice > span:nth-child(4) {
-	width: 80%;
-	text-align: left;
-	}
-	
-	.delete {
-		position: relative;
-		margin-left: 0 5em 0 10.5em;
-	}
+    .invoice > span {
+        width: 80%;
+        margin-left: 1em;
+    }
+
+    .invoice > span:nth-child(4) {
+        width: 80%;
+        text-align: left;
+    }
+
+    .delete {
+        position: absolute;
+        top: 1em;
+        right: 0;
+    }
 }
