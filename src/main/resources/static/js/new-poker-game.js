@@ -59,7 +59,7 @@ form.addEventListener('submit', function(event) {
         players: users,
         notes: document.getElementById('notes').value
     };
-    fetch('/api/v1/poker-game/create', {
+    fetch('/api/v1/games/poker/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
