@@ -3,17 +3,18 @@ import {sendDataToServer} from "./components/networking.js";
 
 const loginForm = document.getElementById('login-form');
 const formerUrl = document.referrer;
+const curBaseUrl = window.location.href.split("/").slice(0, -1).join("/");
 
-if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/login") {
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== curBaseUrl+"/login") {
   	window.location.href = '/login';
 }
-else if(formerUrl === "http://localhost:8080/request-confirmation" || formerUrl === "http://localhost:8080/register") {
+else if(formerUrl === curBaseUrl+"/request-confirmation" || formerUrl === curBaseUrl+"/register") {
 	setDefaultNotification("Bestätigungsmail wurde gesendet!", 0);
 }
-else if(formerUrl === "http://localhost:8080/request-password-reset") {
+else if(formerUrl === curBaseUrl+"/request-password-reset") {
 	setDefaultNotification("Email zur Passwortzurücksetzung wurde gesendet!", 0);
 }
-else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset-form") {
+else if(formerUrl.split("?")[0] === curBaseUrl+"/password-reset-form") {
     setDefaultNotification("Passwort wurde erfolgreich geändert.", 0);
 }
 

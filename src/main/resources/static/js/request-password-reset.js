@@ -3,11 +3,12 @@ import {sendDataToServer} from "./components/networking.js";
 
 const resetPasswordForm = document.getElementById('resetPassword-form');
 const formerUrl = document.referrer;
+const curBaseUrl = window.location.href.split("/").slice(0, -1).join("/");
 
-if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/request-password-reset") {
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== curBaseUrl+"/request-password-reset") {
     window.location.href = '/request-password-reset';
 }
-else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset-form") {
+else if(formerUrl.split("?")[0] === curBaseUrl+"/password-reset-form") {
     setErrorNotification("Anfrage zur Passwort Zurücksetzung invalide oder abgelaufen. Bitte erneut anfordern!", 0);
 }
 

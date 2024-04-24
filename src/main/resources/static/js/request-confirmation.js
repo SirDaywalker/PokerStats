@@ -3,14 +3,15 @@ import {sendDataToServer} from "./components/networking.js";
 
 const newConfirmationForm = document.getElementById('newConfirmation-form');
 const formerUrl = document.referrer;
+const curBaseUrl = window.location.href.split("/").slice(0, -1).join("/");
 
-if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== "http://localhost:8080/request-confirmation") {
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD && formerUrl !== curBaseUrl+"/request-confirmation") {
   	window.location.href = '/request-confirmation';
 }
-else if(formerUrl.split("?")[0] === "http://localhost:8080/password-reset-form") {
+else if(formerUrl.split("?")[0] === curBaseUrl+"/password-reset-form") {
     setErrorNotification("Benutzer muss vor Passwortänderung bestätigt werden!", 0);
 }
-else if(formerUrl.split("?")[0] === "http://localhost:8080/confirm-redirect") {
+else if(formerUrl.split("?")[0] === curBaseUrl+"/confirm-redirect") {
     setErrorNotification("Token ist invalide oder wurde bereits benutzt!", 0);
 }
 
