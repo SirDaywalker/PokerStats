@@ -138,7 +138,7 @@ public class AuthenticationService {
             throw new InvalidRequestParameterException("Der Name ist bereits vergeben.");
         }
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
-            throw new InvalidRequestParameterException("Der Name oder die E-Mail-Adresse ist ungültig.");
+            throw new InvalidRequestParameterException("Der Name oder die E-Mail-Adresse ist ung&uumlltig.");
         }
         if (userRepository.existsByEmail(request.email())) {
             throw new EmailAlreadyInUseException(request.email());
@@ -226,7 +226,7 @@ public class AuthenticationService {
 
         long targetID = request.targetId();
         if (targetID != account.getId() && !account.getRole().equals(Role.ADMIN)) {
-            throw new IllegalArgumentException("Du hast nicht die Berechtigung, diese Aktion auszuführen.");
+            throw new IllegalArgumentException("Du hast nicht die Berechtigung, diese Aktion auszuf&uumlhren.");
         }
 
         final User user = this.userRepository.findById(targetID).orElseThrow();
@@ -235,7 +235,7 @@ public class AuthenticationService {
         }
 
         if (emailIsNotValid(request.email()) || nameIsNotValid(request.name())) {
-            throw new IllegalArgumentException("Der Name oder die E-Mail-Adresse ist ungültig.");
+            throw new IllegalArgumentException("Der Name oder die E-Mail-Adresse ist ung&uumlltig.");
         }
 
         if (request.role() != null) {
@@ -261,7 +261,7 @@ public class AuthenticationService {
         if (picture != null) {
             String type = picture.getContentType();
             if (type == null || !type.startsWith("image/")) {
-                throw new IllegalArgumentException("Das Bild ist ungültig.");
+                throw new IllegalArgumentException("Das Bild ist ung&uumlltig.");
             }
             type = type.split("/")[1];
             final File onDisk = new File("%s/data/user/%d/picture.%s".formatted(
