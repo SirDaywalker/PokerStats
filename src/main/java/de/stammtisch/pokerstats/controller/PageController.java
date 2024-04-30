@@ -23,7 +23,6 @@ import de.stammtisch.pokerstats.models.Invoice;
 import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.Role;
 import de.stammtisch.pokerstats.models.User;
-import de.stammtisch.pokerstats.repository.ConfirmationRepository;
 import de.stammtisch.pokerstats.service.AuthenticationService;
 import de.stammtisch.pokerstats.service.ConfirmationService;
 import de.stammtisch.pokerstats.service.InvoiceService;

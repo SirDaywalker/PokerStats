@@ -12,14 +12,18 @@ import org.springframework.util.StreamUtils;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmailService {
-
-	private JavaMailSender mailSender;
-
+	
+	private final JavaMailSender mailSender;
+	
+	private String homeUrlPath;
+	
 	@Async
     public void send(
     		String emailAddress, 
@@ -53,7 +57,8 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/confirm-redirect?confirmation=" + token);
+        mail = mail.replace("{LINKHOME}", homeUrlPath);
+        mail = mail.replace("{LINK}", homeUrlPath + "confirm-redirect?confirmation=" + token);
         
         this.send(emailAddress, mail, "Email Bestätigung");
     }
@@ -71,7 +76,8 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINK}", "http://localhost:8080/password-reset-form?confirmation=" + token);
+        mail = mail.replace("{LINKHOME}", homeUrlPath);
+        mail = mail.replace("{LINK}", homeUrlPath + "http://localhost:8080/password-reset-form?confirmation=" + token);
 
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }
@@ -93,6 +99,7 @@ public class EmailService {
         } catch (IOException e) {
             return;
         }
+        mail = mail.replace("{LINKHOME}", homeUrlPath);
         mail = mail.replace("{USERNAME}", username);
         mail = mail.replace("{TITLE}", title);
         mail = mail.replace("{CREDITOR}", creditor);
