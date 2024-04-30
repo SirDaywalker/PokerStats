@@ -77,7 +77,7 @@ public class EmailService {
         }
         mail = mail.replace("{USERNAME}", username);
         mail = mail.replace("{LINKHOME}", homeUrlPath);
-        mail = mail.replace("{LINK}", homeUrlPath + "http://localhost:8080/password-reset-form?confirmation=" + token);
+        mail = mail.replace("{LINK}", homeUrlPath + "password-reset-form?confirmation=" + token);
 
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }
