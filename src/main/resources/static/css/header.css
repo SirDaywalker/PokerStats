@@ -67,16 +67,6 @@ header {
     background: var(--container);
 }
 
-#account-section:hover {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-#account-info:hover svg {
-    transform: scale(1,-1);
-    transition: all 0.5s ease-in-out;
-}
-
 #account-info {
     display: flex;
     gap: 5%;
@@ -149,7 +139,22 @@ header {
     color: var(--red);
 }
 
-#account-info:hover #account-popup {
+#account-section {
+    transition: border-radius 350ms ease-in-out;
+}
+
+#account-section:hover {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: border-radius 350ms ease-in-out;
+}
+
+#account-section:hover svg {
+    transform: scale(1,-1);
+    transition: all 0.5s ease-in-out;
+}
+
+#account-section:hover #account-popup {
     opacity: 1;
     visibility: visible;
     border-top-right-radius: 0;
