@@ -28,7 +28,7 @@ input {
 
 form button[type="submit"] {
     width: 50%;
-    margin: 0 auto;
+    margin: 2em auto 0;
 }
 
 
