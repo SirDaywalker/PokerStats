@@ -110,10 +110,14 @@
     #invisible-center-box {
         transform: translateX(-50%);
         top: 10em;
+        width: 100%;
+        max-width: 450px;
     }
     #buttons-in-row {
         flex-direction: column;
         height: 9em;
+        width: 75%;
+        margin: 1em auto 0;
     }
     #buttons-in-row button {
         width: 100%;
@@ -122,27 +126,30 @@
 
     #icon {
         display: flex;
-        flex-direction: row-reverse;
-        position: relative;
-
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
     }
 
     #icon-cards {
         display: block;
-        position: absolute;
-        height: 100%;
-        left: 0;
+        width: 5em;
+        position: relative;
+        height: 6.5em;
     }
 
     #text {
-        margin: 0 0 0 6em;
+        display: block;
     }
 
     #table {
         display: flex;
         width: 100%;
-        justify-content: space-between;
         margin: 2em 0;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1em;
     }
 
     #combination {
