@@ -22,10 +22,10 @@ public class EmailService {
 	
 	private final JavaMailSender mailSender;
 	
-	private String homeUrlPath;
+	private String homeDomain;
 	
 	@Async
-    public void send(
+    private void send(
     		String emailAddress, 
     		String email, 
     		String subject
@@ -57,8 +57,8 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINKHOME}", homeUrlPath);
-        mail = mail.replace("{LINK}", homeUrlPath + "confirm-redirect?confirmation=" + token);
+        mail = mail.replace("{LINKHOME}", homeDomain);
+        mail = mail.replace("{LINK}", homeDomain + "confirm-redirect?confirmation=" + token);
         
         this.send(emailAddress, mail, "Email Bestätigung");
     }
@@ -76,8 +76,8 @@ public class EmailService {
             return;
         }
         mail = mail.replace("{USERNAME}", username);
-        mail = mail.replace("{LINKHOME}", homeUrlPath);
-        mail = mail.replace("{LINK}", homeUrlPath + "password-reset-form?confirmation=" + token);
+        mail = mail.replace("{LINKHOME}", homeDomain);
+        mail = mail.replace("{LINK}", homeDomain + "password-reset-form?confirmation=" + token);
 
         this.send(emailAddress, mail, "Passwort Zurücksetzung");
     }
@@ -99,7 +99,7 @@ public class EmailService {
         } catch (IOException e) {
             return;
         }
-        mail = mail.replace("{LINKHOME}", homeUrlPath);
+        mail = mail.replace("{LINKHOME}", homeDomain);
         mail = mail.replace("{USERNAME}", username);
         mail = mail.replace("{TITLE}", title);
         mail = mail.replace("{CREDITOR}", creditor);
