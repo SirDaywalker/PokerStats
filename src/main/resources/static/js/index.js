@@ -5,152 +5,151 @@ iconCards[0].children[0].src = '/assets/' + getRandomCards();
 iconCards[1].children[0].src = '/assets/' + getRandomCards();
 
 const tableCards = document.getElementById('table').children;
-tableCards[0].children[0].src = '/assets/' + getRandomCards();
-tableCards[1].children[0].src = '/assets/' + getRandomCards();
-tableCards[2].children[0].src = '/assets/' + getRandomCards();
-tableCards[3].children[0].src = '/assets/' + getRandomCards();
-tableCards[4].children[0].src = '/assets/' + getRandomCards();
-
-// Check the combination of the seven cards
-const cards_with_values = {
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-    "jack": [],
-    "queen": [],
-    "king": [],
-    "ace": [],
-};
-
-const cards_with_types = {
-    "hearts": [],
-    "diamonds": [],
-    "clubs": [],
-    "spades": [],
-};
-
-function processCard(index, card) {
-    let card_value = card.split('_')[0];
-    let card_type = card.split('_')[2].split('.')[0];
-    cards_with_values[card_value].push(card);
-    cards_with_types[card_type].push(card);
-}
-
-for (let i = 0; i < iconCards.length; i++) {
-    processCard(i, iconCards[i].children[0].src.split('/').pop());
-}
 for (let i = 0; i < tableCards.length; i++) {
-    processCard(i, tableCards[i].children[0].src.split('/').pop());
+    tableCards[i].children[0].src = '/assets/' + getRandomCards();
 }
 
-cards_with_values[11] = cards_with_values["jack"];
-cards_with_values[12] = cards_with_values["queen"];
-cards_with_values[13] = cards_with_values["king"];
-cards_with_values[14] = cards_with_values["ace"];
-cards_with_values[1] = cards_with_values[14];
-delete cards_with_values["jack"];
-delete cards_with_values["queen"];
-delete cards_with_values["king"];
-delete cards_with_values["ace"];
+const cards = {};
+for (let i = 0; i < 14; i++) {
+    cards[i] = [];
+}
+const convertCardValue = {
+    "jack": [10],
+    "queen": [11],
+    "king": [12],
+    "ace": [0, 13]
+}
 
-let pair = false;
-let three_of_a_kind = false;
-let four_of_a_kind = false;
-let full_house = false;
-let two_pairs = false;
-
-for (let key in cards_with_values) {
-    if (key === "1") {
-        continue;
+for (let card of [].concat(Array.prototype.slice.call(iconCards), Array.prototype.slice.call(tableCards))) {
+    let cardValue = card.children[0].src.split('/').pop().split('_')[0];
+    let cardType = card.children[0].src.split('/').pop().split('_')[2].split('.')[0];
+    if (cardValue === "jack" || cardValue === "queen" || cardValue === "king" || cardValue === "ace") {
+        cardValue = convertCardValue[cardValue];
     }
-
-    if (cards_with_values[key].length === 2) {
-        if (pair) {
-            two_pairs = true;
-        }
-        pair = true;
+    for (let value of cardValue) {
+        cards[value].push(cardType);
     }
-    if (cards_with_values[key].length === 3) {
-        if (three_of_a_kind) {
-            full_house = true;
-        }
-        three_of_a_kind = true;
-    }
-    if (cards_with_values[key].length === 4) {
-        four_of_a_kind = true;
-    }
-}
-if (!full_house) {
-    full_house = pair && three_of_a_kind;
-}
-let flush = false;
-
-for (let key in cards_with_types) {
-    if (cards_with_types[key].length >= 5) {
-        flush = true;
-    }
-}
-
-let straight = false;
-
-for (let i = 2; i <= 10; i++) {
-    if (cards_with_values[i].length !== 0 && cards_with_values[i + 1].length !== 0 && cards_with_values[i + 2].length !== 0 && cards_with_values[i + 3].length !== 0 && cards_with_values[i + 4].length !== 0) {
-        straight = true;
-    }
-}
-
-if (cards_with_values[14].length !== 0 && cards_with_values[2].length !== 0 && cards_with_values[3].length !== 0 && cards_with_values[4].length !== 0 && cards_with_values[5].length !== 0) {
-    straight = true;
-}
-
-let straight_flush = flush && straight;
-let royal_flush = false;
-
-if (cards_with_values[10].length !== 0 && cards_with_values[11].length !== 0 && cards_with_values[12].length !== 0 && cards_with_values[13].length !== 0 && cards_with_values[14].length !== 0) {
-    straight = true;
-    straight_flush = flush && straight;
-
-    if (straight_flush) {
-        royal_flush = true;
-    }
-}
-
-let result = "HIGH CARD";
-if (pair) {
-    result = "PAIR";
-}
-if (two_pairs) {
-    result = "TWO PAIRS";
-}
-if (three_of_a_kind) {
-    result = "THREE OF A KIND";
-}
-if (straight) {
-    result = "STRAIGHT";
-}
-if (flush) {
-    result = "FLUSH";
-}
-if (full_house) {
-    result = "FULL HOUSE";
-}
-if (four_of_a_kind) {
-    result = "FOUR OF A KIND";
-}
-if (straight_flush) {
-    result = "STRAIGHT FLUSH";
-}
-if (royal_flush) {
-    result = "ROYAL FLUSH";
 }
 
 const combination = document.getElementById('combination');
+
+let straight = false;
+
+for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 5; j++) {
+        if (cards[i + j].length === 0) {
+            break;
+        }
+        if (j === 4) {
+            straight = true;
+        }
+    }
+
+    // check if straight flush
+    if (straight) {
+        let hearts = 0;
+        let diamonds = 0;
+        let clubs = 0;
+        let spades = 0;
+
+        for (let j = 0; j < 5; j++) {
+            if (cards[i + j].includes("hearts")) {
+                hearts++;
+            }
+            if (cards[i + j].includes("diamonds")) {
+                diamonds++;
+            }
+            if (cards[i + j].includes("clubs")) {
+                clubs++;
+            }
+            if (cards[i + j].includes("spades")) {
+                spades++;
+            }
+        }
+
+        if (hearts === 5 || diamonds === 5 || clubs === 5 || spades === 5) {
+            if (i === 9) {
+                combination.innerText = "ROYAL FLUSH";
+            } else {
+                combination.innerText = "STRAIGHT FLUSH";
+            }
+            return;
+        }
+        combination.innerText = "STRAIGHT";
+        return;
+    }
+}
+
+// check for regular flush
+
+let hearts = 0;
+let diamonds = 0;
+let clubs = 0;
+let spades = 0;
+
+for (let i = 0; i < 14; i++) {
+    if (cards[i].includes("hearts")) {
+        hearts++;
+    }
+    if (cards[i].includes("diamonds")) {
+        diamonds++;
+    }
+    if (cards[i].includes("clubs")) {
+        clubs++;
+    }
+    if (cards[i].includes("spades")) {
+        spades++;
+    }
+}
+
+if (hearts >= 5 || diamonds >= 5 || clubs >= 5 || spades >= 5) {
+    combination.innerText = "FLUSH";
+    return;
+}
+
+// check for four of a kind
+for (let i = 0; i < 14; i++) {
+    if (cards[i].length === 4) {
+        combination.innerText = "FOUR OF A KIND";
+        return;
+    }
+}
+
+let threeOfAKind = false;
+let pair = false;
+let twoPairs = false;
+
+// check for full house
+for (let i = 0; i < 14; i++) {
+    if (cards[i].length === 3) {
+        threeOfAKind = true;
+    }
+    if (cards[i].length === 2) {
+        if (pair) {
+            twoPairs = true;
+        }
+        pair = true;
+    }
+
+    if (threeOfAKind && pair) {
+        combination.innerText = "FULL HOUSE";
+        return;
+    }
+    if (threeOfAKind) {
+        combination.innerText = "THREE OF A KIND";
+        return;
+    }
+    if (twoPairs) {
+        combination.innerText = "TWO PAIRS";
+        return;
+    }
+    if (pair) {
+        combination.innerText = "PAIR";
+        return;
+    }
+}
+
+combination.innerText = "HIGH CARD";
 
 let index = 0;
 function flipCard(stop) {
@@ -171,19 +170,4 @@ setTimeout(() => {
 }, 4000);
 setTimeout(() => {
     combination.style.transform = 'scale(1)';
-    combination.innerText = result;
 }, 4500);
-
-console.log(result);
-console.log(cards_with_values);
-console.log(cards_with_types);
-
-console.log(pair);
-console.log(two_pairs);
-console.log(three_of_a_kind);
-console.log(four_of_a_kind);
-console.log(full_house);
-console.log(flush);
-console.log(straight);
-console.log(straight_flush);
-console.log(royal_flush);
