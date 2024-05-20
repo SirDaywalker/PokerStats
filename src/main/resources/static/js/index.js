@@ -9,10 +9,11 @@ for (let i = 0; i < tableCards.length; i++) {
     tableCards[i].children[0].src = '/assets/' + getRandomCards();
 }
 
-const cards = {};
+let cards = {};
 for (let i = 0; i < 14; i++) {
     cards[i] = [];
 }
+
 const convertCardValue = {
     "jack": [10],
     "queen": [11],
@@ -25,6 +26,8 @@ for (let card of [].concat(Array.prototype.slice.call(iconCards), Array.prototyp
     let cardType = card.children[0].src.split('/').pop().split('_')[2].split('.')[0];
     if (cardValue === "jack" || cardValue === "queen" || cardValue === "king" || cardValue === "ace") {
         cardValue = convertCardValue[cardValue];
+    } else {
+        cardValue = [Number(cardValue) - 1];
     }
     for (let value of cardValue) {
         cards[value].push(cardType);
@@ -33,102 +36,104 @@ for (let card of [].concat(Array.prototype.slice.call(iconCards), Array.prototyp
 
 const combination = document.getElementById('combination');
 
-let straight = false;
+function checkCombinations() {
+    let straight = false;
 
-for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 5; j++) {
-        if (cards[i + j].length === 0) {
-            break;
-        }
-        if (j === 4) {
-            straight = true;
-        }
-    }
-
-    // check if straight flush
-    if (straight) {
-        let hearts = 0;
-        let diamonds = 0;
-        let clubs = 0;
-        let spades = 0;
-
+    for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 5; j++) {
-            if (cards[i + j].includes("hearts")) {
-                hearts++;
+            if (cards[i + j].length === 0) {
+                break;
             }
-            if (cards[i + j].includes("diamonds")) {
-                diamonds++;
-            }
-            if (cards[i + j].includes("clubs")) {
-                clubs++;
-            }
-            if (cards[i + j].includes("spades")) {
-                spades++;
+            if (j === 4) {
+                straight = true;
             }
         }
 
-        if (hearts === 5 || diamonds === 5 || clubs === 5 || spades === 5) {
-            if (i === 9) {
-                combination.innerText = "ROYAL FLUSH";
-            } else {
-                combination.innerText = "STRAIGHT FLUSH";
+        // check if straight flush
+        if (straight) {
+            let hearts = 0;
+            let diamonds = 0;
+            let clubs = 0;
+            let spades = 0;
+
+            for (let j = 0; j < 5; j++) {
+                if (cards[i + j].includes("hearts")) {
+                    hearts++;
+                }
+                if (cards[i + j].includes("diamonds")) {
+                    diamonds++;
+                }
+                if (cards[i + j].includes("clubs")) {
+                    clubs++;
+                }
+                if (cards[i + j].includes("spades")) {
+                    spades++;
+                }
             }
+
+            if (hearts === 5 || diamonds === 5 || clubs === 5 || spades === 5) {
+                if (i === 9) {
+                    combination.innerText = "ROYAL FLUSH";
+                } else {
+                    combination.innerText = "STRAIGHT FLUSH";
+                }
+                return;
+            }
+            combination.innerText = "STRAIGHT";
             return;
         }
-        combination.innerText = "STRAIGHT";
-        return;
     }
-}
 
-// check for regular flush
+    // check for regular flush
 
-let hearts = 0;
-let diamonds = 0;
-let clubs = 0;
-let spades = 0;
+    let hearts = 0;
+    let diamonds = 0;
+    let clubs = 0;
+    let spades = 0;
 
-for (let i = 0; i < 14; i++) {
-    if (cards[i].includes("hearts")) {
-        hearts++;
-    }
-    if (cards[i].includes("diamonds")) {
-        diamonds++;
-    }
-    if (cards[i].includes("clubs")) {
-        clubs++;
-    }
-    if (cards[i].includes("spades")) {
-        spades++;
-    }
-}
-
-if (hearts >= 5 || diamonds >= 5 || clubs >= 5 || spades >= 5) {
-    combination.innerText = "FLUSH";
-    return;
-}
-
-// check for four of a kind
-for (let i = 0; i < 14; i++) {
-    if (cards[i].length === 4) {
-        combination.innerText = "FOUR OF A KIND";
-        return;
-    }
-}
-
-let threeOfAKind = false;
-let pair = false;
-let twoPairs = false;
-
-// check for full house
-for (let i = 0; i < 14; i++) {
-    if (cards[i].length === 3) {
-        threeOfAKind = true;
-    }
-    if (cards[i].length === 2) {
-        if (pair) {
-            twoPairs = true;
+    for (let i = 1; i < 14; i++) {
+        if (cards[i].includes("hearts")) {
+            hearts++;
         }
-        pair = true;
+        if (cards[i].includes("diamonds")) {
+            diamonds++;
+        }
+        if (cards[i].includes("clubs")) {
+            clubs++;
+        }
+        if (cards[i].includes("spades")) {
+            spades++;
+        }
+    }
+
+    if (hearts >= 5 || diamonds >= 5 || clubs >= 5 || spades >= 5) {
+        combination.innerText = "FLUSH";
+        return;
+    }
+
+    // check for four of a kind
+    for (let i = 0; i < 14; i++) {
+        if (cards[i].length === 4) {
+            combination.innerText = "FOUR OF A KIND";
+            return;
+        }
+    }
+
+    let threeOfAKind = false;
+    let pair = false;
+    let twoPairs = false;
+
+    // check for full house
+    for (let i = 1; i < 14; i++) {
+        if (cards[i].length === 3) {
+            threeOfAKind = true;
+        }
+        if (cards[i].length === 2) {
+            if (pair) {
+                twoPairs = true;
+            }
+            pair = true;
+        }
     }
 
     if (threeOfAKind && pair) {
@@ -147,9 +152,9 @@ for (let i = 0; i < 14; i++) {
         combination.innerText = "PAIR";
         return;
     }
+    combination.innerText = "HIGH CARD";
 }
-
-combination.innerText = "HIGH CARD";
+checkCombinations();
 
 let index = 0;
 function flipCard(stop) {
