@@ -178,16 +178,25 @@ header {
         justify-content: center;
         align-items: center;
         height: auto;
+        margin-top: 1em;
+    }
+
+    #poker-stats {
+        font-size: 3.5rem;
+    }
+
+    #stammtisch {
+        font-size: 1rem;
     }
 
     #account-section {
         height: 4em;
-        width: 345px;
+        width: 320px;
         margin-top: 1em;
     }
 
     #pott-badge {
-        top: -110px;
-        right: -7px;
+        top: -105px;
+        right: 25px;
     }
 }
