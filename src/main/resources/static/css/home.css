@@ -202,6 +202,7 @@
 @media only screen and (max-width: 850px) {
     #card-centerbox {
         margin-top: 15%;
+        padding: 1em;
     }
 
     .tilting-card-content > div:first-child, #card-stack, #card-stack > .card,  #card-stack > .card > img{
