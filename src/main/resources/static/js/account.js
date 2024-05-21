@@ -1,21 +1,15 @@
 import {calculatePasswordStrength} from "./components/security.js";
 import {setErrorNotification} from "./components/notifications.js";
 import {sendDataToServer} from "./components/networking.js";
+import {setProfilePicture} from "./components/utils.js";
 
 const imageInputElement = document.getElementById('profile-image-selector');
-const imagePreviewElement = document.getElementById('profile-image');
-
 const newPasswordElement = document.getElementById('new-password');
 const form = document.getElementById('account-form');
 const nameElement = document.getElementById('name');
 
 imageInputElement.addEventListener('change', function() {
-    const file = this.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        imagePreviewElement.src = e.target.result;
-    }
-    reader.readAsDataURL(file);
+    setProfilePicture('profile-image', this);
 });
 
 newPasswordElement.addEventListener('input', function() {

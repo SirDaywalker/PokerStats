@@ -1,15 +1,10 @@
 import {setErrorNotification} from "./components/notifications.js";
 import {calculatePasswordStrength} from "./components/security.js";
 import {sendDataToServer} from "./components/networking.js";
+import {setProfilePicture} from "./components/utils.js";
 
-document.getElementById('profile-image-selector').addEventListener('change', function() {
-    let reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById('image-preview').style.display = 'block';
-        document.getElementById('image-preview').src = e.target.result;
-        document.getElementById('img-example').style.display = 'none';
-    };
-    reader.readAsDataURL(this.files[0]);
+document.getElementById('image-input').addEventListener('change', function() {
+    setProfilePicture('image-preview', this);
 });
 
 const form = document.getElementsByTagName('form')[0];
@@ -25,7 +20,7 @@ form.addEventListener('submit', function(event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
-    const picture = document.getElementById('profile-image-selector').files[0];
+    const picture = document.getElementById('image-input').files[0];
     const confirmPassword = document.getElementById('password-confirm').value;
     const email = document.getElementById('email').value;
 
@@ -33,6 +28,11 @@ form.addEventListener('submit', function(event) {
         const errorElement = document.getElementsByClassName('notification')[0];
         errorElement.innerHTML = 'Passwörter stimmen nicht überein.';
         errorElement.classList.add('red');
+        return;
+    }
+
+    if (picture === undefined) {
+        setErrorNotification('Bitte wählen Sie ein Bild aus.', 0);
         return;
     }
 
