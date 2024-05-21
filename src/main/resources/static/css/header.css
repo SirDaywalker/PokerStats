@@ -160,12 +160,12 @@ header {
     transition: border-radius 350ms ease-in-out;
 }
 
-#account-info:hover svg {
+#account-section:hover > div  svg {
     transform: scale(1,-1);
     transition: all 0.5s ease-in-out;
 }
 
-#account-info:hover #account-popup {
+#account-section:hover #account-popup {
     opacity: 1;
     visibility: visible;
     border-top-right-radius: 0;
