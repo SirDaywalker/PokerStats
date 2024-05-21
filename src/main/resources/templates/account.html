@@ -21,10 +21,11 @@
     <form id="account-form" class="container">
         <p>Account</p>
         <div id="first-bar">
-            <div id="profile">
-                <label for="profile-image-selector"></label>
-                <input type="file" accept="image/*" id="profile-image-selector">
-                <img id="profile-image" th:src="${user.getProfilePictureURL()}" alt="">
+            <div id="picture">
+                <input type="file" accept="image/*" id="image-input">
+                <label for="image-input">
+                    <img th:src="${user.getProfilePictureURL()}" alt="" id="image-preview">
+                </label>
                 <div id="guest-badge" class="badge red-to-violet" th:if="${user.getRole().name().equals('GUEST')}">
                     <div>
                         <span>Gast</span>
