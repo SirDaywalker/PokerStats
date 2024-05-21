@@ -52,18 +52,28 @@ header {
     left: 11px;
 }
 
-#account-section {
+#right {
     display: flex;
     align-items: center;
-    border: var(--border);
-    border-radius: var(--border-radius);
     height: 70%;
-    padding: 0 1em 0 0.5em;
     min-width: max-content;
     width: min-content;
     text-align: right;
     white-space: nowrap;
     position: relative;
+}
+
+#account-section {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-width: max-content;
+    width: min-content;
+    text-align: right;
+    white-space: nowrap;
+    position: relative;
+    border: var(--border);
+    border-radius: var(--border-radius);
     background: var(--container);
 }
 
@@ -72,6 +82,7 @@ header {
     gap: 5%;
     height: 100%;
     width: 100%;
+    padding: 0 1em 0 0.5em;
     align-items: center;
 }
 
@@ -143,18 +154,18 @@ header {
     transition: border-radius 350ms ease-in-out;
 }
 
-#account-section:hover {
-    border-bottom-right-radius: 0;
+#account-section:hover  {
     border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     transition: border-radius 350ms ease-in-out;
 }
 
-#account-section:hover svg {
+#account-info:hover svg {
     transform: scale(1,-1);
     transition: all 0.5s ease-in-out;
 }
 
-#account-section:hover #account-popup {
+#account-info:hover #account-popup {
     opacity: 1;
     visibility: visible;
     border-top-right-radius: 0;
@@ -196,7 +207,7 @@ header {
     }
 
     #pott-badge {
-        top: -105px;
+        top: -87px;
         right: 25px;
     }
 }
