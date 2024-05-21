@@ -3,13 +3,13 @@ import {setErrorNotification} from "./components/notifications.js";
 import {sendDataToServer} from "./components/networking.js";
 import {setProfilePicture} from "./components/utils.js";
 
-const imageInputElement = document.getElementById('profile-image-selector');
+const imageInputElement = document.getElementById('image-input');
 const newPasswordElement = document.getElementById('new-password');
 const form = document.getElementById('account-form');
 const nameElement = document.getElementById('name');
 
 imageInputElement.addEventListener('change', function() {
-    setProfilePicture('profile-image', this);
+    setProfilePicture('image-preview', this);
 });
 
 newPasswordElement.addEventListener('input', function() {
