@@ -6,6 +6,7 @@ form {
     position: relative;
     width: 20em;
     margin: 2em auto 0;
+    max-width: 80%;
 }
 
 form > p {
