@@ -14,14 +14,16 @@
 </head>
 <body>
     <header th:replace="~{header.html :: header}"></header>
-    <div class="container">
-        <h1>Nutzer zum Bearbeiten auswählen</h1>
-        <a th:each="user : ${users}" th:href="'/account?u=' + ${user.getId()}">
-            <div class="user">
-                <img th:src="${user.getProfilePictureURL()}" alt="">
-                <span th:text="${user.getUsername()}"></span>
-            </div>
-        </a>
+    <div id="centerbox">
+        <div class="container">
+            <h1>Nutzer zum Bearbeiten auswählen</h1>
+            <a th:each="user : ${users}" th:href="'/account?u=' + ${user.getId()}">
+                <div class="user">
+                    <img th:src="${user.getProfilePictureURL()}" alt="">
+                    <span th:text="${user.getUsername()}"></span>
+                </div>
+            </a>
+        </div>
     </div>
 </body>
 </html>

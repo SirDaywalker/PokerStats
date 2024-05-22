@@ -1,4 +1,4 @@
-body {
+#centerbox {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    margin: 5em 1em 1em 1em;
+    margin: 2.5em 1em 1em 1em;
 }
 
 .user {
