@@ -16,6 +16,13 @@ form > p {
     gap: 2em;
 }
 
+@media (max-width: 850px) {
+    #info {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 #info > label {
     flex: 1;
 }
@@ -95,12 +102,13 @@ form > button[type="submit"] {
     cursor: pointer;
     margin: 1em;
     display: flex;
+    gap: 5px;
 }
 
 .user > div {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     height: 100%;
     flex: 3;
 }
