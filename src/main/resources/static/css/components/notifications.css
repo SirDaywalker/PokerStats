@@ -11,6 +11,8 @@
     margin: auto 0;
     border-radius: 10px;
     width: max-content;
+    max-width: 80%;
+    text-align: center;
 }
 
 .red, .blue {
