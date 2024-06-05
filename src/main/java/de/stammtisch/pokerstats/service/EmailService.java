@@ -110,4 +110,23 @@ public class EmailService {
 
         this.send(emailAddress, mail, "Rechnung erhalten");
     }
+	
+	@Async
+    public void sendInvoicePaiedMail(
+    		String username, 
+    		String emailAddress,
+    		String creditor
+    		
+    ) {
+    	String mail;
+        try {
+            mail = StreamUtils.copyToString(new ClassPathResource("mails/invoice-paied-mail.html").getInputStream(), Charset.defaultCharset());
+        } catch (IOException e) {
+            return;
+        }
+        mail = mail.replace("{USERNAME}", username);
+        mail = mail.replace("{LINKHOME}", homeDomain);
+        
+        this.send(emailAddress, mail, "Rechnung bezahlt");
+    }
 }
