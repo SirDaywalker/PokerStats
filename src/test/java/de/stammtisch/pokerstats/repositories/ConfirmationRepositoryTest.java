@@ -3,6 +3,7 @@ package de.stammtisch.pokerstats.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -64,7 +65,6 @@ public class ConfirmationRepositoryTest {
 		userRepository.save(user);
 		
 		Confirmation conf = new Confirmation();
-		
 		String token = UUID.randomUUID().toString();
 		
 		conf.setToken(token);
@@ -79,4 +79,67 @@ public class ConfirmationRepositoryTest {
 		//then
 		assertThat(expected).isEqualTo(conf);
 	}
+	
+	@Test
+	void canFindConfirmationsByUser() {
+		//given
+		User user = this.generateUser();
+		
+		userRepository.save(user);
+		
+		Confirmation conf1 = new Confirmation();
+		String token1 = UUID.randomUUID().toString();
+		
+		conf1.setToken(token1);
+		conf1.setValidatedAt(10);
+		conf1.setUser(user);
+		
+		underTest.save(conf1);
+		
+		//must be done to ensure no double primary keys
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+		}
+		
+		Confirmation conf2 = new Confirmation();
+		String token2 = UUID.randomUUID().toString();
+		
+		conf2.setToken(token2);
+		conf2.setValidatedAt(20);
+		conf2.setUser(user);
+		
+		underTest.save(conf2);
+		
+		//when
+		Set<Confirmation> expected = underTest.findByUser(user).orElse(null);
+		
+		//then
+		Set<Confirmation> lst = Set.of(conf1, conf2);
+		assertThat(expected).isEqualTo(lst);
+	}
+	
+	@Test
+	void CheckConfirmationExistsByToken() {
+		//given
+		User user = this.generateUser();
+		
+		userRepository.save(user);
+		
+		Confirmation conf = new Confirmation();
+		String token = UUID.randomUUID().toString();
+		
+		conf.setToken(token);
+		conf.setValidatedAt(10);
+		conf.setUser(user);
+		
+		underTest.save(conf);
+		
+		//when
+		boolean expected = underTest.existsByToken(token);
+		
+		//then
+		assertThat(expected).isEqualTo(true);
+	}
+	
 }

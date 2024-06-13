@@ -26,7 +26,7 @@ public class InvoiceService {
     public void createInvoice(User creditor, InvoiceCreatingRequest request) {
         for (String debtorEmail : request.users()) {
             Invoice invoice = new Invoice();
-            User debtor = this.userRepository.findByEmail(debtorEmail);
+            User debtor = this.userRepository.findByEmail(debtorEmail).orElse(null);
             
             invoice.setDue(request.due()+ZonedDateTime.now().getOffset().getTotalSeconds()*1000);
             invoice.setAmount(request.amount());

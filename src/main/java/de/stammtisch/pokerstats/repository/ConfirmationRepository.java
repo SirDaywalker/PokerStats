@@ -7,11 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ConfirmationRepository extends JpaRepository<Confirmation, Long> {
 
     Optional<Confirmation> findByToken(String token);
-    List<Confirmation> findByUser(User user);
+    Optional<Set<Confirmation>> findByUser(User user);
     boolean existsByToken(String token);
 }

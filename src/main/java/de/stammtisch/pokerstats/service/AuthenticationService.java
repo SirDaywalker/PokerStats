@@ -3,9 +3,11 @@ package de.stammtisch.pokerstats.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -213,7 +215,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(request.password()));
         this.userRepository.save(user);
 
-        List<Confirmation> confs = this.confirmationRepository.findByUser(user);
+        Set<Confirmation> confs = this.confirmationRepository.findByUser(user).orElse(Set.of());
         for(Confirmation con : confs){
             if(con.getValidatedAt() != 0) { continue; }
             this.confirmationRepository.deleteById(con.getId());

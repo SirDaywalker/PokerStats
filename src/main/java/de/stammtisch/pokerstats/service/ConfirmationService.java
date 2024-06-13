@@ -1,6 +1,8 @@
 package de.stammtisch.pokerstats.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -66,7 +68,7 @@ public class ConfirmationService {
 		user.setEnabled(true);
 		this.userRepository.save(user);
 
-		List<Confirmation> confs = this.confirmationRepository.findByUser(user);
+		Set<Confirmation> confs = this.confirmationRepository.findByUser(user).orElse(Set.of());
 		for(Confirmation con : confs){
 			if(con.getValidatedAt() != 0) { continue; }
 			this.confirmationRepository.deleteById(con.getId());
