@@ -11,10 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -64,9 +61,7 @@ public class PokerGameService {
 
     public List<PokerGame> getGames() {
         List<PokerGame> games = this.pokerGameRepository.findAll();
-
-        // Sort games by id
-        games.sort((a, b) -> (int) (a.getId() - b.getId()));
+        games.sort(PokerGame::compareTo);  // Sort games by date (id)
         return games;
     }
 
