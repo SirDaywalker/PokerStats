@@ -47,14 +47,35 @@ public class PokerGameService {
         this.userGameRepository.saveAll(usersGames);
     }
 
-    public void updateWinner(Long gameId, Long userId) {
+    public void updateGame(long gameId, @NonNull long[] playerIds, Long winnerId) {
         PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
+        Set<UserGame> usersGames = game.getUsers();
 
-        if (userId == null) {
+        for (UserGame userGame : usersGames) {
+            // If the user is not in the new list of players, remove them from the game
+            if (Arrays.stream(playerIds).noneMatch(id -> id == userGame.getUser().getId())) {
+                this.userGameRepository.delete(userGame);
+            }
+        }
+
+        for (long playerId : playerIds) {
+            // If the user is not in the current list of players, add them to the game
+            if (usersGames.stream().noneMatch(userGame -> userGame.getUser().getId() == playerId)) {
+                User user = this.userRepository.findById(playerId).orElseThrow();
+                UserGame userGame = new UserGame();
+                userGame.setUser(user);
+                userGame.setPokerGame(game);
+                userGame.setBuyIn(user.getBuyIn());
+                usersGames.add(userGame);
+            }
+        }
+
+        game.setUsers(usersGames);
+
+        if (winnerId == null) {
             game.setWinner(null);
         } else {
-            User user = this.userRepository.findById(userId).orElseThrow();
-            game.setWinner(user);
+            game.setWinner(this.userRepository.findById(winnerId).orElseThrow());
         }
         this.pokerGameRepository.save(game);
     }
@@ -86,5 +107,10 @@ public class PokerGameService {
             }
         }
         return pot;
+    }
+
+    public void deleteGame(long gameId) {
+        PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
+        this.pokerGameRepository.delete(game);
     }
 }

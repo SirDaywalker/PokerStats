@@ -7,9 +7,9 @@ import de.stammtisch.pokerstats.models.PokerGame;
 import de.stammtisch.pokerstats.models.UserGame;
 import de.stammtisch.pokerstats.service.PokerGameService;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,14 +33,24 @@ public class PokerGameController {
         return new ResponseEntity<>("Successfully created Poker Game.", HttpStatus.CREATED);
     }
 
-    @PostMapping("/update-winner")
-    public ResponseEntity<String> updateWinner(@NonNull @RequestBody UpdatePokerGameRequest request) {
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@NonNull @RequestBody UpdatePokerGameRequest request) {
         try {
-            this.pokerGameService.updateWinner(request.gameId(), request.userId());
+            this.pokerGameService.updateGame(request.gameId(), request.playerIds(), request.winnerId());
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Successfully updated winner.", HttpStatus.OK);
+        return new ResponseEntity<>("Successfully updated Poker Game.", HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam(name = "id") long gameId) {
+        try {
+            this.pokerGameService.deleteGame(gameId);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully deleted Poker Game.", HttpStatus.OK);
     }
 
     @GetMapping("/stats")
