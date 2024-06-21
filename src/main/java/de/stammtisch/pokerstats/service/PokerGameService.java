@@ -114,6 +114,10 @@ public class PokerGameService {
         return this.pokerGameRepository.findAllByOrderByIdAsc();
     }
 
+    /**
+     * Returns the current pot. The pot is calculated based on the last game in the list.
+     * @return the current pot.
+     */
     public double getCurrentPot() {
         if (this.getGames().isEmpty()) {
             return 0;
@@ -123,6 +127,11 @@ public class PokerGameService {
         return pot;
     }
 
+    /**
+     * Returns the pot of the given game. The pot is calculated based on the last game in the list.
+     * @param game the game to calculate the pot for.
+     * @return the pot of the given game.
+     */
     public double getPot(PokerGame game) {
         List<PokerGame> games = this.getGames();
 
