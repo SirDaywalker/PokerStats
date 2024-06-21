@@ -56,6 +56,7 @@ public class User implements UserDetails {
     private String email;
 
     private boolean enabled = false;
+    private boolean banned = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -85,7 +86,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.banned;
     }
 
     /**
@@ -98,11 +99,11 @@ public class User implements UserDetails {
     }
 
     /**
-     * @return the name of the user.
+     * @return true if the user is enabled, false otherwise.
      */
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return this.enabled && !this.banned;
     }
 
     /**
@@ -122,5 +123,4 @@ public class User implements UserDetails {
         }
         return other.getId() == this.id;
     }
-
 }
