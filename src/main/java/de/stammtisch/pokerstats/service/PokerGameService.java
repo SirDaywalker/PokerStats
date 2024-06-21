@@ -58,6 +58,9 @@ public class PokerGameService {
         if (winnerId == null) {
             game.setWinner(null);
         } else {
+            if (game.getUsers().stream().noneMatch(userGame -> userGame.getUser().getId() == winnerId)) {
+                throw new NoSuchElementException("Der Gewinner muss ein Spieler des Spiels sein.");
+            }
             User winner = this.userRepository.findById(winnerId).orElseThrow();
             game.setWinner(winner);
         }
