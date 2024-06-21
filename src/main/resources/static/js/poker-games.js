@@ -6,12 +6,12 @@ let gameContainers = document.getElementsByClassName('game');
 function updateGame(gameId, winner) {
     const data = {
         gameId: gameId,
-        userId: winner
+        winnerId: winner
     }
 
     sendDataToServer(
         JSON.stringify(data),
-        '/api/v1/games/poker/update-winner',
+        '/api/v1/games/poker/set-winner',
         'POST',
         'application/json',
         (text, status, isOK) => {

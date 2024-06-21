@@ -1,7 +1,6 @@
 package de.stammtisch.pokerstats.controller.dtos;
 
-public record UpdatePokerGameRequest (
+public record UpdatePokerGameWinnerRequest(
     Long gameId,
-    long[] playerIds,
     long winnerId
 ) {}

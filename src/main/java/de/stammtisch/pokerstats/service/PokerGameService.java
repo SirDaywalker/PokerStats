@@ -47,7 +47,40 @@ public class PokerGameService {
         this.userGameRepository.saveAll(usersGames);
     }
 
-    public void updateGame(long gameId, @NonNull long[] playerIds, Long winnerId) {
+    /**
+     * Updates the winner of the game with the given id. If the winnerId is null, the game is set to running.
+     * @param gameId the id of the game to update.
+     * @param winnerId the id of the winner.
+     */
+    public void updateWinner(long gameId, Long winnerId) {
+        PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
+
+        if (winnerId == null) {
+            game.setWinner(null);
+        } else {
+            User winner = this.userRepository.findById(winnerId).orElseThrow();
+            game.setWinner(winner);
+        }
+        this.pokerGameRepository.save(game);
+    }
+
+    /**
+     * Updates the players of the game with the given id. The players are set to the players with the given ids. A
+     * game can only be updated if it is the last game in the list, as the pot is calculated based on the last game.
+     * @param gameId the id of the game to update.
+     * @param playerIds the ids of the players. Should contain at least 2 unique ids. Should to be null.
+     */
+    public void updatePlayers(long gameId, @NonNull long[] playerIds) {
+        if (playerIds.length < 2) {
+            throw new IllegalArgumentException("Es müssen mindestens 2 Spieler teilnehmen.");
+        }
+        if (Arrays.stream(playerIds).distinct().count() < playerIds.length) {
+            throw new IllegalArgumentException("Ein Spieler kann nicht mehrfach teilnehmen.");
+        }
+        if (this.isNotLastGame(gameId)) {
+            throw new IllegalArgumentException("Die Spieler können nur im letzten Spiel geändert werden.");
+        }
+
         PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
         Set<UserGame> usersGames = game.getUsers();
 
@@ -69,21 +102,16 @@ public class PokerGameService {
                 usersGames.add(userGame);
             }
         }
-
         game.setUsers(usersGames);
-
-        if (winnerId == null) {
-            game.setWinner(null);
-        } else {
-            game.setWinner(this.userRepository.findById(winnerId).orElseThrow());
-        }
         this.pokerGameRepository.save(game);
     }
 
+    /**
+     * Returns a list of all games. The games are sorted by date (id).
+     * @return a list of all games.
+     */
     public List<PokerGame> getGames() {
-        List<PokerGame> games = this.pokerGameRepository.findAll();
-        games.sort(PokerGame::compareTo);  // Sort games by date (id)
-        return games;
+        return this.pokerGameRepository.findAllByOrderByIdAsc();
     }
 
     public double getCurrentPot() {
@@ -109,7 +137,26 @@ public class PokerGameService {
         return pot;
     }
 
+    /**
+     * Checks if the game with the given id is the last game in the list.
+     * @param gameId the id of the game to check.
+     * @return true if the game is the last game in the list, false otherwise.
+     */
+    public boolean isNotLastGame(long gameId) {
+        return this.pokerGameRepository.findByIdGreaterThan(gameId).isPresent();
+    }
+
+    /**
+     * Deletes the game with the given id if it is the last game in the list.
+     * @param gameId the id of the game to delete.
+     * @throws IllegalArgumentException if the game is not the last game in the list.
+     */
     public void deleteGame(long gameId) {
+        if (this.isNotLastGame(gameId)) {
+            throw new IllegalArgumentException(
+                    "Das Spiel kann nicht gelöscht werden, da es nicht das letzte Spiel ist."
+            );
+        }
         PokerGame game = this.pokerGameRepository.findById(gameId).orElseThrow();
         this.pokerGameRepository.delete(game);
     }
