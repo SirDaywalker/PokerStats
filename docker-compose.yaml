@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  database:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: database-name
+      MYSQL_USER: database-username
+      MYSQL_PASSWORD: database-user-password
+      MYSQL_ROOT_PASSWORD: database-root-password
+    ports:
+      - "8081:3306"
+    volumes:
+     - mysql-data:/var/lib/mysql
+    networks:
+      - springboot-mysql-network
+
+  stammtischhub:
+    depends_on:
+      - database
+    image: sirdaywalker/stammtischhub:latest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      # Database-config:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/database-name
+      SPRING_DATASOURCE_USERNAME: spring-database-username
+      SPRING_DATASOURCE_PASSWORD: spring-database-password
+      SPRING_MYSQL_PORT: 3306
+      SPRING_JPA_HIBERNATE_DLL-AUTO: update
+      SPRING_JPA_OPEN-IN-VIEW: false
+      # Multipart-config:
+      SPRING_SERVLET_MULTIPART_MAX-REQUEST-SIZE: 15MB
+      SPRING_SERVLET_MULTIPART_MAX-FILE-SIZE: 10MB
+      # Mailing-config:
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: email-username
+      SPRING_MAIL_PASSWORD: email-user-password
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      # DNS-config
+      STAMMTISCHHUB_DDNS_DOMAIN: domain
+      # Security-config:
+      JWT_SECRET: 256-hex-secret-key
+      JWT_EXPIRATION: 604800000
+    networks:
+     - springboot-mysql-network
+
+volumes:
+  mysql-data:
+
+networks:
+    springboot-mysql-network:
